@@ -36,10 +36,10 @@
               data-toggle="collapse"
               aria-expanded="false"
               class="dropdown-toggle"
-            >Menu1</a>
+            >영업</a>
             <ul class="collapse list-unstyled" id="homeSubmenu2">
               <li class="dropdown-menu__item">
-                <a href="#">Home 1</a>
+                <a href="/sales/asQuality/list">AS 품질 확보</a>
               </li>
               <li>
                 <a href="#">Home 2</a>

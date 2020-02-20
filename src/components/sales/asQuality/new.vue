@@ -1,11 +1,11 @@
 <template>
-  <div id="itDamage" class="container">
+  <div id="asQuality" class="container">
     등록
     <div id="insertForm" class="col-xs-12 col-sm-12">
       <div class="panel panel-default">
         <form @submit="save">
           <div class="input-group">
-            <label for="fact">공장</label>
+            <label for="fact">공장</label>s
             <select class="form-control" id="fact" v-model="fact" @change="selectfact(fact)" required>
                   <option selected value="null">공장</option>
                   <option v-for="fact in factList" v-bind:key="fact.asgub" v-bind:value="fact.asgub" >{{ fact.asdes }}</option>
@@ -49,14 +49,14 @@
 </template>
 
 <script>
-import crudService from "@/services/general/crudService";
+import crudService from "@/services/crudService";
 import axios from "axios";
 
 export default {
-  name: "itDamage",
+  name: "asQuality",
   data() {
     return {
-      folderPath:"itdamage",
+      folderPath:"asQuality",
       file: '',
       rtime: '',
       fact:'',
@@ -96,7 +96,7 @@ export default {
       });
     },
     save(e) {
-      crudService.setRoute('general/itdamage');
+      crudService.setRoute('sales/asQuality');
       let formData = new FormData();
       formData.append("file", this.file);
       formData.append("fileName",fileName);
@@ -126,7 +126,7 @@ export default {
       window.open("/api/file/" + data.attach);
     },
     selectfact(fact){
-      crudService.setRoute('general/wrkct');
+      crudService.setRoute('sales/wrkct');
       crudService.getWrkctListByFact(fact)
       .then(response => {
         this.wrkctList = response.data;
@@ -138,7 +138,7 @@ export default {
     }
   },
   created() {
-    crudService.setRoute('base/codeLib');
+    crudService.setRoute('sales/codeLib');
     crudService.retrieve("IT")
     .then(response => {
       this.class1List = response.data;
