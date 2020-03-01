@@ -6,6 +6,7 @@ import router from './router'
 import axios from 'axios'
 import store from './store'
 import 'bootstrap'
+import 'es6-promise/auto'
 
 // import $ from 'jquery';
 // import 'expose-loader?$!expose-loader?jQuery!jquery'

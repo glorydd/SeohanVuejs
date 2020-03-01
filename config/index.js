@@ -24,6 +24,8 @@ module.exports = {
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8091, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
+    https: false,
+    disableHostCheck: true,
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
