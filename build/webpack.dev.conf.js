@@ -22,6 +22,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
   // these devServer options should be customized in /config/index.js
   devServer: {
+    disableHostCheck: true,
     // https: true,
     // https: {
     //     key: require('../auth/seohan.com.key'),
