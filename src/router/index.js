@@ -23,6 +23,10 @@ import asQuality from '@/components/sales/asQuality/asQuality'
 import asQualityList from '@/components/sales/asQuality/list'
 import asQualityNew from '@/components/sales/asQuality/new'
 
+import mat from '@/components/mat/mat'
+import importPlan from '@/components/mat/importPlan/importPlan'
+import importPlanList from '@/components/mat/importPlan/list'
+
 import foodTable from '@/components/general/foodTable'
 import qrReader from '@/components/general/qrReader'
 
@@ -71,6 +75,18 @@ const router = new Router({
       },
     ],
     // beforeEnter: requireAuth(),
+  },
+  {
+    path: '/mat', component: mat,
+    children: [
+      {
+        path: 'importPlan', component: importPlan,
+        children: [
+          { path: 'list', component: importPlanList },
+        ]
+      },
+    ],
+    beforeEnter: requireAuth(),
   },
   {
     path: '/qc', component: general,
