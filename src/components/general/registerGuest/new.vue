@@ -1,14 +1,14 @@
 <template>
-  <div id="sGateCar">
+  <div id="registerGuest">
     등록
   </div>
 </template>
 
 <script>
-import sGateCarService from "@/services/general/sGateCarService";
+import registerGuestService from "@/services/general/registerGuestService";
 
 export default {
-  name: "sGateCar",
+  name: "registerGuest",
   data() {
     return {
       rtime: "",
@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     getData() {
-      sGateCarService
+      registerGuestService
         .retrieve(rtime)
         .then(response => {
           this.dataList = response.data;
@@ -28,7 +28,7 @@ export default {
         });
     },
     save(data) {
-      sGateCarService
+      registerGuestService
         .save(data)
         .then(() => {
           this.getData();
