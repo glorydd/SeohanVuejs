@@ -1,6 +1,6 @@
 <template>
-  <div id="sGateCar">
-    <router-link to="/general/sGateCar/new" exact>New Post</router-link>
+  <div id="rentCar">
+    <router-link to="/general/rentCar/new" exact>New Post</router-link>
 
     <table class="table table-striped table-bordered" id="dataTable">
       <tbody>
@@ -26,7 +26,7 @@
               class="btn btn-default btn-sm"
               type="button"
               id="endDamage"
-              @click="endsGateCar(data)"
+              @click="endrentCar(data)"
             >완료</button>
           </td>
         </tr>
@@ -39,7 +39,7 @@
 import crudService from "@/services/general/crudService";
 
 export default {
-  name: "sGateCar",
+  name: "rentCar",
   data() {
     return {
       serno: "",
@@ -64,7 +64,7 @@ export default {
           console.log(e);
         });
     },
-    endsGateCar(data) {
+    endrentCar(data) {
       crudService
         .update(data)
         .then(() => {
@@ -80,7 +80,7 @@ export default {
     }
   },
   created() {
-    crudService.setRoute('general/sGateCar');
+    crudService.setRoute('general/rentCar');
     this.getData();
   },
   mounted: function() {}
