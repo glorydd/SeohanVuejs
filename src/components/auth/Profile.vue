@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import UserService from '@/services/auth/user.service';
+import UserService from '@/services/auth/auth.service';
 
 export default {
   name: 'profile',
