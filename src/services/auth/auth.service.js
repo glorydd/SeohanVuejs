@@ -31,10 +31,6 @@ class AuthService {
     localStorage.removeItem('user');
     localStorage.removeItem('accessToken');
   } 
-  getUserContent() {
-    let user = JSON.parse(localStorage.getItem('user')).data;
-    return axios.post(API_URL + 'userinfo', user , { headers: authHeader()  });
-  } 
   handleResponse(response) {
     if (response.status === 401) {
       this.logout();

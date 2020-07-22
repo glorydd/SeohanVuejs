@@ -39,21 +39,7 @@ export default {
         .catch(e => {
           console.log(e);
         });
-    },
-    endimportPlan(data) {
-      crudService
-        .update(data)
-        .then(() => {
-          this.getData();
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-    fileDown(data) {
-      var folderPath="importPlan";
-      window.open("/api/file/" + folderPath + "/" + data.attach);
-    },
+    }
   },
   created() {
     crudService.setRoute('mat/importPlan');
