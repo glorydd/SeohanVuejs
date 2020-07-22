@@ -9,7 +9,8 @@
 </template>
 
 <script>
-import UserService from '@/services/auth/user.service';
+import AuthService from '@/services/auth/auth.service';
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'profile',
@@ -18,13 +19,22 @@ export default {
       content: ''
     }
   },
+  // computed:{
+  //   getUserInfo(){
+  //     this.$store.getters.getUserInfo;
+  //   }
+  // },
+  computed: mapGetters({
+    content : 'getUserInfo'
+  }),
   mounted() {
-    UserService.getUserContent().then(
+    AuthService.getUserContent().then(
       response => {
-        this.content = response.data;
+        this.content = response.data;        
       },
       error => {
         this.content = error.response.data.message;
+        alert(error.response.data.message);
       }
     )
   }

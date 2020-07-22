@@ -21,18 +21,16 @@ class AuthService {
       });
   }
 
+  getUserContent() {
+    let member = JSON.parse(localStorage.getItem('user')); 
+    return axios.post(API_URL + 'userinfo', member , { headers: authHeader()  });
+  }
+
   logout() {
     localStorage.removeItem('user');
     localStorage.removeItem('accessToken');
   }
-
-  // register(user) {
-  //   return axios.post(API_URL + 'signup', {
-  //     username: user.username,
-  //     email: user.email,
-  //     password: user.password
-  //   });
-  // }
+ 
 
   handleResponse(response) {
     if (response.status === 401) {
