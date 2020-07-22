@@ -35,8 +35,18 @@ const NotFound = { template: '<div>Not Found</div>' }
 Vue.use(Router)
 
 const requireAuth = () => (from, to, next) => {
-  if (authHeader ()) return next()
-  next('/login')
+  // var permissionCheck = false;
+  // var permissions = localStorage.getItem('permissions');
+  // permissions.forEach(element => {
+  //   if (element = from) permissionCheck = true;
+  // });
+
+  // if (authHeader() && permissionCheck ) {
+  if (authHeader()  ) {
+    return next()
+  }else{    
+    next('/login')
+  }
 }
 
 const router = new Router({
@@ -111,13 +121,13 @@ const router = new Router({
         { path: 'qrReader', component: qrReader },
       ],
       beforeEnter: requireAuth(),
-    },
-    { path: '/', component: Home,beforeEnter: requireAuth(), },
-    // { path: '*', component: NotFound,beforeEnter: requireAuth(), },
-    { path: '/login', component: Login },
-    { path: '/Profile', component: Profile , beforeEnter: requireAuth() }
-    ]
-  }]
+    }],
+  },
+  { path: '/', component: Home,beforeEnter: requireAuth(), },
+  // { path: '*', component: NotFound,beforeEnter: requireAuth(), },
+  { path: '/login', component: Login },
+  { path: '/Profile', component: Profile , beforeEnter: requireAuth() }
+  ]
 });
 
 export default router;
