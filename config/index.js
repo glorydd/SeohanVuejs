@@ -17,6 +17,13 @@ module.exports = {
         pathRewrite: {
           '^/api': ''
         }
+      },
+      '/message': {
+        target: 'http://localhost:5090',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/message': ''
+        }
       }
     },
 
@@ -66,6 +73,13 @@ module.exports = {
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
+        }
+      },
+      '/message': {
+        target: 'http://ind.seohan.com:5090',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/message': ''
         }
       }
     },
