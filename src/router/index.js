@@ -54,6 +54,8 @@ const router = new Router({
   routes: [{
     path: '/menu', component:Menu,
     children:[{
+      path: '/', component: Home,beforeEnter: requireAuth(), 
+      path: '/Profile', component: Profile , beforeEnter: requireAuth(),
       path: '/general', component: general,
       children: [
         {
@@ -123,10 +125,9 @@ const router = new Router({
       beforeEnter: requireAuth(),
     }],
   },
-  { path: '/', component: Home,beforeEnter: requireAuth(), },
+  
   // { path: '*', component: NotFound,beforeEnter: requireAuth(), },
-  { path: '/login', component: Login },
-  { path: '/Profile', component: Profile , beforeEnter: requireAuth() }
+  { path: '/login', component: Login }
   ]
 });
 

@@ -26,6 +26,7 @@ export default {
   name: "importPlan",
   data() {
     return {
+      pagePath : 'importPlan/userid',
       folderPath:"importPlan", 
       datepicker: new Date(),
       querydate: "",
@@ -58,13 +59,12 @@ export default {
           console.log(e);
         });
     },
-    fileDown(data) {
-      var folderPath="importPlan/userid";
-      window.open("/api/file/" + folderPath + "/" + data.attach);
+    fileDown(data) {      
+      window.open("/api/file/" + this.folderPath + "/" + data.attach);
     },
   },
   created() {
-    crudService.setRoute('mat/importPlan');
+    crudService.setRoute(this.pagePath);
     this.getData();
   },
   mounted: function() {}
