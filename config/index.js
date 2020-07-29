@@ -3,16 +3,18 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
+const host = "localhost"
 
-module.exports = {
+module.exports = {  
   dev: {
-    // Paths
+    // Paths 
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
       // proxy all requests starting with /api to jsonplaceholder
       '/api': {
-        target: 'http://localhost:8090',
+        target: 'http://localhost:44000',
+        secure:false,
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
@@ -20,16 +22,17 @@ module.exports = {
       },
       '/message': {
         target: 'http://localhost:5090',
+        secure:false,
         changeOrigin: true,
         pathRewrite: {
           '^/message': ''
         }
       }
-    },
-
+    }, 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8091, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    
     autoOpenBrowser: false,
     https: false,
     disableHostCheck: true,
@@ -37,7 +40,6 @@ module.exports = {
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
     // https:true,
-
     // Use Eslint Loader?
     // If true, your code will be linted during bundling and
     // linting errors and warnings will be shown in the console.
@@ -54,8 +56,7 @@ module.exports = {
     cacheBusting: true,
     cssSourceMap: true
   },
-  build: {
-
+  build: { 
     // Various Dev Server settings
     host: 'http://ind.seohan.com', // can be overwritten by process.env.HOST
     port: 8091, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
@@ -69,7 +70,7 @@ module.exports = {
     proxyTable: {
       // proxy all requests starting with /api to jsonplaceholder
       '/api': {
-        target: 'http://ind.seohan.com:8090',
+        target: 'http://ind.seohan.com:44000',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
@@ -103,5 +104,5 @@ module.exports = {
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
     bundleAnalyzerReport: process.env.npm_config_report
-  }
+  },
 }

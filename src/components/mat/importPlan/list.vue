@@ -1,5 +1,5 @@
 <template>
-  <div id="importPlan">
+  <div id="importplan">
     <table class="table table-striped table-bordered" id="dataTable">
       <tbody>
         <tr v-for="data in dataList" v-bind:key="data" >          
@@ -20,16 +20,18 @@
 </template>
 
 <script>
+import AuthService from '@/services/auth/auth.service';
 import crudService from "@/services/crudService";
 
 export default {
-  name: "importPlan",
+  name: "importplan",
   data() {
     return {
-      folderPath:"importPlan", 
+      folderPath:"importplan", 
       datepicker: new Date(),
       querydate: "",
-      dataList: []
+      dataList: [],
+      user:[]
     };
   },
   watch:{
@@ -46,7 +48,7 @@ export default {
         })
         .catch(e => {
           console.log(e);
-        });
+        })
     },
     endimportPlan(data) {
       crudService
@@ -64,7 +66,7 @@ export default {
     },
   },
   created() {
-    crudService.setRoute('mat/importPlan');
+    crudService.setRoute('mat/importplan/alarm');
     this.getData();
   },
   mounted: function() {}

@@ -16,15 +16,16 @@ class crudService {
       }
     )
 
-    headerInfo = {
-      headers: { 
-        'Content-Type': 'application/json',
-        'Authorized':''
-      }
-    }
-  }
-  
-
+    // headerInfo = {
+    //   headers: { 
+    //     'Content-Type': 'application/json',
+    //     'Authorized':''
+    //   }
+    // }
+  } 
+  setRoute(sourceRoute) {
+    route = sourceRoute;
+  }  
   getAllList(stat) {
     return axios.get('/api/' + route, headerInfo);
   }
