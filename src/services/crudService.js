@@ -52,8 +52,8 @@ class crudService {
     return axios.get('/api/file/' + data, headerInfo);
   }
  
-  retrieveListByQueryDate(querydate) {
-    return axios.get('/api/' + route + '?querydate=' + querydate);
+  retrieveListByQueryDate(user) {
+    return axios.get('/api/' + route + '?userid=' + user.asabn);
   }
   retrieveList(stat) {
     return axios.get('/api/' + route + '?stat=' + stat);

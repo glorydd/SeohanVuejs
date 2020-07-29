@@ -1,5 +1,5 @@
 <template>
-  <div id="importPlan">
+  <div id="importplan">
     <table class="table table-striped table-bordered" id="dataTable">
       <tbody>
         <tr v-for="data in dataList" v-bind:key="data" >
@@ -13,16 +13,18 @@
 </template>
 
 <script>
+import AuthService from '@/services/auth/auth.service';
 import crudService from "@/services/crudService";
 
 export default {
-  name: "importPlan",
+  name: "importplan",
   data() {
     return {
-      folderPath:"importPlan", 
+      folderPath:"importplan", 
       datepicker: new Date(),
       querydate: "",
-      dataList: []
+      dataList: [],
+      user:[]
     };
   },
   watch:{
@@ -30,15 +32,20 @@ export default {
   },
   methods: {
     getData() {
+      AuthService.getUserContent().then(
+      response => {
+        this.user = response.data;        
+      });
+
       crudService
-        .retrieveListByQueryDate('20200720')
+        .retrieveListByQueryDate(this.user.asabn)
         .then(response => {
           this.dataList = response.data;
           console.log(response);
         })
         .catch(e => {
           console.log(e);
-        });
+        })
     },
     endimportPlan(data) {
       crudService
@@ -51,12 +58,12 @@ export default {
         });
     },
     fileDown(data) {
-      var folderPath="importPlan";
+      var folderPath="importplan";
       window.open("/api/file/" + folderPath + "/" + data.attach);
     },
   },
   created() {
-    crudService.setRoute('mat/importPlan');
+    crudService.setRoute('mat/importplan/alarm');
     this.getData();
   },
   mounted: function() {}
