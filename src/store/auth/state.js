@@ -3,7 +3,7 @@ const initialState = user
 ? { status: { loggedIn: true }, user }
 : { status: {}, user: null }
 
-const state = {
+export const state = {
     access_token: null,
     account: [],        // 로그인 사용자 정보
     
@@ -32,5 +32,4 @@ const state = {
     operationStatus: ''
   
   }
-  
-  export default state
+   
