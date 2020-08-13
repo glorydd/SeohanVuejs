@@ -1,6 +1,6 @@
-import AuthService from '@/services/auth/auth.service'
-
-const actions = {
+import AuthService from '@/services/auth/auth.service';
+  
+export const action  = {
     
     login ({ commit }, user) {
         return AuthService.login(user).then(
@@ -31,4 +31,4 @@ const actions = {
         );
     }
 
-}
+} 
