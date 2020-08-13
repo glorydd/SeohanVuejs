@@ -52,8 +52,8 @@ const requireAuth = () => (from, to, next) => {
 const router = new Router({
   mode: 'history', // Use browser history
   routes: [{
-    path: '/menu', component:Menu,
-    children:[{
+    path: '/', component:Menu,beforeEnter: requireAuth(), 
+    children:[{ 
       path: '/general', component: general,
       children: [
         {
@@ -123,7 +123,6 @@ const router = new Router({
       beforeEnter: requireAuth(),
     }],
   },
-  { path: '/', component: Home,beforeEnter: requireAuth(), },
   // { path: '*', component: NotFound,beforeEnter: requireAuth(), },
   { path: '/login', component: Login },
   { path: '/Profile', component: Profile , beforeEnter: requireAuth() }

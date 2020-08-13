@@ -115,7 +115,7 @@ export default {
       if (this.user.companyCode && this.user.asabn && this.user.pass) {
         this.$store.dispatch("auth/login", this.user).then(
           () => {
-            this.$router.push("/profile");
+            this.$router.push("/");
           },
           error => {
             this.loading = false;
