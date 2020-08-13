@@ -1,59 +1,37 @@
 import axios from "axios";
 
 var route = '';
-var headerInfo= '';
 class crudService {
-  setConfig(sourceRoute) {
-    route = sourceRoute;
-
-    UserService.getUserContent().then(
-      response => {
-        this.content = response.data;
-      },
-      error => {
-        this.content = error.response.data.message;
-      }
-    )
-
-    // headerInfo = {
-    //   headers: { 
-    //     'Content-Type': 'application/json',
-    //     'Authorized':''
-    //   }
-    // }
-  } 
   setRoute(sourceRoute) {
     route = sourceRoute;
-  }  
+  }
+
   getAllList(stat) {
-    return axios.get('/api/' + route, headerInfo);
+    return axios.get('/api/' + route);
   }
   retrieve(id) {
-    return axios.get('/api/' + route + '/' + id, headerInfo);
+    return axios.get('/api/' + route + '/' + id);
   }
   update(data) {
-    return axios.put('/api/' + route + '/update', data, headerInfo);
+    return axios.put('/api/' + route + '/update', data);
   }
   save(data) {
-    return axios.post('/api/' + route +'/save', data, headerInfo);
+    return axios.post('/api/' + route +'/save', data);
   }
   fileUpload(folderPath, data) {
     return axios.post('/api/file/upload'+ '/' +folderPath, data, {
-      headers: { 
+      headers: {
+        // encodeURI(param) headers: {
         'Content-Type': 'multipart/form-data',
         "Process-Data": false,
-        'Authorized':''
       }
     });
   }
-
   fileDown(data) {
-    return axios.get('/api/file/' + data, headerInfo);
+    return axios.get('/api/file/' + data);
   }
- 
-  retrieveListByQueryDate(user) {
-    return axios.get('/api/' + route + '?userid=' + user.asabn);
-  }
+
+
   retrieveList(stat) {
     return axios.get('/api/' + route + '?stat=' + stat);
   }

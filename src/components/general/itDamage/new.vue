@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import crudService from "@/services/general/crudService";
+import crudService from "@/services/crudService";
 import axios from "axios";
 
 export default {

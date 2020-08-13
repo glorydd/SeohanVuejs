@@ -38,7 +38,7 @@
 
 <script>
 // import itDamageService from "@/service/general/itDamageService";
-import crudService from "@/services/general/crudService";
+import crudService from "@/services/crudService";
 
 export default {
   name: "itDamage",

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // import store from '@/vuex/store'
-import authHeader from '@/services/auth/auth-header'
+import authHeader from '@/services/auth-header'
  
 import Menu from '@/components/menu.vue'
 import Home from '@/components/home.vue'
