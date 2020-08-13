@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     getData() {
-      var userId = localStorage.getItem('user')
+      var userId = JSON.parse(localStorage.getItem('user')).getItem('asabn')
       crudService
         .retrieveListByUserId(userId)
         .then(response => {

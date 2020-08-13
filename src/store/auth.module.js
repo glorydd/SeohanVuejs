@@ -8,10 +8,7 @@ const initialState = user
 
 export const auth = {
   namespaced: true,
-  state: initialState,
-  getters:{
-    
-  },
+  state: initialState, 
   actions: {
     login ({ commit }, user) {
       return AuthService.login(user).then(
