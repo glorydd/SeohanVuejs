@@ -1,5 +1,4 @@
 import axios from "axios";
-import AuthModule from '@/store/auth.module';
 
 var route = '';
 var headerInfo= '';
