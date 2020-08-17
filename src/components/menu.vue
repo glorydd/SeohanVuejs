@@ -141,13 +141,13 @@
         return store.getters.isAuthenticated
       },
       currentUser() {
-        return this.$store.state.auth.user;
+        return this.$store.state.account;
       }
     }, 
     methods: {
       onClickLogout() {
         // LOGOUT 변이 실행 후 리다이렉트
-        store.dispatch('LOGOUT').then(() => this.$router.push('/general'))
+        store.dispatch('LOGOUT').then(() => this.$router.push('/'))
       },
       toggle() {
         if (this.toggleClass === true) {
@@ -157,8 +157,10 @@
         }
       },
       logOut() {
-        this.$store.dispatch("auth/logout");
-        this.$router.push("/");
+        this.$store.commit("LOGOUT");
+        
+        location.href = '/login'
+        // this.$router.push("/");
       }
     }
   }

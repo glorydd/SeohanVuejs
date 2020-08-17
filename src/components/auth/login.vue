@@ -62,7 +62,7 @@ export default {
   name: "login",
   computed: {
     loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
+      return this.$store.state.user.status.loggedIn;
     }
   },
   data() {
@@ -113,7 +113,7 @@ export default {
       }
 
       if (this.user.companyCode && this.user.asabn && this.user.pass) {
-        this.$store.dispatch("auth/login", this.user).then(
+        this.$store.dispatch("LOGIN", this.user).then(
           () => {
             this.$router.push("/");
           },

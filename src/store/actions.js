@@ -1,9 +1,9 @@
-import  Auth   from '@/services/auth';
+import  auth   from '@/services/auth';
   
-export const action  = {
+const actions  = {
     
     login ({ commit }, user) {
-        return Auth.login(user).then(
+        return auth.login(user).then(
         user => {
             commit('loginSuccess', user)
             return Promise.resolve(user)
@@ -15,11 +15,11 @@ export const action  = {
         );
     },
     logout({ commit }) {
-        Auth.logout();
+        auth.logout();
         commit('logout');
     },    
     register({ commit }, user) {
-        return Auth.register(user).then(
+        return auth.register(user).then(
         response => {
             commit('registerSuccess');
             return Promise.resolve(response.data);
@@ -82,3 +82,4 @@ export const action  = {
         })
     },
 } 
+export default actions;

@@ -19,9 +19,7 @@ const mutations = {
     registerFailure(state) {
         state.status = {};
     },
-
-
-
+    
         
     LOGIN(state, access_token) {
         if (!access_token) return
@@ -63,4 +61,4 @@ const mutations = {
     },
 }
 
-export default mutation;
+export default mutations;
