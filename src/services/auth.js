@@ -9,11 +9,9 @@ const Unauthorized = 401
 const Forbidden = 403
 const NotFound = 404
 
-
 export const setAuthInHeader = token => {
   axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : null
 }
-
 
 class Auth {
   // login(user) {
