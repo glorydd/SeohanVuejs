@@ -1,4 +1,4 @@
-import  auth   from '@/services/auth';
+import  {auth, account}   from '@/services/auth';
   
 const actions  = {
     

@@ -28,10 +28,7 @@ export default {
   computed: {
     invalidForm() {
       return !this.username || !this.password;
-    },
-    loggedIn() {
-      // return this.$store.state.user.status.loggedIn;
-    },
+    }
   },
   data() {
     return {
@@ -43,12 +40,6 @@ export default {
       loading: false,
       message: "",
     };
-  },
-  mounted() {
-    if (this.loggedIn) {
-      this.$router.push("/");
-    }
-    // document.querySelector("#SEOHAN").click();
   },
   created() {
     this.returnPath = this.$route.query.returnPath || "/";

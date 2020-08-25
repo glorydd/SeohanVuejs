@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Auth from '@/services/auth';
+import {auth} from '@/services/auth';
 import {mapGetters} from 'vuex'
 
 export default {

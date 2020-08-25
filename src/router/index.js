@@ -34,19 +34,25 @@ const NotFound = { template: '<div>Not Found</div>' }
 
 Vue.use(Router)
 
-const requireAuth = () => (from, to, next) => {
-  // var permissionCheck = false;
-  // var permissions = localStorage.getItem('permissions');
-  // permissions.forEach(element => {
-  //   if (element = from) permissionCheck = true;
-  // });
 
-  // if (authHeader() && permissionCheck ) {
-  if (authHeader()  ) {
-    return next()
-  }else{    
-    next('/login')
-  }
+const requireAuth = (to, from, next) => {
+  !!store.state.access_token ? next() : next(`/login?returnPath=${encodeURIComponent(from.path)}`)
+}
+
+
+const requireManager = (to, from, next) => {
+
+  // 액세스토큰이 있으면
+  if (!!store.state.access_token) {
+    // 권한이 ADMIN 이면
+    if (!!store.state.account.roles && !!(store.state.account.roles.includes('ADMIN') ))
+      return next()
+    else {
+      alert('권한이 없습니다.')
+      return next('/')
+    }
+  } else
+    return next(`/login?returnPath=${encodeURIComponent(from.path)}`)
 }
 
 const router = new Router({
