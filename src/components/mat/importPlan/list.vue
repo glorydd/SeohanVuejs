@@ -4,15 +4,15 @@
       <tbody>
         <tr v-for="data in dataList" v-bind:key="data" >          
           <td class="d-none d-sm-block">{{data.cstcd}}</td>
+          <td class="d-none d-sm-block">{{data.cusna}}</td>
           <td class="d-none d-sm-block">{{data.itmno}}</td>
-          <td class="d-none d-sm-block">{{data.warhs}}</td>
+          <td class="d-none d-sm-block">{{data.dscrp}}</td>
           <td class="d-none d-sm-block">{{data.mqty}}</td>
           <td class="d-none d-sm-block">{{data.bsqty}}</td>
+          <td class="d-none d-sm-block">{{data.pre_qty}}</td>
+          <td class="d-none d-sm-block">{{data.mqty- data.bsqty+ data.pre_qty}}</td>
           <td class="d-none d-sm-block">{{data.tsqty}}</td>
-          <td class="d-none d-sm-block">{{data.preqty}}</td>
-          <td class="d-none d-sm-block">{{data.expqty}}</td>
-          <td class="d-none d-sm-block">{{data.dscrp}}</td>
-          <td class="d-none d-sm-block">{{data.cusna}}</td>
+          <td class="d-none d-sm-block">{{data.exp_qty}}</td>      
         </tr>
       </tbody>
     </table>
