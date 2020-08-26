@@ -52,81 +52,85 @@ const requireAuth = () => (from, to, next) => {
 const router = new Router({
   mode: 'history', // Use browser history
   routes: [{
-    path: '/', component:Menu,beforeEnter: requireAuth(), 
+    path: '/', 
+    component:Menu,beforeEnter: requireAuth(), 
     children:[{ 
-      path: '/general', component: general,
-      children: [
-        {
-          path: 'itDamage', component: itDamage,
-          children: [
-            { path: 'list', component: itDamageList },
-            { path: 'new', component: itDamageNew },
-          ]
-        },
-        {
-          path: 'report', component: report,
-          children: [
-            { path: 'list', component: reportList },
-            // {path: 'new', component: reportNew,beforeEnter: requireAuth},
-          ]
-        },
-        { path: 'foodTable', component: foodTable },
-        { path: 'qrReader', component: qrReader },
-      ],
-      beforeEnter: requireAuth(),
-    },
-    {
-      path: '/sales', component: sales,
-      children: [
-        {
-          path: 'asQuality', component: asQuality,
-          children: [
-            { path: 'list', component: asQualityList },
-            { path: 'new', component: asQualityNew },
-          ]
-        },
-      ],
-      // beforeEnter: requireAuth(),
-    },
-    {
-      path: '/mat', component: mat,
-      children: [
-        {
-          path: 'importPlan', component: importPlan,
-          children: [
-            { path: 'list', component: importPlanList },
-          ]
-        },
-      ],
-      beforeEnter: requireAuth(),
-    },
-    {
-      path: '/qc', component: general,
-      children: [
-        {
-          path: 'gspc', component: itDamage,
-          children: [
-            { path: 'list', component: itDamageList },
-            { path: 'new', component: itDamageNew },
-          ]
-        },
-        {
-          path: 'report', component: report,
-          children: [
-            { path: 'list', component: reportList },
-            // {path: 'new', component: reportNew,beforeEnter: requireAuth},
-          ]
-        },
-        { path: 'foodTable', component: foodTable },
-        { path: 'qrReader', component: qrReader },
-      ],
-      beforeEnter: requireAuth(),
+      path: '/menu', component:Menu,
+      children:[{
+        path: '/', component: Home,beforeEnter: requireAuth(), 
+        path: '/Profile', component: Profile , beforeEnter: requireAuth(),
+        path: '/general', component: general,
+        children: [
+          {
+            path: 'itDamage', component: itDamage,
+            children: [
+              { path: 'list', component: itDamageList },
+              { path: 'new', component: itDamageNew },
+            ]
+          },
+          {
+            path: 'report', component: report,
+            children: [
+              { path: 'list', component: reportList },
+              // {path: 'new', component: reportNew,beforeEnter: requireAuth},
+            ]
+          },
+          { path: 'foodTable', component: foodTable },
+          { path: 'qrReader', component: qrReader },
+        ],
+        beforeEnter: requireAuth(),
+      },
+      {
+        path: '/sales', component: sales,
+        children: [
+          {
+            path: 'asQuality', component: asQuality,
+            children: [
+              { path: 'list', component: asQualityList },
+              { path: 'new', component: asQualityNew },
+            ]
+          },
+        ],
+        // beforeEnter: requireAuth(),
+      },
+      {
+        path: '/mat', component: mat,
+        children: [
+          {
+            path: 'importPlan', component: importPlan,
+            children: [
+              { path: 'list', component: importPlanList },
+            ]
+          },
+        ],
+        beforeEnter: requireAuth(),
+      },
+      {
+        path: '/qc', component: general,
+        children: [
+          {
+            path: 'gspc', component: itDamage,
+            children: [
+              { path: 'list', component: itDamageList },
+              { path: 'new', component: itDamageNew },
+            ]
+          },
+          {
+            path: 'report', component: report,
+            children: [
+              { path: 'list', component: reportList },
+              // {path: 'new', component: reportNew,beforeEnter: requireAuth},
+            ]
+          },
+          { path: 'foodTable', component: foodTable },
+          { path: 'qrReader', component: qrReader },
+        ],
+        beforeEnter: requireAuth(),
+      }], 
     }],
-  },
-  // { path: '*', component: NotFound,beforeEnter: requireAuth(), },
-  { path: '/login', component: Login },
-  { path: '/Profile', component: Profile , beforeEnter: requireAuth() }
-  ]
+    path: '/login', component: Login
+  }]
+    // { path: '*', component: NotFound,beforeEnter: requireAuth(), },
 });
 
 export default router;

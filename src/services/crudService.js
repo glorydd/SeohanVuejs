@@ -51,11 +51,11 @@ class crudService {
     return axios.get('/api/file/' + data, headerInfo);
   }
  
-  retrieveListByQueryDate(user) {
-    return axios.get('/api/' + route + '?userid=' + user.asabn);
+  retrieveListByUserId(userId) {
+    return axios.get('/api/' + route + '/userid?userid=' + userId);
   }
   retrieveList(stat) {
-    return axios.get('/api/' + route + '?stat=' + stat);
+    return axios.get('/api/' + route + '/stat?stat=' + stat);
   }
   getListByAdgub(adgub) {
     return axios.get('/api/' + route + '?adgub=' + adgub);
