@@ -46,7 +46,7 @@
 <script>
 import store from 'vuex';
 import crudService from "@/services/crudService";
-import itemList from '@/components/base/item';
+import itemList from '@/components/erp/base/item';
 
 export default {
   name: "asQuality",
@@ -88,7 +88,7 @@ export default {
     },
   },
   created() {
-    crudService.setRoute('sales/asQuality');
+    crudService.setRoute('erp/sales/asQuality');
     this.getData();
   },
   mounted: function() {}

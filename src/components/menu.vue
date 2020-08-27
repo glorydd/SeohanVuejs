@@ -12,13 +12,13 @@
           </li>
           <li class="active">
             <a
-              id="menuHeader1"
-              href="#homeSubmenu"
+              id="menuGen"
+              href="#menuGenList"
               data-toggle="collapse"
               aria-expanded="false"
               class="menuHeader dropdown-toggle"
             >공통</a>
-            <ul class="collapse list-unstyled" id="homeSubmenu">
+            <ul class="collapse list-unstyled" id="menuGenList">
               <li class="dropdown-menu__item">
                 <a href="/general/report/list">공정신고</a>
               </li>
@@ -32,13 +32,13 @@
           </li>
           <li class="active">
             <a
-              id="menuHeader2"
-              href="#menuHeader2"
+              id="menuSales"
+              href="#menuSalesList"
               data-toggle="collapse"
               aria-expanded="false"
               class="menuHeader dropdown-toggle"
             >영업</a>
-            <ul class="collapse list-unstyled" id="menuHeader2">
+            <ul class="collapse list-unstyled" id="menuSalesList">
               <li class="dropdown-menu__item">
                 <a href="/sales/asQuality/list">AS 품질 확보</a>
               </li>
@@ -50,17 +50,37 @@
               </li>
             </ul>
           </li>
-          <li>
+          <li class="active">
             <a
-              id="menuHeader3"
-              href="#menuHeader3"
+              id="menuMat"
+              href="#menuMatList"
               data-toggle="collapse"
               aria-expanded="false"
               class="menuHeader dropdown-toggle"
             >자재</a>
-            <ul class="collapse list-unstyled" id="menuHeader3">
+            <ul class="collapse list-unstyled" id="menuMatList">
               <li>
                 <a href="/mat/importPlan/list">자재결품조회</a>
+              </li>
+              <li>
+                <a href="#">Page 2</a>
+              </li>
+              <li>
+                <a href="#">Page 3</a>
+              </li>
+            </ul>
+          </li class="active">
+          <li>
+            <a
+              id="menuLab"
+              href="#menuLabList"
+              data-toggle="collapse"
+              aria-expanded="false"
+              class="menuHeader dropdown-toggle"
+            >연구소</a>
+            <ul class="collapse list-unstyled" id="menuLabList">
+              <li>
+                <a href="/lab/proto/locaalmlist">시작품 불출 현황</a>
               </li>
               <li>
                 <a href="#">Page 2</a>
@@ -143,7 +163,7 @@
       currentUser() {
         return this.$store.state.auth.user;
       }
-    }, 
+    },
     methods: {
       onClickLogout() {
         // LOGOUT 변이 실행 후 리다이렉트
@@ -162,4 +182,4 @@
       }
     }
   }
-</script> 
+</script>

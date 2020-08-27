@@ -2,33 +2,38 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // import store from '@/vuex/store'
 import authHeader from '@/services/auth/auth-header'
- 
+
 import Menu from '@/components/menu.vue'
 import Home from '@/components/home.vue'
+
 import Login from '@/components/auth/Login.vue'
 import Profile from '@/components/auth/Profile.vue'
 
-import general from '@/components/general/general'
+import general from '@/components/erp/general/general'
 
-import itDamage from '@/components/general/itDamage/itDamage'
-import itDamageList from '@/components/general/itDamage/list'
-import itDamageNew from '@/components/general/itDamage/new'
+import itDamage from '@/components/erp/it/itDamage/itDamage'
+import itDamageList from '@/components/erp/it/itDamage/list'
+import itDamageNew from '@/components/erp/it/itDamage/new'
 
-import report from '@/components/general/report/report'
-import reportList from '@/components/general/report/list'
+import mat from '@/components/erp/mat/mat'
+import importPlan from '@/components/erp/mat/importPlan/importPlan'
+import importPlanList from '@/components/erp/mat/importPlan/list'
+
+import report from '@/components/erp/qc/report/report'
+import reportList from '@/components/erp/qc/report/list'
 // import reportNew from '@/components/general/report/new'
 
-import sales from '@/components/sales/sales'
-import asQuality from '@/components/sales/asQuality/asQuality'
-import asQualityList from '@/components/sales/asQuality/list'
-import asQualityNew from '@/components/sales/asQuality/new'
+import sales from '@/components/erp/sales/sales'
+import asQuality from '@/components/erp/sales/asQuality/asQuality'
+import asQualityList from '@/components/erp/sales/asQuality/list'
+import asQualityNew from '@/components/erp/sales/asQuality/new'
 
-import mat from '@/components/mat/mat'
-import importPlan from '@/components/mat/importPlan/importPlan'
-import importPlanList from '@/components/mat/importPlan/list'
 
-import foodTable from '@/components/general/foodTable'
-import qrReader from '@/components/general/qrReader'
+import foodTable from '@/components/erp/general/foodTable'
+// import qrReader from '@/components/general/qrReader'
+
+import proto from "@/components/erp/lab/prototype/prototype";
+import locaAlmList from "@/components/erp/lab/prototype/locaAlmList";
 
 const NotFound = { template: '<div>Not Found</div>' }
 
@@ -44,7 +49,7 @@ const requireAuth = () => (from, to, next) => {
   // if (authHeader() && permissionCheck ) {
   if (authHeader()  ) {
     return next()
-  }else{    
+  }else{
     next('/login')
   }
 }
@@ -52,12 +57,11 @@ const requireAuth = () => (from, to, next) => {
 const router = new Router({
   mode: 'history', // Use browser history
   routes: [{
-    path: '/', 
-    component:Menu,beforeEnter: requireAuth(), 
-    children:[{ 
-      path: '/menu', component:Menu,
-      children:[{
-        path: '/', component: Home,beforeEnter: requireAuth(), 
+    path: '/',
+    component:Menu,beforeEnter: requireAuth(),
+    children:[{
+        path: '/', component: Home, beforeEnter: requireAuth(),
+        path: '/login', component: Login,
         path: '/Profile', component: Profile , beforeEnter: requireAuth(),
         path: '/general', component: general,
         children: [
@@ -76,7 +80,7 @@ const router = new Router({
             ]
           },
           { path: 'foodTable', component: foodTable },
-          { path: 'qrReader', component: qrReader },
+          // { path: 'qrReader', component: qrReader },
         ],
         beforeEnter: requireAuth(),
       },
@@ -93,18 +97,18 @@ const router = new Router({
         ],
         // beforeEnter: requireAuth(),
       },
-      {
-        path: '/mat', component: mat,
-        children: [
-          {
-            path: 'importPlan', component: importPlan,
-            children: [
-              { path: 'list', component: importPlanList },
-            ]
-          },
-        ],
-        beforeEnter: requireAuth(),
-      },
+      // {
+      //   path: '/mat', component: mat,
+      //   children: [
+      //     {
+      //       path: 'importPlan', component: importPlan,
+      //       children: [
+      //         { path: 'list', component: importPlanList },
+      //       ]
+      //     },
+      //   ],
+      //   beforeEnter: requireAuth(),
+      // },
       {
         path: '/qc', component: general,
         children: [
@@ -123,14 +127,34 @@ const router = new Router({
             ]
           },
           { path: 'foodTable', component: foodTable },
-          { path: 'qrReader', component: qrReader },
+          // { path: 'qrReader', component: qrReader },
         ],
         beforeEnter: requireAuth(),
-      }], 
-    }],
-    path: '/login', component: Login
+      },
+      // {
+      //   path: '/lab', component: mat,
+      //   children: [
+      //     {
+      //       path: 'proto', component: proto,
+      //       children: [
+      //         { path: 'list', component: locaAlmList },
+      //       ]
+      //     },
+      //   ],
+      //   beforeEnter: requireAuth(),
+      // }
+      ],
+  }, {
+    path: '/lab', component: mat,
+    children: [
+      {
+        path: 'proto', component: proto,
+        children: [
+          { path: 'locaalmlist', component: locaAlmList },
+        ]
+      },
+    ]
   }]
-    // { path: '*', component: NotFound,beforeEnter: requireAuth(), },
-});
+})
 
 export default router;
