@@ -1,6 +1,6 @@
 <template>
   <div class="container" id="app">
-    <div class="row panel panel-default panel-body">
+    <div class="row col-md-12 col-lg-12 col-sm-12 col-xs-12  ">
       <div>
         <h3>식단표</h3>
           <button class="btn btn-default" v-on:click="getFoodTableList('seohan')">서한</button>

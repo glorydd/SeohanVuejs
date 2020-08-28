@@ -8,7 +8,7 @@
           <td class="d-none d-sm-block">{{data.class1}}</td>
           <td class="d-none d-sm-block">{{data.co_gb}}</td>
           <td class="d-none d-sm-block">{{data.rteam}}</td>
-          <td class="d-none d-sm-block">
+          <td class="d-none d-sm-block ">
             <a v-bind:href="'tel:' + data.rtel">{{data.rname}}</a></td>
           <td class="d-none d-sm-block">
             <a v-bind:href="'tel:' + data.rtel">{{data.rtel}}</a>

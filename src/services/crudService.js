@@ -32,7 +32,7 @@ class crudService {
     return axios.get('/api/' + route + '/' + id, headerInfo);
   }
   update(data) {
-    return axios.put('/api/' + route + '/update', data, headerInfo);
+    return axios.put('/api/' + route + '/', data, headerInfo);
   }
   save(data) {
     return axios.post('/api/' + route +'/save', data, headerInfo);

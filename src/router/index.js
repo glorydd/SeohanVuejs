@@ -32,6 +32,7 @@ import asQualityNew from '@/components/erp/sales/asQuality/new'
 import foodTable from '@/components/erp/general/foodTable'
 // import qrReader from '@/components/general/qrReader'
 
+import lab from "@/components/erp/lab/lab";
 import proto from "@/components/erp/lab/prototype/prototype";
 import locaAlmList from "@/components/erp/lab/prototype/locaAlmList";
 
@@ -145,7 +146,7 @@ const router = new Router({
       // }
       ],
   }, {
-    path: '/lab', component: mat,
+    path: '/lab', component: lab,
     children: [
       {
         path: 'proto', component: proto,
