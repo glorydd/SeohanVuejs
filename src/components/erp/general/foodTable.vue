@@ -8,7 +8,7 @@
           <button class="btn btn-default" v-on:click="getFoodTableList('lab')">연구소</button>
         <input class="form-control"
           v-model="datepicker"
-          v-on:change="foodTable"
+          v-on:change="getFoodTableList()"
           type="date"
           value="datepicker && datepicker.toISOString().split('T')[0]"
         />
