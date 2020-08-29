@@ -16,15 +16,15 @@ class crudService {
     )
 
     // headerInfo = {
-    //   headers: { 
+    //   headers: {
     //     'Content-Type': 'application/json',
     //     'Authorized':''
     //   }
     // }
-  } 
+  }
   setRoute(sourceRoute) {
     route = sourceRoute;
-  }  
+  }
   getAllList(stat) {
     return axios.get('/api/' + route, headerInfo);
   }
@@ -32,14 +32,14 @@ class crudService {
     return axios.get('/api/' + route + '/' + id, headerInfo);
   }
   update(data) {
-    return axios.put('/api/' + route + '/update', data, headerInfo);
+    return axios.put('/api/' + route + '/', data, headerInfo);
   }
   save(data) {
     return axios.post('/api/' + route +'/save', data, headerInfo);
   }
   fileUpload(folderPath, data) {
     return axios.post('/api/file/upload'+ '/' +folderPath, data, {
-      headers: { 
+      headers: {
         'Content-Type': 'multipart/form-data',
         "Process-Data": false,
         'Authorized':''
@@ -50,12 +50,15 @@ class crudService {
   fileDown(data) {
     return axios.get('/api/file/' + data, headerInfo);
   }
- 
-  retrieveListByQueryDate(user) {
-    return axios.get('/api/' + route + '?userid=' + user.asabn);
+
+  retrieveListByUserId(userId) {
+    return axios.get('/api/' + route + '/userid?userid=' + userId);
   }
-  retrieveList(stat) {
-    return axios.get('/api/' + route + '?stat=' + stat);
+  retrieveListByStat(stat) {
+    return axios.get('/api/' + route + '/stat?stat=' + stat);
+  }
+  retrieveList() {
+    return axios.get('/api/' + route );
   }
   getListByAdgub(adgub) {
     return axios.get('/api/' + route + '?adgub=' + adgub);

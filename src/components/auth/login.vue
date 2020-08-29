@@ -1,6 +1,6 @@
 // components/Login.vue
 <template>
-  <div class=" col-xs-2">
+  <div class="col-xs-2">
     <div id="login" class="form-group">
       <div class="btn-group">
         <button
@@ -25,7 +25,9 @@
           v-on:click="setCompanyCode('SEOHAN')"
         >프랜지</button>
       </div>
-      <p></p>
+
+      <h4 class="card-title mb-4 mt-1">Sign in</h4> 
+      
       <label for="ID">ID</label>
       <input
         type="text"
@@ -47,7 +49,7 @@
         <div class="alert alert-danger" role="alert" v-if="errors.has('pass')">Password is required!</div>
       </div>
       <div class="form-group">
-        <input type="submit" class="btn btn-primary" value="Login" @click="onSubmit" />
+        <input type="submit" class="btn btn-primary btn-block" value="Login" @click="onSubmit" />
       </div>
     </div>
   </div>
@@ -63,13 +65,13 @@ export default {
   computed: {
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
-    }
+    },
   },
   data() {
     return {
       user: new User("", "", ""),
       loading: false,
-      message: ""
+      message: "",
     };
   },
   mounted() {
@@ -117,19 +119,19 @@ export default {
           () => {
             this.$router.push("/");
           },
-          error => {
+          (error) => {
             this.loading = false;
             this.message = error.message;
           }
         );
       }
-    }
+    },
   },
   mounted() {
     // this.companyCode = 'SEOHAN';
     document.querySelector("#SEOHAN").click();
     // this.$refs.SEOHAN.click();
-  }
+  },
 };
 </script>
 <style scoped>
