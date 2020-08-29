@@ -1,21 +1,14 @@
 <template>
-  <div id="asQuality">
-    <router-link to="/sales/asQuality/new" exact>New Post</router-link>
+  <div id="itDamage">
+    <router-link to="/general/itdamage/new" exact>New Post</router-link>
 
-    <button @click="ShowItemListButton">Toggle Modal</button>
-    <app-my-modal
-      title="Registered Item"
-      :visible.sync="itemLIstVisible">
-      <div> Registered Item</div>
-    </app-my-modal>
-<!--
     <table class="table table-striped table-bordered" id="dataTable">
       <tbody>
         <tr v-for="data in dataList" v-bind:key="data.rtime" v-on:click="'tel:' + data.rtel">
           <td class="d-none d-sm-block">{{data.class1}}</td>
           <td class="d-none d-sm-block">{{data.co_gb}}</td>
           <td class="d-none d-sm-block">{{data.rteam}}</td>
-          <td class="d-none d-sm-block">
+          <td class="d-none d-sm-block ">
             <a v-bind:href="'tel:' + data.rtel">{{data.rname}}</a></td>
           <td class="d-none d-sm-block">
             <a v-bind:href="'tel:' + data.rtel">{{data.rtel}}</a>
@@ -34,43 +27,35 @@
               class="btn btn-indigo btn-sm"
               type="button"
               id="endDamage"
-              @click="endasQuality(data)"
+              @click="enditdamage(data)"
             >완료</button>
           </td>
         </tr>
       </tbody>
-    </table> -->
+    </table>
   </div>
 </template>
 
 <script>
-import store from 'vuex';
-import crudService from "@/services/crudService";
-import itemList from '@/components/base/item';
+// import itDamageService from "@/service/general/itDamageService";
+import crudService from "@/services/general/crudService";
 
 export default {
-  name: "asQuality",
+  name: "itDamage",
   data() {
     return {
-      folderPath:"asQuality",
+      folderPath:"itdamage",
       ctime: "",
       rtime: "",
       datepicker: new Date(),
       querydate: "",
-      dataList: [],
-      itemLIstVisible:false,
+      dataList: []
     };
   },
   watch:{
     '$route':'getData'
   },
-  components: {
-    appMyModal: itemList
-  },
   methods: {
-    ShowItemListButton(){
-      this.itemLIstVisible = !this.visible
-    } ,
     getData() {
       crudService
         .retrieveList('01')
@@ -82,13 +67,23 @@ export default {
           console.log(e);
         });
     },
+    enditdamage(data) {
+      crudService
+        .update(data)
+        .then(() => {
+          this.getData();
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
     fileDown(data) {
-      var folderPath="asQuality";
+      var folderPath="itdamage";
       window.open("/api/file/" + folderPath + "/" + data.attach);
     },
   },
   created() {
-    crudService.setRoute('sales/asQuality');
+    crudService.setRoute('general/itdamage');
     this.getData();
   },
   mounted: function() {}
