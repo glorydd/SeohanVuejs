@@ -34,7 +34,7 @@ import foodTable from '@/components/erp/general/foodTable'
 
 import lab from "@/components/erp/lab/lab";
 import proto from "@/components/erp/lab/prototype/prototype";
-import locaAlmList from "@/components/erp/lab/prototype/locaAlmList";
+import locaAlm from "@/components/erp/mat/location/locaAlm";
 
 const NotFound = { template: '<div>Not Found</div>' }
 
@@ -138,7 +138,7 @@ const router = new Router({
       //     {
       //       path: 'proto', component: proto,
       //       children: [
-      //         { path: 'list', component: locaAlmList },
+      //         { path: 'list', component: locaAlm },
       //       ]
       //     },
       //   ],
@@ -151,7 +151,7 @@ const router = new Router({
       {
         path: 'proto', component: proto,
         children: [
-          { path: 'locaalmlist', component: locaAlmList },
+          { path: 'locaalmlist', component: locaAlm },
         ]
       },
     ]
