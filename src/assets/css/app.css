@@ -64,7 +64,7 @@ a:focus {
 
 .wrapper {
     display: flex;
-    width: 80%;
+    width: 100%;
     align-items: stretch;
 }
 
