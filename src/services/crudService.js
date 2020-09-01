@@ -2,10 +2,28 @@ import axios from "axios";
 
 var route = '';
 class crudService {
+  setConfig(sourceRoute) {
+    route = sourceRoute;
+
+    UserService.getUserContent().then(
+      response => {
+        this.content = response.data;
+      },
+      error => {
+        this.content = error.response.data.message;
+      }
+    )
+
+    // headerInfo = {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     'Authorized':''
+    //   }
+    // }
+  }
   setRoute(sourceRoute) {
     route = sourceRoute;
   }
-
   getAllList(stat) {
     return axios.get('/api/' + route);
   }
@@ -13,7 +31,7 @@ class crudService {
     return axios.get('/api/' + route + '/' + id);
   }
   update(data) {
-    return axios.put('/api/' + route + '/update', data);
+    return axios.put('/api/' + route + '/', data, headerInfo);
   }
   save(data) {
     return axios.post('/api/' + route +'/save', data);
@@ -21,19 +39,23 @@ class crudService {
   fileUpload(folderPath, data) {
     return axios.post('/api/file/upload'+ '/' +folderPath, data, {
       headers: {
-        // encodeURI(param) headers: {
         'Content-Type': 'multipart/form-data',
         "Process-Data": false,
       }
     });
   }
   fileDown(data) {
-    return axios.get('/api/file/' + data);
+    return axios.get('/api/file/' + data, headerInfo);
   }
 
-
-  retrieveList(stat) {
-    return axios.get('/api/' + route + '?stat=' + stat);
+  retrieveListByUserId(userId) {
+    return axios.get('/api/' + route + '/userid?userid=' + userId);
+  }
+  retrieveListByStat(stat) {
+    return axios.get('/api/' + route + '/stat?stat=' + stat);
+  }
+  retrieveList() {
+    return axios.get('/api/' + route );
   }
   getListByAdgub(adgub) {
     return axios.get('/api/' + route + '?adgub=' + adgub);

@@ -8,6 +8,10 @@ body {
     background: #fafafa;
 }
 
+table:thead:th{
+  align:center
+}
+
 p {
     font-family: 'Poppins', sans-serif;
     font-size: 1.1em;
@@ -45,10 +49,18 @@ a:focus {
     border-bottom: 1px dashed #ddd;
     margin: 40px 0;
 }
+.btn{
+  margin : 5px;
+}
 
-/* ---------------------------------------------------
-    SIDEBAR STYLE
------------------------------------------------------ */
+.btn-left{
+}
+.btn-right{
+
+}
+  /* ---------------------------------------------------
+      SIDEBAR STYLE
+  ----------------------------------------------------- */
 
 .wrapper {
     display: flex;
@@ -165,5 +177,11 @@ a.article:hover {
     }
     #sidebarCollapse span {
         display: none;
+    }
+
+    .container{
+      /*hidden-xs hidden-sm*/
+      font-size: 0.8rem;
+      margin: 10px;
     }
 }

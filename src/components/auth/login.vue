@@ -9,14 +9,15 @@
         />
       </div>
       <!-- <div class="alert alert-danger" role="alert" v-if="errors.has('asabn')">Username is required!</div> -->
+
       <div class="form-group">
         <label for="password">Password</label>
         <input type="password" class="form-control" v-model="password"
           v-validate="'required'"
-        />        
+        />
       </div>
       <div class="form-group">
-        <input type="submit" class="btn btn-primary" value="Login" @click="onSubmit" />
+        <input type="submit" class="btn btn-primary btn-block" value="Login" @click="onSubmit" />
       </div>
     </div>
   </div>

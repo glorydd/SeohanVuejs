@@ -1,14 +1,14 @@
 <template>
   <div class="container" id="app">
-    <div class="row panel panel-default panel-body">
+    <div class="row col-md-12 col-lg-12 col-sm-12 col-xs-12  ">
       <div>
         <h3>식단표</h3>
-          <button class="btn btn-default" v-on:click="foodTable('seohan')">서한</button>
-          <button class="btn btn-default" v-on:click="foodTable('kamtec')">캄텍</button>
-          <button class="btn btn-default" v-on:click="foodTable('lab')">연구소</button>
+          <button class="btn btn-default" v-on:click="getFoodTableList('seohan')">서한</button>
+          <button class="btn btn-default" v-on:click="getFoodTableList('kamtec')">캄텍</button>
+          <button class="btn btn-default" v-on:click="getFoodTableList('lab')">연구소</button>
         <input class="form-control"
           v-model="datepicker"
-          v-on:change="foodTable"
+          v-on:change="getFoodTableList()"
           type="date"
           value="datepicker && datepicker.toISOString().split('T')[0]"
         />
@@ -21,7 +21,7 @@
           </thead>
           <tbody>
             <tr v-for="data in dataList" v-bind:key="data.gubn">
-              <td  v-bind:class="{'A' : data.gubn==='아침' || data.gubn==='저녁'}">{{data.gubn}}</td>
+              <td v-bind:class="{'A' : data.gubn==='아침' || data.gubn==='저녁'}">{{data.gubn}}</td>
               <td v-bind:class="{'A' : data.gubn==='아침' || data.gubn==='저녁'}">{{data.menu}}</td>
             </tr>
           </tbody>
@@ -51,7 +51,7 @@ export default {
         return 'black' ;
       }
     },
-    foodTable(company) {
+    getFoodTableList(company) {
       this.querydate =this.datepicker.substr(0, 4) +this.datepicker.substr(5, 2) +this.datepicker.substr(8, 2);
       this.company= company;
 
@@ -62,19 +62,15 @@ export default {
             switch (item.gubn) {
               case "A":
                 item.gubn = "아침";
-                // this.tableStyle.backgroundColor='EFEFEF';
                 break;
               case "B":
                 item.gubn = "점심";
-                // this.tableStyle.backgroundColor='FBFBFB';
                 break;
               case "C":
                 item.gubn = "저녁";
-                // this.tableStyle.backgroundColor='EFEFEF';
                 break;
               case "D":
                 item.gubn = "야식";
-                // this.tableStyle.backgroundColor='FBFBFB';
                 break;
             }
           });
@@ -90,7 +86,7 @@ export default {
     var today = new Date();
     this.datepicker =
       today.getFullYear() + "-" +("00" + (today.getMonth() + 1)).slice(-2) +"-" +("00" + today.getDate()).slice(-2);
-    this.foodTable('seohan');
+    this.getFoodTableList('seohan');
   },
   mounted: function() {},
   computed: {

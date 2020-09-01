@@ -1,4 +1,4 @@
-  <template> 
+  <template>
     <router-view/>
     <!--
         <a class="navbar-brand" href="/">
@@ -30,14 +30,14 @@
         </li>
       </div>
     </nav>
-    </div>--> 
+    </div>-->
 </template>
-<script src='../src/assets/js/bootstrap.min.js'>
-</script>
+<!--<script src='../src/assets/js/bootstrap.min.js'>-->
+<!--</script>-->
 
 <script>
 export default {
-  name: "App",  
+  name: "App",
   computed: {
     isAuthenticated() {
       return this.$store.getters.isAuthenticated;
@@ -45,7 +45,7 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     }
-  }, 
+  },
 };
 </script>
 
