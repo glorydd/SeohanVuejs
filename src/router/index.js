@@ -9,6 +9,10 @@ import Home from '@/components/home.vue'
 import Login from '@/components/auth/Login.vue'
 import Profile from '@/components/auth/Profile.vue'
 
+import base from '@/components/erp/base/base'
+import item from '@/components/erp/base/item'
+// import bom from '@/components/erp/base/bom'
+
 import general from '@/components/erp/general/general'
 
 import itDamage from '@/components/erp/it/itDamage/itDamage'
@@ -34,7 +38,8 @@ import foodTable from '@/components/erp/general/foodTable'
 
 import lab from "@/components/erp/lab/lab";
 import proto from "@/components/erp/lab/prototype/prototype";
-import locaAlm from "@/components/erp/mat/location/locaAlm";
+import locaAlm from "@/components/erp/lab/prototype/locaAlm";
+import warehouse from "@/components/erp/lab/prototype/warehouse";
 
 const NotFound = { template: '<div>Not Found</div>' }
 
@@ -152,10 +157,21 @@ const router = new Router({
         path: 'proto', component: proto,
         children: [
           { path: 'locaalmlist', component: locaAlm },
+          { path: 'warehouse', component: warehouse},
         ]
       },
     ]
-  }]
+  },
+    {
+      path: '/base', component: base,
+      children: [
+        {
+          path: 'item', component: item,
+          // path: 'bom', component: bom,
+        },
+      ],
+      // beforeEnter: requireAuth(),
+    },]
 })
 
 export default router;
