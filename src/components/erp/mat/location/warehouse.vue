@@ -115,7 +115,7 @@ export default {
   },
   created() {
     crudService.setRoute('mat/warehouse');
-    this.warehouse = this.$route.params.warehouse;
+    this.warehouse=this.$route.query.warehouse;
     this.onFetch(0);
   },
   methods: {
