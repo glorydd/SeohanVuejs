@@ -55,7 +55,7 @@ class crudService {
     return axios.get('/api/' + route + '/' + id, headerInfo);
   }
   retrieveListByUserId(userId) {
-    return axios.get('/api/' + route + '/userid?userid=' + userId);
+    return axios.get('/api/' + roumoveLocationte + '/userid?userid=' + userId);
   }
   retrieveListByStat(stat) {
     return axios.get('/api/' + route + '/stat?stat=' + stat);

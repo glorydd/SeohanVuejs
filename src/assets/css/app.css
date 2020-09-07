@@ -8,8 +8,29 @@ body {
     background: #fafafa;
 }
 
-table:thead:th{
-  align:center
+table{
+  /*margin-left:5%*/
+}
+table tbody{
+}
+
+
+table thead th{
+  text-align:center
+}
+table .input{
+  text-align:center;
+  width:10%;
+}
+table .qty{
+  text-align:right;
+}
+td>input {
+  margin: 0;
+  height: 100% !important;
+  display: inline-block;
+  width: 100%;
+  border-radius: 0 !important;
 }
 
 p {
