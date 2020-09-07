@@ -11,16 +11,12 @@ import 'bootstrap'
 // import $ from 'jquery';
 // import 'expose-loader?$!expose-loader?jQuery!jquery'
 
-
 import VeeValidate from 'vee-validate'
-
-// library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt)
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 
 Vue.use(VeeValidate)
-// Vue.use($)
 
 /* eslint-disable no-new */
 new Vue({

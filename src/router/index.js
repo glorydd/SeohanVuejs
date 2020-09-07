@@ -9,6 +9,10 @@ import Home from '@/components/home.vue'
 import Login from '@/components/auth/Login.vue'
 import Profile from '@/components/auth/Profile.vue'
 
+import base from '@/components/erp/base/base'
+import item from '@/components/erp/base/item'
+// import bom from '@/components/erp/base/bom'
+
 import general from '@/components/erp/general/general'
 
 import itDamage from '@/components/erp/it/itDamage/itDamage'
@@ -18,6 +22,8 @@ import itDamageNew from '@/components/erp/it/itDamage/new'
 import mat from '@/components/erp/mat/mat'
 import importPlan from '@/components/erp/mat/importPlan/importPlan'
 import importPlanList from '@/components/erp/mat/importPlan/list'
+import warehouse from "@/components/erp/mat/location/warehouse";
+import locaAlm from "@/components/erp/mat/location/locaAlm";
 
 import report from '@/components/erp/qc/report/report'
 import reportList from '@/components/erp/qc/report/list'
@@ -34,7 +40,6 @@ import foodTable from '@/components/erp/general/foodTable'
 
 import lab from "@/components/erp/lab/lab";
 import proto from "@/components/erp/lab/prototype/prototype";
-import locaAlm from "@/components/erp/mat/location/locaAlm";
 
 const NotFound = { template: '<div>Not Found</div>' }
 
@@ -151,11 +156,22 @@ const router = new Router({
       {
         path: 'proto', component: proto,
         children: [
-          { path: 'locaalmlist', component: locaAlm },
+          { path: 'locaalm', component: locaAlm,  props: true},
+          { path: 'warehouse', component: warehouse,  props: true },
         ]
       },
     ]
-  }]
+  },
+    {
+      path: '/base', component: base,
+      children: [
+        {
+          path: 'item', component: item,
+          // path: 'bom', component: bom,
+        },
+      ],
+      // beforeEnter: requireAuth(),
+    },]
 })
 
 export default router;
