@@ -22,6 +22,8 @@ import itDamageNew from '@/components/erp/it/itDamage/new'
 import mat from '@/components/erp/mat/mat'
 import importPlan from '@/components/erp/mat/importPlan/importPlan'
 import importPlanList from '@/components/erp/mat/importPlan/list'
+import warehouse from "@/components/erp/mat/location/warehouse";
+import locaAlm from "@/components/erp/mat/location/locaAlm";
 
 import report from '@/components/erp/qc/report/report'
 import reportList from '@/components/erp/qc/report/list'
@@ -38,8 +40,6 @@ import foodTable from '@/components/erp/general/foodTable'
 
 import lab from "@/components/erp/lab/lab";
 import proto from "@/components/erp/lab/prototype/prototype";
-import locaAlm from "@/components/erp/lab/prototype/locaAlm";
-import warehouse from "@/components/erp/lab/prototype/warehouse";
 
 const NotFound = { template: '<div>Not Found</div>' }
 
@@ -156,8 +156,8 @@ const router = new Router({
       {
         path: 'proto', component: proto,
         children: [
-          { path: 'locaalmlist', component: locaAlm },
-          { path: 'warehouse', component: warehouse},
+          { path: 'locaalm', component: locaAlm,  props: true},
+          { path: 'warehouse', component: warehouse,  props: true },
         ]
       },
     ]
