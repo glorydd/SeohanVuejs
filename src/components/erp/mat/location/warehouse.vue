@@ -10,10 +10,10 @@
 
       <div class="input-group mb-3 ">
         <div class="input-group-prepend">
-          <button class="btn btn-outline-secondary" type="button">Item 검색</button>
+          <button class="btn btn-secondary" type="button" @click="textClear()">Item 검색</button>
         </div>
-        <input type="text" class="form-control" minlength="3" onkeyup="this.value = this.value.toUpperCase();"
-               v-model="itmno" v-on:keyup.enter="onFetch()">
+        <input type="text" class="form-control" ref="itmno" minlength="3" onkeyup="this.value = this.value.toUpperCase();"
+               v-model="itmno" v-on:keyup.enter="onFetch()" >
         <!--      <input type="label" class="form-control" aria-describedby="basic-addon1">-->
         <div align="left">
           <button class="btn btn-success btn-lg"
@@ -47,10 +47,10 @@
             <td class=" d-none d-sm-table-cell d-sm-block">{{ data.dscrp }}</td>
             <td class="">{{ data.locat }}</td>
             <td class=" qty">{{ data.jqty }}</td>
-            <td class=""><input class="form-control" type="text" maxlength="4" minlength="4" required="required"
+            <td class=""><input class="form-control" type="text"   maxlength="4" minlength="4" required="required"
                                 onkeyup="this.value = this.value.toUpperCase();"
                                 v-model="data.changedLocat"/></td>
-            <td class=""><input class="form-control" type="text" @keypress="checkValidLoca()" required="required"
+            <td class=""><input class="form-control" type="text"  required="required"
                                 onkeyup="this.value = this.value.toUpperCase();"
                                 v-model="data.changedQty"/></td>
             <!--          v-on:keyup.enter="checkValidLoca()"-->
@@ -153,8 +153,13 @@ export default {
     onReset() {
       this.pagination = 0
     },
+    textClear() {
+      this.itmno = '';
+      this.$refs.itmno.focus();
+
+    },
     moveLocation(data) {
-      if (data.changedLocat===undefined || data.changedLocat==='') {
+      if (data.changedLocat===undefined || data.changedLocat==='' || data.changedLocat.length < 4) {
         alert('로케이션 확인');
         return;
       }
