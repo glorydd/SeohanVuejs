@@ -22,8 +22,9 @@ import itDamageNew from '@/components/erp/it/itDamage/new'
 import mat from '@/components/erp/mat/mat'
 import importPlan from '@/components/erp/mat/importPlan/importPlan'
 import importPlanList from '@/components/erp/mat/importPlan/list'
-import warehouse from "@/components/erp/mat/location/warehouse";
-import locaAlm from "@/components/erp/mat/location/locaAlm";
+import wms from '@/components/erp/mat/warehouse/wms'
+import warehouse from "@/components/erp/mat/warehouse/warehouse";
+import locaAlm from "@/components/erp/mat/warehouse/locaAlm";
 
 import report from '@/components/erp/qc/report/report'
 import reportList from '@/components/erp/qc/report/list'
@@ -39,7 +40,7 @@ import foodTable from '@/components/erp/general/foodTable'
 // import qrReader from '@/components/general/qrReader'
 
 import lab from "@/components/erp/lab/lab";
-import proto from "@/components/erp/lab/prototype/prototype";
+import protowms from "@/components/erp/lab/prototype/protowms";
 
 const NotFound = { template: '<div>Not Found</div>' }
 
@@ -65,11 +66,11 @@ const router = new Router({
   routes: [{
     path: '/',
     component:Menu,beforeEnter: requireAuth(),
-    children:[{
-        path: '/', component: Home, beforeEnter: requireAuth(),
-        path: '/login', component: Login,
-        path: '/Profile', component: Profile , beforeEnter: requireAuth(),
-        path: '/general', component: general,
+    children:[
+      {path: '/', component: Home, beforeEnter: requireAuth()},
+      {path: '/login', component: Login},
+      {path: '/Profile', component: Profile , beforeEnter: requireAuth()},
+      {path: '/general', component: general,
         children: [
           {
             path: 'itDamage', component: itDamage,
@@ -103,18 +104,25 @@ const router = new Router({
         ],
         // beforeEnter: requireAuth(),
       },
-      // {
-      //   path: '/mat', component: mat,
-      //   children: [
-      //     {
-      //       path: 'importPlan', component: importPlan,
-      //       children: [
-      //         { path: 'list', component: importPlanList },
-      //       ]
-      //     },
-      //   ],
-      //   beforeEnter: requireAuth(),
-      // },
+      {
+        path: '/mat', component: mat,
+        children: [
+          {
+            path: 'importPlan', component: importPlan,
+            children: [
+              { path: 'list', component: importPlanList },
+            ]
+          },
+          {
+            path: 'wms', component: wms,
+            children: [
+              { path: 'locaalm', component: locaAlm,  props: true},
+              { path: 'warehouse', component: warehouse,  props: true }
+            ]
+          }
+        ],
+        beforeEnter: requireAuth(),
+      },
       {
         path: '/qc', component: general,
         children: [
@@ -137,24 +145,25 @@ const router = new Router({
         ],
         beforeEnter: requireAuth(),
       },
-      // {
-      //   path: '/lab', component: mat,
-      //   children: [
-      //     {
-      //       path: 'proto', component: proto,
-      //       children: [
-      //         { path: 'list', component: locaAlm },
-      //       ]
-      //     },
-      //   ],
-      //   beforeEnter: requireAuth(),
-      // }
+      //   {
+      //     path: '/lab', component: lab,
+      //     children: [
+      //       {
+      //         path: 'protowms', component: protowms,
+      //         children: [
+      //           { path: 'locaalm', component: locaAlm,  props: true},
+      //           { path: 'warehouse', component: warehouse,  props: true },
+      //         ]
+      //       },
+      //     ]
+      //   },
       ],
-  }, {
+  },
+  {
     path: '/lab', component: lab,
     children: [
       {
-        path: 'proto', component: proto,
+        path: 'proto', component: protowms,
         children: [
           { path: 'locaalm', component: locaAlm,  props: true},
           { path: 'warehouse', component: warehouse,  props: true },
@@ -162,16 +171,14 @@ const router = new Router({
       },
     ]
   },
-    {
-      path: '/base', component: base,
-      children: [
-        {
-          path: 'item', component: item,
-          // path: 'bom', component: bom,
-        },
-      ],
-      // beforeEnter: requireAuth(),
-    },]
+  {
+    path: '/base', component: base,
+    children: [
+      {path: 'item', component: item,  props: true, },
+      // {path: 'bom', component: bom },
+    ],
+    // beforeEnter: requireAuth(),
+  },]
 })
 
 export default router;

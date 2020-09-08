@@ -1,29 +1,26 @@
 <template>
   <div id="app">
     <div class="row clearfix col-12">
-      <h2 id="titleProtoWarehouse">시작품 재고 현황</h2>
-
-      <!--    <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">-->
-      <!--      <button type="button" class="btn btn-secondary" value="XA" @click="onFetch()">XA</button>-->
-      <!--      <button type="button" class="btn btn-secondary" value="XB" @click="onFetch()">XB</button>-->
-      <!--    </div>-->
-
+      <h2 id="titleProtoWarehouse">재고 현황</h2>
       <div class="input-group mb-3 ">
         <div class="input-group-prepend">
-          <button class="btn btn-secondary" type="button" @click="textClear()">Item 검색</button>
+          <button class="btn btn-secondary" type="button" data-toggle="modal"  data-target="#itemSearchModal"  >Item 검색</button>
+
+          <modal name="itemSearchModal"/>
         </div>
-        <input type="text" class="form-control" ref="itmno" minlength="3" onkeyup="this.value = this.value.toUpperCase();"
-               v-model="itmno" v-on:keyup.enter="onFetch()" >
-        <!--      <input type="label" class="form-control" aria-describedby="basic-addon1">-->
+        <input type="text" class="form-control" ref="itmno" minlength="3"
+               onkeyup="this.value = this.value.toUpperCase();"
+               v-model="itmno" v-on:keyup.enter="onFetch(0)" @click="textClear()">
         <div align="left">
           <button class="btn btn-success btn-lg"
                   type="button"
                   id="onFetch"
-                  @click="onFetch()"
+                  @click="onFetch(0)"
           >조회
           </button>
         </div>
       </div>
+
       <div class="table-responsive">
         <table class="table table-bordered">
           <thead>
@@ -47,10 +44,10 @@
             <td class=" d-none d-sm-table-cell d-sm-block">{{ data.dscrp }}</td>
             <td class="">{{ data.locat }}</td>
             <td class=" qty">{{ data.jqty }}</td>
-            <td class=""><input class="form-control" type="text"   maxlength="4" minlength="4" required="required"
+            <td class=""><input class="form-control" type="text" maxlength="4" minlength="4" required="required"
                                 onkeyup="this.value = this.value.toUpperCase();"
                                 v-model="data.changedLocat"/></td>
-            <td class=""><input class="form-control" type="text"  required="required"
+            <td class=""><input class="form-control" type="text" required="required"
                                 onkeyup="this.value = this.value.toUpperCase();"
                                 v-model="data.changedQty"/></td>
             <!--          v-on:keyup.enter="checkValidLoca()"-->
@@ -67,6 +64,8 @@
           </tbody>
         </table>
       </div>
+
+
       <ul v-if="dataList.totalPages>0" class="pagination justify-content-center">
         <li v-if="pagination!=0" class="page-item" @click="onPrevious">
           <button class="page-link">이전</button>
@@ -88,20 +87,35 @@
           <button class="page-link">다음</button>
         </li>
       </ul>
+
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade bd-example-modal-lg " id="itemSearchModal" tabindex="-1" role="dialog" aria-labelledby="itemSearchTitle" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <itemSearchModal :method="setItem"/>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import crudService from "@/services/crudService";
-import moment from 'moment'
-import router from '@/router';
+import matWmsService from "@/services/erp/matWmsService";
+import itemSearchModal from '@/components/erp/base/item' ;
 
 export default {
+  components: {
+    itemSearchModal: itemSearchModal
+  },
   name: "warehouse",
   data() {
     return {
-      route : this.$route,
+      modal:false,
+      route: this.$route,
       datepicker: new Date(),
       pagination: 0,
       querydate: "",
@@ -110,29 +124,29 @@ export default {
       dataList: [],
       selected: [],
       selectedData: [],
-
-    };
+    }
   },
+
   created() {
-    crudService.setRoute('mat/warehouse');
-    this.warehouse=this.$route.query.warehouse;
+    this.warehouse = this.$route.query.warehouse;
     this.onFetch(0);
   },
   methods: {
+    setItem(itemno){
+      this.itmno = itemno;
+     if (itemno!='') $('#itemSearchModal').modal('toggle') ;
+     this.onFetch(0);
+    },
     onFetch(index) {
       if (this.itmno === '') return
-      var data =
-        {
-          params: {
+      var data = {params: {
             warhs: this.warehouse,
             itmno: this.itmno,
             page: index - 1,
             size: 20
-          }
-        }
-
-      crudService
-        .getDataByParam(data)
+          }}
+      matWmsService
+        .fetchByParams(data)
         .then(response => {
           this.dataList = response.data;
           console.log(response);
@@ -153,21 +167,22 @@ export default {
     onReset() {
       this.pagination = 0
     },
+
     textClear() {
       this.itmno = '';
       this.$refs.itmno.focus();
-
+      // $('#itemSearchModal').modal('show') ;
     },
     moveLocation(data) {
-      if (data.changedLocat===undefined || data.changedLocat==='' || data.changedLocat.length < 4) {
+      if (data.changedLocat === undefined || data.changedLocat === '' || data.changedLocat.length < 4) {
         alert('로케이션 확인');
         return;
       }
-      if (data.changedQty===undefined || data.changedQty==='' || data.jqty < data.changedQty) {
+      if (data.changedQty === undefined || data.changedQty === '' || data.jqty < data.changedQty) {
         alert('수량 확인');
         return;
       }
-      crudService
+      matWmsService
         .update(data)
         .then(() => {
           this.itmno = data.itmno;
@@ -177,13 +192,9 @@ export default {
           alert(e);
         });
     },
-    formatDate(value) {
-      if (value) {
-        return moment(String(value)).format('MM/DD/YYYY hh:mm')
-      }
-    }
   },
-  mounted: function () {
+  mounted() {
+    $('#itemSearchModal').modal('hide') ;
   },
   computed: {}
 };

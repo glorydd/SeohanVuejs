@@ -24,7 +24,7 @@
     <div id="locaAlmList" class="table-responsive">
       <table class="table table-bordered">
         <thead>
-        <th class="">작성시간</th>
+        <th class="d-none d-sm-table-cell d-sm-block">작성시간</th>
         <th class="">Item No</th>
         <th class="">Item Name</th>
         <th class="">Loca</th>
@@ -38,7 +38,7 @@
         <!--        d-sm-none d-md-block-->
         <tr v-for="(data, index) in dataList"
             v-bind:key="data.id" @click="rowClick(data, index)" :class="{selected: selected.includes(index)}">
-          <td class="" align="center">{{ data.jymdhms || formatDate }}</td>
+          <td class="d-none d-sm-table-cell d-sm-block" align="center">{{ data.jymdhms || formatDate }}</td>
           <td class="">{{ data.itmno }}</td>
           <td class="">{{ data.itm_nm }}</td>
           <td class="" align="center">{{ data.locat }}</td>
