@@ -1,4 +1,5 @@
 import httpService from '../httpService';
+import axios from "axios";
 
 
 var route = '/mat/warehouse';
@@ -9,10 +10,12 @@ class matWmsService  {
     return httpService.request('get', route)
   };
   fetchList(playload) {
-    return httpService.request('get', route + `?page=${playload.page}&size=${playload.size}&sort=${playload.option},${playload.sort}`)
+    return axios.get('/api/' + route + "/params", data);
+    // return httpService.request('get', route + `?page=${playload.page}&size=${playload.size}&sort=${playload.option},${playload.sort}`)
   };
   fetchByParams(data) {
-    return httpService.request('get', route + '/params', data)
+    // return httpService.request('get', route + '/params', data)
+    return axios.get('/api/' + route + "/params", data);
   };
   create(playload) {
     return httpService.request('post', route, playload)

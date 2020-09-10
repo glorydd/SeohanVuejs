@@ -1,6 +1,6 @@
 <template>
   <div  id="app">
-    <h2 id="titleTop">시작품 출고 목록</h2>
+    <h2 id="titleTop">출고 대기 목록</h2>
     <div class="row clearfix col-12">
       <div class="col-6 " align="left">
         <button class="btn btn-success btn-lg"

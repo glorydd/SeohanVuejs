@@ -116,8 +116,8 @@ const router = new Router({
           {
             path: 'wms', component: wms,
             children: [
-              { path: 'locaalm', component: locaAlm,  props: true},
-              { path: 'warehouse', component: warehouse,  props: true }
+              { path: 'locaalm', name:'locaalm', component: locaAlm,  props: true},
+              { path: 'warehouse', name:'warehouse', component: warehouse,  props: true }
             ]
           }
         ],

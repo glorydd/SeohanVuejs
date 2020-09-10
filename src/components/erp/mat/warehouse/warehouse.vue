@@ -105,6 +105,7 @@
 
 <script>
 import matWmsService from "@/services/erp/matWmsService";
+import httpService from "@/services/httpService";
 import itemSearchModal from '@/components/erp/base/item' ;
 
 export default {

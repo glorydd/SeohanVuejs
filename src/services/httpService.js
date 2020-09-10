@@ -9,6 +9,8 @@ const Unauthorized = 401
 const Forbidden = 403
 const NotFound = 404
 
+var route=''
+
 class httpService {
   setAuthInHeader = token => {
     axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : null
@@ -71,8 +73,8 @@ class httpService {
       method,
       url: DOMAIN + url,
       data,
-      processData: false,
-      contentType: false
+      // processData: false,
+      // contentType: false
 
     }).then(result => result)
       .catch(error => error.response)
@@ -83,6 +85,7 @@ class httpService {
       return authRequest('post', '/oauth/token', playload)
     }
   }
+
 }
 
 export default new httpService();

@@ -63,10 +63,10 @@
                 <a href="/mat/importPlan/list">자재결품조회</a>
               </li>
               <li>
-                <a href="#">Page 2</a>
+                <a href="/mat/wms/locaalm">출고 목록</a>
               </li>
               <li>
-                <a href="#">Page 3</a>
+                <a href="/mat/wms/warehouse">재고 현황</a>
               </li>
             </ul>
           </li class="active">
@@ -124,7 +124,7 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item active">
+                <li class="nav-item">
                   <a class="nav-link" href="/general/foodtable">식단표</a>
                 </li>
                 <li class="nav-item">
