@@ -38,7 +38,7 @@
 
 <script>
 // import itDamageService from "@/service/general/itDamageService";
-import crudService from "@/services/general/crudService";
+import itDamageService from "@/services/general/itDamageService";
 
 export default {
   name: "itDamage",
@@ -57,8 +57,14 @@ export default {
   },
   methods: {
     getData() {
-      crudService
-        .retrieveList('01')
+
+      var data = {
+        params: {
+          stat:'01'
+        }}
+
+      itDamageService
+        .getDataByParam(data)
         .then(response => {
           this.dataList = response.data;
           console.log(response);
@@ -68,7 +74,7 @@ export default {
         });
     },
     enditdamage(data) {
-      crudService
+      itDamageService
         .update(data)
         .then(() => {
           this.getData();
@@ -78,12 +84,15 @@ export default {
         });
     },
     fileDown(data) {
-      var folderPath="itdamage";
-      window.open("/api/file/" + folderPath + "/" + data.attach);
+      var param = {
+        params: {
+          filename: data.attach
+        }}
+      itDamageService
+        .fileDown(param);
     },
   },
   created() {
-    crudService.setRoute('general/itdamage');
     this.getData();
   },
   mounted: function() {}
