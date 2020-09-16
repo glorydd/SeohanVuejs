@@ -1,18 +1,13 @@
-import axios from "axios";
-import crudService from "../crudService";
+import crudService from "../../crudService";
 
-var route = 'general/itdamage';
-class itDamageService {
+var route = 'base/code/';
+class dictionaryService {
   setRoute(route) {
     crudService.setRoute(route);
   }
 
   getAllList() {
     return crudService.getAllList(route);
-  }
-  retrieve(data) {
-    return crudService.retrieve(route, data);
-    // axios.get('/api/' + route + '/' + id);
   }
 
   getDataByParam(data) {
@@ -36,4 +31,4 @@ class itDamageService {
   }
 }
 
-export default new itDamageService();
+export default new dictionaryService();

@@ -37,8 +37,7 @@
 </template>
 
 <script>
-// import itDamageService from "@/service/general/itDamageService";
-import itDamageService from "@/services/general/itDamageService";
+import itDamageService from "@/services/erp/general/itDamageService";
 
 export default {
   name: "itDamage",
@@ -89,7 +88,7 @@ export default {
           filename: data.attach
         }}
       itDamageService
-        .fileDown(param);
+        .fileDown(data.attach);
     },
   },
   created() {

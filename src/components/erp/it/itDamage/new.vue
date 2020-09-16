@@ -3,34 +3,32 @@
     등록
     <div id="insertForm" class="col-xs-12 col-sm-12">
       <div class="panel panel-default">
-        <form @submit="save">
+
+        <div class="btn-group" role="group" aria-label="Fact Group">
+          <button type="button" class="btn btn-secondary" v-model="fact" v-for="data in factList" v-bind:key="data.asgub" v-bind:value="data.fact"> {{data.factnm}}</button>
+        </div>
+
+        <div class="btn-group" role="group" aria-label="Fact Group">
+          <button type="button" class="btn btn-secondary" v-for="wrkct in wrkctList" v-bind:key="wrkct.wrkct" v-bind:value="wrkct.wrkct"> {{ wrkct.wrkct }}-{{ wrkct.wrkds }} </button>
+        </div>
+
+<!--          <div class="input-group">-->
+<!--            <label for="wrkct">라인</label>-->
+<!--            <select class="form-control" id="wrkct" v-model="wrkct" required>-->
+<!--								 <option selected value="null">라인</option>-->
+<!--                <option v-for="wrkct in wrkctList" v-bind:key="wrkct.wrkct" v-bind:value="wrkct.wrkct" >{{ wrkct.wrkct }}-{{ wrkct.wrkds }}</option>-->
+<!--						</select>-->
+<!--          </div>-->
+
+        <div class="btn-group" role="group" aria-label="Error Type">
+          <button type="button" class="btn btn-secondary" v-model="class1" v-for="data in class1List" v-bind:key="data.asgub" v-bind:value="data.asgub + '-' + data.asdes"> {{ data.asdes }} </button>
+        </div>
+
           <div class="input-group">
-            <label for="fact">공장</label>
-            <select class="form-control" id="fact" v-model="fact" @change="selectfact(fact)" required>
-                  <option selected value="null">공장</option>
-                  <option v-for="fact in factList" v-bind:key="fact.asgub" v-bind:value="fact.asgub" >{{ fact.asdes }}</option>
-						</select>
-          </div>
-          <div class="input-group">
-            <label for="wrkct">라인</label>
-            <select class="form-control" id="wrkct" v-model="wrkct" required>
-								 <option selected value="null">라인</option>
-                <option v-for="wrkct in wrkctList" v-bind:key="wrkct.wrkct" v-bind:value="wrkct.wrkct" >{{ wrkct.wrkct }}-{{ wrkct.wrkds }}</option>
-						</select>
-          </div>
-          <div class="input-group">
-						<label for="class1">고장 유형</label>
-            <select class="form-control" id="class1" v-model="class1" required>
-								 <option selected value="null">고장 유형</option>
-                  <option v-for="data in class1List" v-bind:key="data.asgub" v-bind:value="data.asgub + '-' + data.asdes" >{{ data.asdes }}</option>
-						</select>
-					</div>
-          <div class="input-group">
-            <label for="rtel">연락처</label>
             <input class="form-control" type="tel" id="rtel" v-model="rtel" placeholder="010-1234-5678" required/>
           </div>
+
           <div class="input-group">
-            <label for="rtxt">내용</label>
             <input class="form-control" type="text" id="rtxt" v-model="rtxt" required />
           </div>
 
@@ -39,81 +37,67 @@
                    v-on:change="handleFileUpload()"/>
              <button v-on:click="submitFile()">Submit</button>
           </div>
-          <div class="col-md-12 col-sm-12 col-xs-12">
-            <button type="submit" class="btn btn-default">확인</button>
-          </div>
-        </form>
+          <button type="submit" class="btn btn-default">확인</button>
+
+
+
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import crudService from "@/services/general/crudService";
-import axios from "axios";
+import lineService from "@/services/erp/base/lineService";
+import dictionayService from "@/services/erp/base/dictionaryService";
+import itDamageService from "@/services/erp/general/itDamageService";
 
 export default {
   name: "itDamage",
   data() {
     return {
-      folderPath:"itdamage",
-      file: '',
-      rtime: '',
       fact:'',
       wrkct:'',
       class1:'',
       class2:'',
       class3:'',
-      rsabun:'',
-      rteam:'',
-      rname:'',
+
       rtel:'',
       rtxt:'',
+
+      file: '',
       attach:'',
-      stat:'01',
+
       class1List:[],
       factList:[],
       wrkctList:[],
     };
   },
+  created() {
+    var data = { adgub:'IT' }
+    dictionayService.getDataByParam(data)
+      .then(response => {
+        this.class1List = response.data;
+      })
+      .catch(e => {console.log(e);});;
+
+    var data = { adgub:'31' }
+    lineService.getDataByParam(data)
+      .then(response => {
+        this.factList = response.data;
+      })
+      .catch(e => {console.log(e)});;
+  },
   methods: {
-    submitFile(fileName) {
-      let formData = new FormData();
-      formData.append("file", this.file);
-      formData.append("fileName",fileName);
-      // for( var i = 0; i < this.files.length; i++ ){
-      //   let file = this.files[i];
-      //   formData.append('files[' + i + ']', file);
-      // }
-
-      crudService
-      .fileUpload(this.folderPath,formData)
-      .then(function() {
-        console.log("SUCCESS!!");
-      })
-      .catch(function() {
-        console.log("FAILURE!!");
-      });
-    },
     save(e) {
-      crudService.setRoute('general/itdamage');
       let formData = new FormData();
       formData.append("file", this.file);
       formData.append("fileName",fileName);
 
-      crudService
-      .fileUpload(this.folderPath,formData)
-      .then(function() {
-        console.log("SUCCESS!!");
-      })
-      .catch(function() {
-        console.log("FAILURE!!");
-      });
-
-      crudService.save(this._data)
-      .then((response) => {
-        // this.submitFile(response.data.rtime)
-      })
+      itDamageService.fileUpload(this.folderPath,formData)
+                  .then(function() {})
+                  .catch(e => {console.log(e)});
+      itDamageService.save(this._data)
+      .then((response) => { })
       .catch(e => {
         console.log(e);
       });
@@ -123,38 +107,16 @@ export default {
       this.attach =this.$refs.file.files[0].name;
     },
     fileDown(data) {
-      window.open("/api/file/" + data.attach);
+      itDamageService.fileDown(data.attach)
     },
     selectfact(fact){
-      crudService.setRoute('general/wrkct');
-      crudService.getWrkctListByFact(fact)
+      itDamageService.getWrkctListByFact(fact)
       .then(response => {
         this.wrkctList = response.data;
         console.log(response);
       })
-      .catch(e => {
-        console.log(e);
-      });
+      .catch(e => {console.log(e);});
     }
-  },
-  created() {
-    crudService.setRoute('base/codeLib');
-    crudService.retrieve("IT")
-    .then(response => {
-      this.class1List = response.data;
-      console.log(response);
-    })
-    .catch(e => {
-      console.log(e);
-    });;
-    crudService.retrieve('/fact')
-    .then(response => {
-      this.factList = response.data;
-      console.log(response);
-    })
-    .catch(e => {
-      console.log(e);
-    });;
   },
   mounted: function() {}
 };

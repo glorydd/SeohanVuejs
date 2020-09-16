@@ -23,9 +23,13 @@ class crudService {
     //   }
     // }
   }
-  // setRoute(sourceRoute) {
-  //   route = sourceRoute;
-  // }
+
+  getOne(route, data) {
+    return axios.get('/api/' + route + '/' + data, headerInfo);
+  }
+
+
+
 
 
   getAllList(route) {
@@ -51,7 +55,14 @@ class crudService {
     });
   }
   fileDown(route, data) {
-    return axios.get('/api/' + route + '/download' + data);
+    var param = {
+      params: {
+        folderPath : route,
+        filename: data
+      }}
+    window.location.href = '/api/file?folderPath=' + route + '&filename=' + data;
+
+    return axios.get('/api/file/', param, {responseType: "blob"});
   }
 }
 
