@@ -10,25 +10,7 @@ module.exports = {
     // Paths 
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {
-      // proxy all requests starting with /api to jsonplaceholder
-      '/api': {
-        target: 'http://localhost:44000',
-        secure:false,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': ''
-        }
-      },
-      '/message': {
-        target: 'http://localhost:5090',
-        secure:false,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/message': ''
-        }
-      }
-    }, 
+    
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8091, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
