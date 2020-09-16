@@ -1,7 +1,7 @@
 import crudService from "../../crudService";
 
 var route = 'base/code/';
-class dictionaryService {
+class codeService {
   setRoute(route) {
     crudService.setRoute(route);
   }

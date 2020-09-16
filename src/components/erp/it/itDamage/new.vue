@@ -4,8 +4,10 @@
     <div id="insertForm" class="col-xs-12 col-sm-12">
       <div class="panel panel-default">
 
-        <div class="btn-group" role="group" aria-label="Fact Group">
-          <button type="button" class="btn btn-secondary" v-model="fact" v-for="data in factList" v-bind:key="data.asgub" v-bind:value="data.fact"> {{data.factnm}}</button>
+        <div class="btn-group" role="group" aria-label="Fact Group"  >
+          <input-group v-model="fact">
+            <button type="button" class="btn btn-secondary" v-for="data in factList" v-bind:key="data.asgub" v-bind:value="data.fact"> {{data.factnm}}</button>
+          </input-group>
         </div>
 
         <div class="btn-group" role="group" aria-label="Fact Group">
@@ -21,7 +23,9 @@
 <!--          </div>-->
 
         <div class="btn-group" role="group" aria-label="Error Type">
-          <button type="button" class="btn btn-secondary" v-model="class1" v-for="data in class1List" v-bind:key="data.asgub" v-bind:value="data.asgub + '-' + data.asdes"> {{ data.asdes }} </button>
+          <input-group v-model="class1">
+          <button type="button" class="btn btn-secondary"  v-for="data in class1List" v-bind:key="data.asgub" v-bind:value="data.asgub + '-' + data.asdes"> {{ data.asdes }} </button>
+          </input-group>
         </div>
 
           <div class="input-group">
@@ -48,7 +52,7 @@
 
 <script>
 import lineService from "@/services/erp/base/lineService";
-import dictionayService from "@/services/erp/base/dictionaryService";
+import codeService from "@/services/erp/base/codeService";
 import itDamageService from "@/services/erp/general/itDamageService";
 
 export default {
