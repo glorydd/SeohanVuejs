@@ -69,11 +69,11 @@ const router = new Router({
     children:[
       {path: '/', component: Home, beforeEnter: requireAuth()},
       {path: '/login', component: Login},
-      {path: '/Profile', component: Profile , beforeEnter: requireAuth()},
+      {path: '/profile', component: Profile , beforeEnter: requireAuth()},
       {path: '/general', component: general,
         children: [
           {
-            path: 'itDamage', component: itDamage,
+            path: 'it-damage', component: itDamage,
             children: [
               { path: 'list', component: itDamageList },
               { path: 'new', component: itDamageNew },
@@ -86,7 +86,7 @@ const router = new Router({
               // {path: 'new', component: reportNew,beforeEnter: requireAuth},
             ]
           },
-          { path: 'foodTable', component: foodTable },
+          { path: 'food', component: foodTable },
           // { path: 'qrReader', component: qrReader },
         ],
         beforeEnter: requireAuth(),
@@ -95,7 +95,7 @@ const router = new Router({
         path: '/sales', component: sales,
         children: [
           {
-            path: 'asQuality', component: asQuality,
+            path: 'as-qc', component: asQuality,
             children: [
               { path: 'list', component: asQualityList },
               { path: 'new', component: asQualityNew },
@@ -108,7 +108,7 @@ const router = new Router({
         path: '/mat', component: mat,
         children: [
           {
-            path: 'importPlan', component: importPlan,
+            path: 'import-plan', component: importPlan,
             children: [
               { path: 'list', component: importPlanList },
             ]
@@ -116,7 +116,7 @@ const router = new Router({
           {
             path: 'wms', component: wms,
             children: [
-              { path: 'locaalm', name:'locaalm', component: locaAlm,  props: true},
+              { path: 'loca', name:'loca', component: locaAlm,  props: true},
               { path: 'warehouse', name:'warehouse', component: warehouse,  props: true }
             ]
           }
@@ -127,7 +127,7 @@ const router = new Router({
         path: '/qc', component: general,
         children: [
           {
-            path: 'gspc', component: itDamage,
+            path: 'spc', component: itDamage,
             children: [
               { path: 'list', component: itDamageList },
               { path: 'new', component: itDamageNew },
@@ -140,7 +140,7 @@ const router = new Router({
               // {path: 'new', component: reportNew,beforeEnter: requireAuth},
             ]
           },
-          { path: 'foodTable', component: foodTable },
+          { path: 'food', component: foodTable },
           // { path: 'qrReader', component: qrReader },
         ],
         beforeEnter: requireAuth(),

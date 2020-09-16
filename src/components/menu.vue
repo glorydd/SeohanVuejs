@@ -23,7 +23,7 @@
                 <a href="/general/report/list">공정신고</a>
               </li>
               <li>
-                <a href="/general/itdamage/list">전산고장신고</a>
+                <a href="/general/it-damage/list">전산고장신고</a>
               </li>
               <li>
                 <a href="#">Home 3</a>
@@ -40,7 +40,7 @@
             >영업</a>
             <ul class="collapse list-unstyled" id="menuSalesList">
               <li class="dropdown-menu__item">
-                <a href="/sales/asQuality/list">AS 품질 확보</a>
+                <a href="/sales/as-qc/list">AS 품질 확보</a>
               </li>
               <li>
                 <a href="#">Home 2</a>
@@ -60,7 +60,7 @@
             >자재</a>
             <ul class="collapse list-unstyled" id="menuMatList">
               <li>
-                <a href="/mat/importPlan/list">자재결품조회</a>
+                <a href="/mat/import-plan">자재결품조회</a>
               </li>
               <li>
                 <a href="/mat/wms/locaalm">출고 목록</a>
@@ -80,7 +80,7 @@
             >연구소</a>
             <ul class="collapse list-unstyled" id="menuLabList">
               <li>
-                <a href="/lab/proto/locaalmlist">시작품 불출 현황</a>
+                <a href="/lab/proto/locaalm">시작품 불출 현황</a>
               </li>
               <li>
                 <a href="#">Page 2</a>
@@ -125,7 +125,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item">
-                  <a class="nav-link" href="/general/foodtable">식단표</a>
+                  <a class="nav-link" href="/general/food">식단표</a>
                 </li>
                 <li class="nav-item">
                   <!-- <a class="nav-link" href="#">Page</a> -->
