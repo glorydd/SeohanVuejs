@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import authHeader from './auth-header';
 import router from '../router'
 import qs from 'qs'
 
@@ -12,6 +11,15 @@ const NotFound = 404
 
 export const setAuthInHeader = token => {
   axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : null
+}
+
+export default function authHeader () {
+  let accessToken = localStorage.getItem('accessToken');
+  if (accessToken) {
+    return { Authorization: accessToken }
+  } else {
+    return false
+  }
 }
 
 
@@ -46,16 +54,16 @@ const request = (method, url, data) => {
 //   login(playload) {
 //     return authRequest('post', '/oauth/token', playload)
 //   }
-  
+
 //   getUserContent() {
-//     let member = JSON.parse(localStorage.getItem('user')); 
+//     let member = JSON.parse(localStorage.getItem('user'));
 //     return axios.post(API_URL + 'userinfo', member , { headers: authHeader()  });
 //   }
 
 //   logout() {
 //     localStorage.removeItem('user');
 //     localStorage.removeItem('accessToken');
-//   } 
+//   }
 //   handleResponse(response) {
 //     if (response.status === 401) {
 //       this.logout();

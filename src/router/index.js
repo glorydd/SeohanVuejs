@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import store from '@/vuex/store'
+import store from '@/store'
 import authHeader from '@/services/auth-header'
 
 import Menu from '@/components/menu.vue'
@@ -41,7 +41,7 @@ const NotFound = { template: '<div>Not Found</div>' }
 Vue.use(Router)
 
 
-const requireAuth = (to, from, next) => {
+const requireAuth = () => (to, from, next) => {
   !!store.state.access_token ? next() : next(`/login?returnPath=${encodeURIComponent(from.path)}`)
 }
 
@@ -63,14 +63,14 @@ const requireManager = (to, from, next) => {
 
 const router = new Router({
   mode: 'history', // Use browser history
-  routes: [{
-    path: '/',
+  routes: [
+    {path: '/login', component: Login},
+    {path: '/',
     component:Menu,beforeEnter: requireAuth(),
-    children:[{
-        path: '/', component: Home, beforeEnter: requireAuth(),
-        path: '/login', component: Login,
-        path: '/Profile', component: Profile , beforeEnter: requireAuth(),
-        path: '/general', component: general,
+    children:[
+      {path: '/', component: Home, beforeEnter: requireAuth()},
+      {path: '/Profile', component: Profile , beforeEnter: requireAuth()},
+      {path: '/general', component: general,
         children: [
           {
             path: 'itDamage', component: itDamage,
