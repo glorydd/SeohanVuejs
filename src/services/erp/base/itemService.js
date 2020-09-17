@@ -6,11 +6,11 @@ class itemService  {
   fetch() {
     return request('get', route)
   };
-  fetchList(playload) {
+  fetchList(data) {
     return axios.get('/api/' + route + "/params", data);
     // return httpService.request('get', route + `?page=${playload.page}&size=${playload.size}&sort=${playload.option},${playload.sort}`)
   };
-  fetchByParams(params) {
+  fetchByParams(data) {
     // return request('get', route + '/params', params)
     return axios.get('/api/' + route + "/params", data);
   };

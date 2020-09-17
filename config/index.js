@@ -10,25 +10,9 @@ module.exports = {
     // Paths 
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {
-      // proxy all requests starting with /api to jsonplaceholder
-      '/api': {
-        target: 'http://localhost:44000',
-        secure:false,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': ''
-        }
-      },
-      '/message': {
-        target: 'http://localhost:5090',
-        secure:false,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/message': ''
-        }
-      }
-    }, 
+    
+
+
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8091, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
@@ -43,7 +27,7 @@ module.exports = {
     // Use Eslint Loader?
     // If true, your code will be linted during bundling and
     // linting errors and warnings will be shown in the console.
-    useEslint: false,
+    useEslint: true,
     // If true, eslint errors and warnings will also be shown in the error overlay
     // in the browser.
     showEslintErrorsInOverlay: false,
@@ -66,24 +50,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
-    proxyTable: {
-      // proxy all requests starting with /api to jsonplaceholder
-      '/api': {
-        target: 'http://ind.seohan.com:44000',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': ''
-        }
-      },
-      '/message': {
-        target: 'http://ind.seohan.com:5090',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/message': ''
-        }
-      }
-    },
+    assetsPublicPath: '/', 
     /**
      * Source Maps
      */

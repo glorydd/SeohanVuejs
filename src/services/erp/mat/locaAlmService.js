@@ -2,9 +2,9 @@ import httpService from '../../httpService';
 import axios from "axios";
 
 
-var route = 'mat/warehouse';
+var route = 'mat/locaalm';
 
-class matWmsService  {
+class locaalmService  {
 
   fetch() {
     return httpService.request('get', route)
@@ -31,4 +31,4 @@ class matWmsService  {
   }
 }
 
-export default new  matWmsService;
+export default new  locaalmService;

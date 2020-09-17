@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import crudService from "@/services/crudService";
+import itemService from "@/services/erp/base/itemService";
 import pageFooter from "@/components/common/pageFooter";
 
 export default {
@@ -72,13 +72,13 @@ export default {
             itmno: this.itmno,
             warhs: this.warhs,
             cartype: this.cartype,
-            itemtype: this.itemtype,
+            pumgb: this.itemtype,
             page: index - 1,
             size: 20
           }
         }
-      crudService
-        .getDataByParam(data)
+      itemService
+        .fetchByParams(data)
         .then(response => {
           this.dataList = response.data;
           console.log(response);
@@ -91,8 +91,7 @@ export default {
       this.method(data.itmno);
     }
   },
-  created() {
-    crudService.setRoute("base/item");
+  created() { 
     this.onFetch(0);
   }
 };

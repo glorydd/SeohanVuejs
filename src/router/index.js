@@ -74,7 +74,7 @@ const router = new Router({
     {path: '/',
     component:Menu,beforeEnter: requireAuth(),
     children:[
-      {path: '/', component: Home, beforeEnter: requireAuth()},
+      // {path: '/', component: Home, beforeEnter: requireAuth()},
       {path: '/Profile', component: Profile , beforeEnter: requireAuth()},
       {path: '/general', component: general,
         children: [

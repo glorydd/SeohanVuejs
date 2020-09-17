@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import crudService from "@/services/crudService";
+import locaalmService from "@/services/erp/mat/locaalmService";
 import moment from 'moment'
 
 
@@ -73,8 +73,7 @@ export default {
       sts:''
     };
   },
-  created() {
-    crudService.setRoute('erp/mat/locaalm');
+  created() { 
     this.warehouse=this.$route.query.warehouse;
 
     // this.warehouse=this.$route.params.warehouse;
@@ -95,8 +94,8 @@ export default {
             size: 20
           }
         }
-      crudService
-        .getDataByParam(data)
+      locaalmService
+        .fetchByParams(data)
         .then(response => {
           this.dataList = response.data;
 
@@ -110,7 +109,7 @@ export default {
         });
     },
     endLocaAlmList() {
-      crudService
+      locaalmService
         .update(this.selectedData)
         .then(() => {
           this.onFetch();
