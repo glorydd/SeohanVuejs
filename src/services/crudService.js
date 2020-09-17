@@ -1,9 +1,11 @@
 import axios from "axios";
 
-var route = '';
+var baseRoute = '';
+var headerInfo = '';
 class crudService {
+
   setConfig(sourceRoute) {
-    route = sourceRoute;
+    baseRoute = sourceRoute;
 
     UserService.getUserContent().then(
       response => {
@@ -21,50 +23,46 @@ class crudService {
     //   }
     // }
   }
-  setRoute(sourceRoute) {
-    route = sourceRoute;
+
+  getOne(route, data) {
+    return axios.get('/api/' + route + '/' + data, headerInfo);
   }
-  getAllList(stat) {
-    return axios.get('/api/' + route);
+
+
+
+
+
+  getAllList(route) {
+    return axios.get('/api/' + route, headerInfo);
   }
-  retrieve(id) {
-    return axios.get('/api/' + route + '/' + id);
+  getDataByParam(route, data) {
+    return axios.get('/api/' + route + "/params", data);
   }
-  update(data) {
-    return axios.put('/api/' + route + '/', data, headerInfo);
+  update(route, data) {
+    return axios.put('/api/' + route , data, headerInfo);
   }
-  save(data) {
-    return axios.post('/api/' + route +'/save', data);
+  save(route, data) {
+    return axios.post('/api/' + route , data, headerInfo);
   }
-  fileUpload(folderPath, data) {
-    return axios.post('/api/file/upload'+ '/' +folderPath, data, {
+
+  fileUpload(route, data) {
+    return axios.post('/api/' + route + '/files', data, {
       headers: {
         'Content-Type': 'multipart/form-data',
         "Process-Data": false,
+        'Authorized': ''
       }
     });
   }
-  fileDown(data) {
-    return axios.get('/api/file/' + data, headerInfo);
-  }
+  fileDown(route, data) {
+    var param = {
+      params: {
+        folderPath : route,
+        filename: data
+      }}
+    window.location.href = '/api/file?folderPath=' + route + '&filename=' + data;
 
-  retrieveListByUserId(userId) {
-    return axios.get('/api/' + route + '/userid?userid=' + userId);
-  }
-  retrieveListByStat(stat) {
-    return axios.get('/api/' + route + '/stat?stat=' + stat);
-  }
-  retrieveList() {
-    return axios.get('/api/' + route );
-  }
-  getListByAdgub(adgub) {
-    return axios.get('/api/' + route + '?adgub=' + adgub);
-  }
-  getFact() {
-    return axios.get('/api/' + route + '/fact');
-  }
-  getWrkctListByFact(factory) {
-    return axios.get('/api/' + route + '/fact/' + factory);
+    return axios.get('/api/file/', param, {responseType: "blob"});
   }
 }
 

@@ -9,6 +9,10 @@ import Home from '@/components/home.vue'
 import Login from '@/components/auth/Login.vue'
 import Profile from '@/components/auth/Profile.vue'
 
+import base from '@/components/erp/base/base'
+import item from '@/components/erp/base/item'
+// import bom from '@/components/erp/base/bom'
+
 import general from '@/components/erp/general/general'
 
 import itDamage from '@/components/erp/it/itDamage/itDamage'
@@ -18,6 +22,9 @@ import itDamageNew from '@/components/erp/it/itDamage/new'
 import mat from '@/components/erp/mat/mat'
 import importPlan from '@/components/erp/mat/importPlan/importPlan'
 import importPlanList from '@/components/erp/mat/importPlan/list'
+import wms from '@/components/erp/mat/warehouse/wms'
+import warehouse from "@/components/erp/mat/warehouse/warehouse";
+import locaAlm from "@/components/erp/mat/warehouse/locaAlm";
 
 import report from '@/components/erp/qc/report/report'
 import reportList from '@/components/erp/qc/report/list'
@@ -33,8 +40,7 @@ import foodTable from '@/components/erp/general/foodTable'
 // import qrReader from '@/components/general/qrReader'
 
 import lab from "@/components/erp/lab/lab";
-import proto from "@/components/erp/lab/prototype/prototype";
-import locaAlm from "@/components/erp/mat/location/locaAlm";
+import protowms from "@/components/erp/lab/prototype/protowms";
 
 const NotFound = { template: '<div>Not Found</div>' }
 
@@ -73,7 +79,7 @@ const router = new Router({
       {path: '/general', component: general,
         children: [
           {
-            path: 'itDamage', component: itDamage,
+            path: 'it-damage', component: itDamage,
             children: [
               { path: 'list', component: itDamageList },
               { path: 'new', component: itDamageNew },
@@ -86,7 +92,7 @@ const router = new Router({
               // {path: 'new', component: reportNew,beforeEnter: requireAuth},
             ]
           },
-          { path: 'foodTable', component: foodTable },
+          { path: 'food', component: foodTable },
           // { path: 'qrReader', component: qrReader },
         ],
         beforeEnter: requireAuth(),
@@ -95,7 +101,7 @@ const router = new Router({
         path: '/sales', component: sales,
         children: [
           {
-            path: 'asQuality', component: asQuality,
+            path: 'as-qc', component: asQuality,
             children: [
               { path: 'list', component: asQualityList },
               { path: 'new', component: asQualityNew },
@@ -104,23 +110,30 @@ const router = new Router({
         ],
         // beforeEnter: requireAuth(),
       },
-      // {
-      //   path: '/mat', component: mat,
-      //   children: [
-      //     {
-      //       path: 'importPlan', component: importPlan,
-      //       children: [
-      //         { path: 'list', component: importPlanList },
-      //       ]
-      //     },
-      //   ],
-      //   beforeEnter: requireAuth(),
-      // },
+      {
+        path: '/mat', component: mat,
+        children: [
+          {
+            path: 'import-plan', component: importPlan,
+            children: [
+              { path: 'list', component: importPlanList },
+            ]
+          },
+          {
+            path: 'wms', component: wms,
+            children: [
+              { path: 'loca', name:'loca', component: locaAlm,  props: true},
+              { path: 'warehouse', name:'warehouse', component: warehouse,  props: true }
+            ]
+          }
+        ],
+        beforeEnter: requireAuth(),
+      },
       {
         path: '/qc', component: general,
         children: [
           {
-            path: 'gspc', component: itDamage,
+            path: 'spc', component: itDamage,
             children: [
               { path: 'list', component: itDamageList },
               { path: 'new', component: itDamageNew },
@@ -133,35 +146,45 @@ const router = new Router({
               // {path: 'new', component: reportNew,beforeEnter: requireAuth},
             ]
           },
-          { path: 'foodTable', component: foodTable },
+          { path: 'food', component: foodTable },
           // { path: 'qrReader', component: qrReader },
         ],
         beforeEnter: requireAuth(),
       },
-      // {
-      //   path: '/lab', component: mat,
-      //   children: [
-      //     {
-      //       path: 'proto', component: proto,
-      //       children: [
-      //         { path: 'list', component: locaAlm },
-      //       ]
-      //     },
-      //   ],
-      //   beforeEnter: requireAuth(),
-      // }
+      //   {
+      //     path: '/lab', component: lab,
+      //     children: [
+      //       {
+      //         path: 'protowms', component: protowms,
+      //         children: [
+      //           { path: 'locaalm', component: locaAlm,  props: true},
+      //           { path: 'warehouse', component: warehouse,  props: true },
+      //         ]
+      //       },
+      //     ]
+      //   },
       ],
-  }, {
+  },
+  {
     path: '/lab', component: lab,
     children: [
       {
-        path: 'proto', component: proto,
+        path: 'proto', component: protowms,
         children: [
-          { path: 'locaalmlist', component: locaAlm },
+          { path: 'locaalm', component: locaAlm,  props: true},
+          { path: 'warehouse', component: warehouse,  props: true },
         ]
       },
     ]
-  }]
+  },
+  {
+    path: '/base', component: base,
+    children: [
+      {path: 'item', component: item,  props: true, },
+      // {path: 'bom', component: bom },
+    ],
+    // beforeEnter: requireAuth(),
+  },]
 })
 
 export default router;

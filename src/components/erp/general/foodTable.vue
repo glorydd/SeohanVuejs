@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import foodTableService from "@/services/foodTableService";
+import foodTableService from "@/services/erp/general/foodTableService";
 
 export default {
   name: "foodTable",

@@ -1,12 +1,12 @@
 <template>
-  <div class="container" id="app">
-    <h2 id="titleTop">시작품 출고 목록</h2>
-    <div class="row">
+  <div  id="app">
+    <h2 id="titleTop">출고 대기 목록</h2>
+    <div class="row clearfix col-12">
       <div class="col-6 " align="left">
         <button class="btn btn-success btn-lg"
                 type="button"
-                id="getData"
-                @click="getData()"
+                id="onFetch"
+                @click="onFetch()"
         >조회
         </button>
       </div>
@@ -21,10 +21,10 @@
       </div>
     </div>
 
-    <div id="locaAlmList" class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+    <div id="locaAlmList" class="table-responsive">
       <table class="table table-bordered">
         <thead>
-        <th class="">작성시간</th>
+        <th class="d-none d-sm-table-cell d-sm-block">작성시간</th>
         <th class="">Item No</th>
         <th class="">Item Name</th>
         <th class="">Loca</th>
@@ -38,7 +38,7 @@
         <!--        d-sm-none d-md-block-->
         <tr v-for="(data, index) in dataList"
             v-bind:key="data.id" @click="rowClick(data, index)" :class="{selected: selected.includes(index)}">
-          <td class="" align="center">{{ data.jymdhms || formatDate }}</td>
+          <td class="d-none d-sm-table-cell d-sm-block" align="center">{{ data.jymdhms || formatDate }}</td>
           <td class="">{{ data.itmno }}</td>
           <td class="">{{ data.itm_nm }}</td>
           <td class="" align="center">{{ data.locat }}</td>
@@ -62,16 +62,41 @@ export default {
     return {
       datepicker: new Date(),
       folderPath: "locaAlmList",
+      pagination: 0,
+      warehouse : '',
+      itmno :'',
       querydate: "",
       dataList: [],
       selected: [],
       selectedData: [],
+      gubn:'',
+      sts:''
     };
   },
+  created() {
+    crudService.setRoute('erp/mat/locaalm');
+    this.warehouse=this.$route.query.warehouse;
+
+    // this.warehouse=this.$route.params.warehouse;
+    this.gubn = this.$route.params.warehouse;
+    this.sts = this.$route.params.warehouse;
+    this.onFetch();
+  },
   methods: {
-    getData() {
+    onFetch() {
+      var data =
+        {
+          params: {
+            gubn : 'A2',
+            sts:'1',
+            warhs: this.warehouse,
+            itmno: this.itmno,
+            page: 0,
+            size: 20
+          }
+        }
       crudService
-        .retrieveList()
+        .getDataByParam(data)
         .then(response => {
           this.dataList = response.data;
 
@@ -88,7 +113,7 @@ export default {
       crudService
         .update(this.selectedData)
         .then(() => {
-          this.getData();
+          this.onFetch();
         })
         .catch(e => {
           console.log(e);
@@ -109,15 +134,6 @@ export default {
         this.selectedData.push(data)
       }
     }
-  },
-  created() {
-    crudService.setRoute('erp/mat/locaalm');
-    this.getData();
-    // filter('formatDate', function (value) {
-    //   if (value) {
-    //     return moment(String(value)).format('MM/DD/YYYY hh:mm')
-    //   }
-    // })
   },
   mounted: function () {
   },
