@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import crudService from "@/services/general/crudService";
+import crudService from "@/services/crudService";
 
 export default {
   name: "report",

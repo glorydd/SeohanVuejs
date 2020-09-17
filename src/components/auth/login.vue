@@ -2,51 +2,19 @@
 <template>
   <div class="col-xs-2">
     <div id="login" class="form-group">
-      <div class="btn-group">
-        <button
-          id="SEOHAN"
-          type="button"
-          class="btn btn-default"
-          value="SEOHAN"
-          v-on:click="setCompanyCode('SEOHAN')"
-        >서한</button>
-        <button
-          id="KAMTEC"
-          type="button"
-          class="btn btn-default"
-          value="KAMTEC"
-          v-on:click="setCompanyCode('SEOHAN')"
-        >캄텍</button>
-        <button
-          id="KOFCO"
-          type="button"
-          class="btn btn-default"
-          value="KOFCO"
-          v-on:click="setCompanyCode('SEOHAN')"
-        >프랜지</button>
-      </div>
-
-      <h4 class="card-title mb-4 mt-1">Sign in</h4> 
-      
-      <label for="ID">ID</label>
-      <input
-        type="text"
-        class="form-control"
-        v-model="user.asabn"
-        name="asabn"
-        v-validate="'required'"
-      />
-      <div class="alert alert-danger" role="alert" v-if="errors.has('asabn')">Username is required!</div>
       <div class="form-group">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          class="form-control"
-          name="pass"
-          v-model="user.pass"
+        <label for="ID">ID</label>
+        <input type="text" class="form-control" v-model="username"
           v-validate="'required'"
         />
-        <div class="alert alert-danger" role="alert" v-if="errors.has('pass')">Password is required!</div>
+      </div>
+      <!-- <div class="alert alert-danger" role="alert" v-if="errors.has('asabn')">Username is required!</div> -->
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" v-model="password"
+          v-validate="'required'"
+        />
       </div>
       <div class="form-group">
         <input type="submit" class="btn btn-primary btn-block" value="Login" @click="onSubmit" />
@@ -56,81 +24,40 @@
 </template>
 
 <script>
-import User from "@/models/user";
-import axios from "axios";
-import vuex, { mapActions } from "vuex";
-
 export default {
   name: "login",
   computed: {
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
-    },
+    invalidForm() {
+      return !this.username || !this.password;
+    }
   },
   data() {
     return {
-      user: new User("", "", ""),
+      username: "",
+      password: "",
+      returnPath: "",
+      error: "",
+      grant_type: "password",
       loading: false,
       message: "",
     };
   },
-  mounted() {
-    if (this.loggedIn) {
-      this.$router.push("/");
-    }
+  created() {
+    this.returnPath = this.$route.query.returnPath || "/";
   },
   methods: {
-    setCompanyCode(companyCode) {
-      this.user.companyCode = companyCode;
-    },
-    // onSubmit() {
-    //   var companyCode = this.companyCode;
-    //   var asabn = this.asabn;
-    //   var pass = this.pass;
-
-    //   this.$store
-    //     .dispatch("LOGIN", { companyCode, asabn, pass })
-    //     .then(() => this.redirect())
-    //     .catch(({ message }) => (this.msg = message));
-    // },
-    // redirect() {
-    //   const { search } = window.location;
-    //   const tokens = search.replace(/^\?/, "").split("&");
-    //   const { returnPath } = tokens.reduce((qs, tkn) => {
-    //     const pair = tkn.split("=");
-    //     qs[pair[0]] = decodeURIComponent(pair[1]);
-    //     return qs;
-    //   }, {});
-    //   // 리다이렉트 처리
-    //   this.$router.push(returnPath);
-    // },
-
     onSubmit() {
-      this.loading = true;
-      this.$validator.validateAll();
-
-      if (this.errors.any()) {
-        this.loading = false;
-        return;
-      }
-
-      if (this.user.companyCode && this.user.asabn && this.user.pass) {
-        this.$store.dispatch("auth/login", this.user).then(
-          () => {
-            this.$router.push("/");
-          },
-          (error) => {
-            this.loading = false;
-            this.message = error.message;
-          }
-        );
-      }
+      this.$store
+        .dispatch("LOGIN", {
+          username: this.username,
+          password: this.password,
+          grant_type: this.grant_type,
+        })
+        .then(() => {
+          this.$router.push(this.returnPath);
+        })
+        .catch((err) => {});
     },
-  },
-  mounted() {
-    // this.companyCode = 'SEOHAN';
-    document.querySelector("#SEOHAN").click();
-    // this.$refs.SEOHAN.click();
   },
 };
 </script>
