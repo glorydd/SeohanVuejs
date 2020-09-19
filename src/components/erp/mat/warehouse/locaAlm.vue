@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import crudService from "@/services/crudService";
 import locaalmService from "@/services/erp/mat/locaalmService";
 import moment from 'moment'
 
@@ -94,8 +95,7 @@ export default {
             size: 20
           }
         }
-      locaalmService
-        .fetchByParams(data)
+      crudService.getDataByParam('mat/locaalm', data)
         .then(response => {
           this.dataList = response.data;
 

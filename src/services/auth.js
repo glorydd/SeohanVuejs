@@ -1,6 +1,7 @@
 import axios from 'axios';
 import router from '../router'
 import qs from 'qs'
+import {request, requestFile} from './index'
 
 // const API_URL = '/api/auth/';
 const DOMAIN = 'http://localhost/api'
@@ -14,7 +15,7 @@ export const setAuthInHeader = token => {
 }
 
 export default function authHeader () {
-  let accessToken = localStorage.getItem('accessToken');
+  let accessToken = localStorage.getItem('access_token');
   if (accessToken) {
     return { Authorization: accessToken }
   } else {
@@ -22,81 +23,16 @@ export default function authHeader () {
   }
 }
 
-
-const request = (method, url, data) => {
-  return axios({
-    method,
-    url: DOMAIN + url,
-    data,
-
-  }).then(result => result)
-    .catch(error => error.response)
-}
-
-// class Auth {
-//   // login(user) {
-//   //   return axios
-//   //     .post(API_URL + 'signin', {
-//   //       companyCode:user.companyCode,
-//   //        asabn: user.asabn,
-//   //       pass: user.pass
-//   //     })
-//   //     .then(this.handleResponse)
-//   //     .then(response => {
-//   //       if (response.headers.authorization) {
-//   //         localStorage.setItem('user', JSON.stringify(response.data));
-//   //         localStorage.setItem('accessToken', response.headers.authorization);
-//   //       }
-
-//   //       return response.data;
-//   //     });
-//   // }
-//   login(playload) {
-//     return authRequest('post', '/oauth/token', playload)
-//   }
-
-//   getUserContent() {
-//     let member = JSON.parse(localStorage.getItem('user'));
-//     return axios.post(API_URL + 'userinfo', member , { headers: authHeader()  });
-//   }
-
-//   logout() {
-//     localStorage.removeItem('user');
-//     localStorage.removeItem('accessToken');
-//   }
-//   handleResponse(response) {
-//     if (response.status === 401) {
-//       this.logout();
-//       location.reload(true);
-
-//       const error = response.data && response.data.message;
-//       return Promise.reject(error);
-//     }
-
-//     return Promise.resolve(response);
-//   }
-//   authHeader () {
-//     let accessToken = localStorage.getItem('accessToken');
-//     if (accessToken) {
-//       return { Authorization: accessToken }
-//     } else {
-//       return false
-//     }
-//   }
-// }
-
-// export default new Auth()
-
+export const auth = {
+  login(playload) {
+    return authRequest('post', '/oauth/token', playload)
+  }
+} 
 
 export const account = {
+  
   fetch() {
     return request('get', '/accounts')
-  },
-  create(playload) {
-    return request('post', '/accounts', playload)
-  },
-  put(playload) {
-    return request('put', '/accounts', playload)
   },
   fetchManager(playload) {
     return request('get', `/accounts/manager?page=${playload.page}&size=10&sort=id,DESC`)
@@ -112,33 +48,7 @@ export const account = {
   }
 }
 
-const onUnauthorized = () => {
-  router.push(`/login?returnPath=${encodeURIComponent(location.pathname)}`)
-  throw Error(response)
-}
-const onForbidden = (response) => {
-  alert('권한이 없습니다.')
-  router.push('/')
-  throw Error(response)
-}
-
-const onBadRequest = (response) => {
-  alert('잘못된요청입니다.')
-  throw Error(response)
-}
-
-const onNotFound = (response) => {
-  alert('잘못된 접근입니다.')
-  throw Error(response)
-}
-
-export const auth = {
-  login(playload) {
-    return authRequest('post', '/oauth/token', playload)
-  }
-}
-
-const authRequest = (method, url, data) => {
+export const authRequest = (method, url, data) => {
   return axios({
     headers: {
       'Authorization': 'Basic aWQ6c2VjcmV0',

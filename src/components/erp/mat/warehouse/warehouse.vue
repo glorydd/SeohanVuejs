@@ -104,6 +104,7 @@
 </template>
 
 <script>
+import crudService from "@/services/crudService";
 import matWmsService from "@/services/erp/mat/matWmsService";
 import itemSearchModal from '@/components/erp/base/item' ;
 
@@ -145,8 +146,7 @@ export default {
             page: index - 1,
             size: 20
           }}
-      matWmsService
-        .fetchByParams(data)
+      crudService.getDataByParam('mat/warehouse', data)
         .then(response => {
           this.dataList = response.data;
           console.log(response);

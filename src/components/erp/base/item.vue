@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import itemService from "@/services/erp/base/itemService";
+import crudService from "@/services/crudService";
 import pageFooter from "@/components/common/pageFooter";
 
 export default {
@@ -77,8 +77,7 @@ export default {
             size: 20
           }
         }
-      itemService
-        .fetchByParams(data)
+      crudService.getDataByParam('base/item', data)
         .then(response => {
           this.dataList = response.data;
           console.log(response);
