@@ -37,13 +37,13 @@
 </template>
 
 <script>
-import itDamageService from "@/services/erp/general/itDamageService";
+import crudService from "@/services/crudService";
 
 export default {
   name: "itDamage",
   data() {
     return {
-      folderPath:"itdamage",
+      route:"general/itdamage",
       ctime: "",
       rtime: "",
       datepicker: new Date(),
@@ -56,39 +56,31 @@ export default {
   },
   methods: {
     getData() {
-
       var data = {
         params: {
           stat:'01'
         }}
 
-      itDamageService
-        .getDataByParam(data)
+      crudService.getDataByParam(this.route, data)
         .then(response => {
           this.dataList = response.data;
           console.log(response);
         })
-        .catch(e => {
-          console.log(e);
-        });
+        .catch(e => {console.log(e);});
     },
     enditdamage(data) {
-      itDamageService
-        .update(data)
+      crudService.update(this.route, data)
         .then(() => {
           this.getData();
         })
-        .catch(e => {
-          console.log(e);
-        });
+        .catch(e => {console.log(e);});
     },
     fileDown(data) {
       var param = {
         params: {
           filename: data.attach
         }}
-      itDamageService
-        .fileDown(data.attach);
+      crudService.fileDown(this.route, data.attach);
     },
   },
   created() {

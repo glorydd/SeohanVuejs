@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import itemService from "@/services/erp/base/itemService";
+import crudService from "@/services/crudService";
 import pageFooter from "@/components/common/pageFooter";
 
 export default {
@@ -50,6 +50,7 @@ export default {
   },
   data() {
     return {
+      route : 'base/item/',
         itmno: '',
         warhs: '',
         cartype: '',
@@ -77,21 +78,18 @@ export default {
             size: 20
           }
         }
-      itemService
-        .fetchByParams(data)
+      crudService.fetchByParams(this.route, data)
         .then(response => {
           this.dataList = response.data;
           console.log(response);
         })
-        .catch(e => {
-          console.log(e);
-        });
+        .catch(e => {console.log(e);});
     },
     selectItem(data){
       this.method(data.itmno);
     }
   },
-  created() { 
+  created() {
     this.onFetch(0);
   }
 };

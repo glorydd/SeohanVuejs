@@ -1,91 +1,55 @@
-import axios from 'axios'
-import router from '../router'
-import qs from 'qs'
+import axios from "axios";
 
-const DOMAIN = 'http://localhost/api'
+var baseRoute = '';
+var headerInfo = '';
+class crudService {
 
-const BadRequest = 400
-const Unauthorized = 401
-const Forbidden = 403
-const NotFound = 404
-
-var route=''
-
-class httpService {
-  setAuthInHeader = token => {
-    axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : null
-  }
-
-  onUnauthorized = () => {
-    router.push(`/login?returnPath=${encodeURIComponent(location.pathname)}`)
-    throw Error(response)
-  }
-
-  onForbidden = (response) => {
-    alert('권한이 없습니다.')
-    router.push('/')
-    throw Error(response)
-  }
-
-  onBadRequest = (response) => {
-    alert('잘못된요청입니다.')
-    throw Error(response)
-  }
-
-  onNotFound = (response) => {
-    alert('잘못된 접근입니다.')
-    throw Error(response)
-  }
-
-  authRequest = (method, url, data) => {
-    return axios({
-      headers: {
-        'Authorization': 'Basic aWQ6c2VjcmV0',
-        'Content-Type': 'application/x-www-form-urlencoded'
+  setConfig(sourceRoute) {
+    UserService.getUserContent().then(
+      response => {
+        this.content = response.data;
       },
-      method,
-      url: DOMAIN + url,
-      data: qs.stringify(data)
-    }).then(result => result)
-      .catch(({response}) => {
-        if (response.status === Unauthorized) return onUnauthorized()
-        else if (response.status == Forbidden) return onForbidden(response)
-        else if (response.status == BadRequest) return onBadRequest(response)
-        else if (response.status == NotFound) return onNotFound(response)
-        throw Error(response)
-      })
+      error => {
+        this.content = error.response.data.message;
+      }
+    )
   }
 
-  request = (method, url, data) => {
-    return axios({
-      method,
-      url: DOMAIN + url,
-      data,
-
-    }).then(result => result)
-      .catch(error => error.response)
+  getOne(route, data) {
+    return axios.get('/api/' + route + '/' + data, headerInfo);
+  }
+  getAllList(route) {
+    return axios.get('/api/' + route, headerInfo);
+  }
+  getDataByParam(route, data) {
+    return axios.get('/api/' + route + "/params", data);
+  }
+  update(route, data) {
+    return axios.put('/api/' + route , data, headerInfo);
+  }
+  save(route, data) {
+    return axios.post('/api/' + route , data, headerInfo);
   }
 
-  export
-  const
-  requestFile = (method, url, data) => {
-    return axios({
-      method,
-      url: DOMAIN + url,
-      data,
-      // processData: false,
-      // contentType: false
-
-    }).then(result => result)
-      .catch(error => error.response)
+  fileUpload(route, data) {
+    return axios.post('/api/' + route + '/files', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        "Process-Data": false,
+        'Authorized': ''
+      }
+    });
   }
+  fileDown(route, data) {
+    var param = {
+      params: {
+        folderPath : route,
+        filename: data
+      }}
+    window.location.href = '/api/file?folderPath=' + route + '&filename=' + data;
 
-  auth = {
-    login(playload) {
-      return authRequest('post', '/oauth/token', playload)
-    }
+    return axios.get('/api/file/', param, {responseType: "blob"});
   }
-
 }
 
-export default new httpService();
+export default new crudService();

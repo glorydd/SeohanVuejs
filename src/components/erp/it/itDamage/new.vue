@@ -53,12 +53,13 @@
 <script>
 import lineService from "@/services/erp/base/lineService";
 import codeService from "@/services/erp/base/codeService";
-import itDamageService from "@/services/erp/general/itDamageService";
+import crudService from "@/services/crudService";
 
 export default {
   name: "itDamage",
   data() {
     return {
+      route: 'general/itdamage',
       fact:'',
       wrkct:'',
       class1:'',
@@ -78,14 +79,14 @@ export default {
   },
   created() {
     var data = { adgub:'IT' }
-    dictionayService.getDataByParam(data)
+    crudService.getDataByParam('base/code',data)
       .then(response => {
         this.class1List = response.data;
       })
       .catch(e => {console.log(e);});;
 
     var data = { adgub:'31' }
-    lineService.getDataByParam(data)
+    crudService.getDataByParam('base/line',data)
       .then(response => {
         this.factList = response.data;
       })
@@ -97,10 +98,10 @@ export default {
       formData.append("file", this.file);
       formData.append("fileName",fileName);
 
-      itDamageService.fileUpload(this.folderPath,formData)
+      crudService.fileUpload(this.route,formData)
                   .then(function() {})
                   .catch(e => {console.log(e)});
-      itDamageService.save(this._data)
+      crudService.save(this.route, this._data)
       .then((response) => { })
       .catch(e => {
         console.log(e);
@@ -111,10 +112,10 @@ export default {
       this.attach =this.$refs.file.files[0].name;
     },
     fileDown(data) {
-      itDamageService.fileDown(data.attach)
+      crudService.fileDown(this.route,data.attach)
     },
     selectfact(fact){
-      itDamageService.getWrkctListByFact(fact)
+      crudService.getDataByParam('base/fact', fact)
       .then(response => {
         this.wrkctList = response.data;
         console.log(response);

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import {auth} from '@/services/auth';
+import authService from '@/services/auth/authService';
 import {mapGetters} from 'vuex'
 
 export default {
@@ -28,9 +28,9 @@ export default {
     content : 'getUserInfo'
   }),
   mounted() {
-    Auth.getUserContent().then(
+    authService. getUserContent().then(
       response => {
-        this.content = response.data;        
+        this.content = response.data;
       },
       error => {
         this.content = error.response.data.message;
