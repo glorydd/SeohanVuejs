@@ -23,7 +23,7 @@
                 <a href="/general/report/list">공정신고</a>
               </li>
               <li>
-                <a href="/general/itdamage/list">전산고장신고</a>
+                <a href="/general/it-damage/list">전산고장신고</a>
               </li>
               <li>
                 <a href="#">Home 3</a>
@@ -40,7 +40,7 @@
             >영업</a>
             <ul class="collapse list-unstyled" id="menuSalesList">
               <li class="dropdown-menu__item">
-                <a href="/sales/asQuality/list">AS 품질 확보</a>
+                <a href="/sales/as-qc/list">AS 품질 확보</a>
               </li>
               <li>
                 <a href="#">Home 2</a>
@@ -60,13 +60,13 @@
             >자재</a>
             <ul class="collapse list-unstyled" id="menuMatList">
               <li>
-                <a href="/mat/importPlan/list">자재결품조회</a>
+                <a href="/mat/import-plan">자재결품조회</a>
               </li>
               <li>
-                <a href="#">Page 2</a>
+                <a href="/mat/wms/locaalm">출고 목록</a>
               </li>
               <li>
-                <a href="#">Page 3</a>
+                <a href="/mat/wms/warehouse">재고 현황</a>
               </li>
             </ul>
           </li class="active">
@@ -80,7 +80,7 @@
             >연구소</a>
             <ul class="collapse list-unstyled" id="menuLabList">
               <li>
-                <a href="/lab/proto/locaalmlist">시작품 불출 현황</a>
+                <a href="/lab/proto/locaalm">시작품 불출 현황</a>
               </li>
               <li>
                 <a href="#">Page 2</a>
@@ -124,8 +124,8 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="nav navbar-nav ml-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" href="/general/foodtable">식단표</a>
+                <li class="nav-item">
+                  <a class="nav-link" href="/general/food">식단표</a>
                 </li>
                 <li class="nav-item">
                   <!-- <a class="nav-link" href="#">Page</a> -->
@@ -161,13 +161,13 @@
         return store.getters.isAuthenticated
       },
       currentUser() {
-        return this.$store.state.auth.user;
+        return this.$store.state.account;
       }
     },
     methods: {
       onClickLogout() {
         // LOGOUT 변이 실행 후 리다이렉트
-        store.dispatch('LOGOUT').then(() => this.$router.push('/general'))
+        store.dispatch('LOGOUT').then(() => this.$router.push('/'))
       },
       toggle() {
         if (this.toggleClass === true) {
@@ -177,8 +177,10 @@
         }
       },
       logOut() {
-        this.$store.dispatch("auth/logout");
-        this.$router.push("/");
+        this.$store.commit("LOGOUT");
+        
+        location.href = '/login'
+        // this.$router.push("/");
       }
     }
   }

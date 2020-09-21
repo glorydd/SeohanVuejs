@@ -2,7 +2,7 @@
   <div id="importPlan">
     <table class="table table-striped table-bordered" id="dataTable">
       <tbody>
- 
+
         <tr v-for="data in dataList" v-bind:key="data" >
           <td class="d-none d-sm-block">{{data.cstcd}}</td>
           <td class="d-none d-sm-block">{{data.itmno}}</td>
@@ -13,7 +13,7 @@
           <td class="d-none d-sm-block">{{data.preqty}}</td>
           <td class="d-none d-sm-block">{{data.expqty}}</td>
           <td class="d-none d-sm-block">{{data.dscrp}}</td>
-          <td class="d-none d-sm-block">{{data.cusna}}</td>  
+          <td class="d-none d-sm-block">{{data.cusna}}</td>
         </tr>
       </tbody>
     </table>
@@ -22,13 +22,13 @@
 
 <script>
 import crudService from "@/services/crudService";
- 
+
 
 export default {
   name: "importPlan",
   data() {
     return {
-      folderPath:"importPlan", 
+      folderPath:"importPlan",
       datepicker: new Date(),
       querydate: "",
       dataList: []
@@ -38,10 +38,19 @@ export default {
     '$route':'getData'
   },
   methods: {
-    getData() { 
+    getData(data) {
+      var data =
+        {
+          params: {
+            warhs: this.warehouse,
+            itmno: this.itmno,
+            page: index - 1,
+            size: 20
+          }
+        }
       crudService
-        .retrieveListByQueryDate()
- 
+        .getDataByParam(data)
+
         .then(response => {
           this.dataList = response.data;
           console.log(response);

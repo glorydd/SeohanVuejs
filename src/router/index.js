@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import store from '@/vuex/store'
-import authHeader from '@/services/auth/auth-header'
+import store from '@/store'
+import {authHeader} from '@/services/auth'
 
 import Menu from '@/components/menu.vue'
 import Home from '@/components/home.vue'
@@ -22,8 +22,9 @@ import itDamageNew from '@/components/erp/it/itDamage/new'
 import mat from '@/components/erp/mat/mat'
 import importPlan from '@/components/erp/mat/importPlan/importPlan'
 import importPlanList from '@/components/erp/mat/importPlan/list'
-import warehouse from "@/components/erp/mat/location/warehouse";
-import locaAlm from "@/components/erp/mat/location/locaAlm";
+import wms from '@/components/erp/mat/warehouse/wms'
+import warehouse from "@/components/erp/mat/warehouse/warehouse";
+import locaAlm from "@/components/erp/mat/warehouse/locaAlm";
 
 import report from '@/components/erp/qc/report/report'
 import reportList from '@/components/erp/qc/report/list'
@@ -39,40 +40,50 @@ import foodTable from '@/components/erp/general/foodTable'
 // import qrReader from '@/components/general/qrReader'
 
 import lab from "@/components/erp/lab/lab";
-import proto from "@/components/erp/lab/prototype/prototype";
+import protowms from "@/components/erp/lab/prototype/protowms";
+import Axios from 'axios'
 
 const NotFound = { template: '<div>Not Found</div>' }
 
 Vue.use(Router)
 
-const requireAuth = () => (from, to, next) => {
-  // var permissionCheck = false;
-  // var permissions = localStorage.getItem('permissions');
-  // permissions.forEach(element => {
-  //   if (element = from) permissionCheck = true;
-  // });
 
-  // if (authHeader() && permissionCheck ) {
-  if (authHeader()  ) {
-    return next()
-  }else{
-    next('/login')
+const requireAuth = () => (to, from, next) => {
+  if (from==='/login'){
+    from = '/'
   }
+  !!store.state.access_token ? next() : next(`/login?returnPath=${encodeURIComponent(from.path)}`)
+}
+
+
+const requireManager = (to, from, next) => {
+
+  // 액세스토큰이 있으면
+  if (!!store.state.access_token) {
+    // 권한이 ADMIN 이면
+    if (!!store.state.account.roles && !!(store.state.account.roles.includes('ADMIN') ))
+      return next()
+    else {
+      alert('권한이 없습니다.')
+      return next('/')
+    }
+  } else
+    return next(`/login?returnPath=${encodeURIComponent(from.path)}`)
 }
 
 const router = new Router({
   mode: 'history', // Use browser history
-  routes: [{
-    path: '/',
+  routes: [
+    {path: '/login', component: Login},
+    {path: '/',
     component:Menu,beforeEnter: requireAuth(),
-    children:[{
-        path: '/', component: Home, beforeEnter: requireAuth(),
-        path: '/login', component: Login,
-        path: '/Profile', component: Profile , beforeEnter: requireAuth(),
-        path: '/general', component: general,
+    children:[
+      // {path: '/', component: Home, beforeEnter: requireAuth()},
+      {path: '/Profile', component: Profile , beforeEnter: requireAuth()},
+      {path: '/general', component: general,
         children: [
           {
-            path: 'itDamage', component: itDamage,
+            path: 'it-damage', component: itDamage,
             children: [
               { path: 'list', component: itDamageList },
               { path: 'new', component: itDamageNew },
@@ -85,7 +96,7 @@ const router = new Router({
               // {path: 'new', component: reportNew,beforeEnter: requireAuth},
             ]
           },
-          { path: 'foodTable', component: foodTable },
+          { path: 'food', component: foodTable },
           // { path: 'qrReader', component: qrReader },
         ],
         beforeEnter: requireAuth(),
@@ -94,7 +105,7 @@ const router = new Router({
         path: '/sales', component: sales,
         children: [
           {
-            path: 'asQuality', component: asQuality,
+            path: 'as-qc', component: asQuality,
             children: [
               { path: 'list', component: asQualityList },
               { path: 'new', component: asQualityNew },
@@ -103,23 +114,30 @@ const router = new Router({
         ],
         // beforeEnter: requireAuth(),
       },
-      // {
-      //   path: '/mat', component: mat,
-      //   children: [
-      //     {
-      //       path: 'importPlan', component: importPlan,
-      //       children: [
-      //         { path: 'list', component: importPlanList },
-      //       ]
-      //     },
-      //   ],
-      //   beforeEnter: requireAuth(),
-      // },
+      {
+        path: '/mat', component: mat,
+        children: [
+          {
+            path: 'import-plan', component: importPlan,
+            children: [
+              { path: 'list', component: importPlanList },
+            ]
+          },
+          {
+            path: 'wms', component: wms,
+            children: [
+              { path: 'loca', name:'loca', component: locaAlm,  props: true},
+              { path: 'warehouse', name:'warehouse', component: warehouse,  props: true }
+            ]
+          }
+        ],
+        beforeEnter: requireAuth(),
+      },
       {
         path: '/qc', component: general,
         children: [
           {
-            path: 'gspc', component: itDamage,
+            path: 'spc', component: itDamage,
             children: [
               { path: 'list', component: itDamageList },
               { path: 'new', component: itDamageNew },
@@ -132,29 +150,30 @@ const router = new Router({
               // {path: 'new', component: reportNew,beforeEnter: requireAuth},
             ]
           },
-          { path: 'foodTable', component: foodTable },
+          { path: 'food', component: foodTable },
           // { path: 'qrReader', component: qrReader },
         ],
         beforeEnter: requireAuth(),
       },
-      // {
-      //   path: '/lab', component: mat,
-      //   children: [
-      //     {
-      //       path: 'proto', component: proto,
-      //       children: [
-      //         { path: 'list', component: locaAlm },
-      //       ]
-      //     },
-      //   ],
-      //   beforeEnter: requireAuth(),
-      // }
+      //   {
+      //     path: '/lab', component: lab,
+      //     children: [
+      //       {
+      //         path: 'protowms', component: protowms,
+      //         children: [
+      //           { path: 'locaalm', component: locaAlm,  props: true},
+      //           { path: 'warehouse', component: warehouse,  props: true },
+      //         ]
+      //       },
+      //     ]
+      //   },
       ],
-  }, {
+  },
+  {
     path: '/lab', component: lab,
     children: [
       {
-        path: 'proto', component: proto,
+        path: 'proto', component: protowms,
         children: [
           { path: 'locaalm', component: locaAlm,  props: true},
           { path: 'warehouse', component: warehouse,  props: true },
@@ -162,16 +181,14 @@ const router = new Router({
       },
     ]
   },
-    {
-      path: '/base', component: base,
-      children: [
-        {
-          path: 'item', component: item,
-          // path: 'bom', component: bom,
-        },
-      ],
-      // beforeEnter: requireAuth(),
-    },]
+  {
+    path: '/base', component: base,
+    children: [
+      {path: 'item', component: item,  props: true, },
+      // {path: 'bom', component: bom },
+    ],
+    // beforeEnter: requireAuth(),
+  },]
 })
 
 export default router;

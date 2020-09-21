@@ -1,86 +1,99 @@
 <template>
-  <div id="item">
-  <div class="input-group mb-3">
-    <input type="text" class="form-control" minlength="3" v-model="itmno">
-    <div class="input-group-prepend">
-      <button class="btn btn-outline-secondary" type="button">Item 검색</button>
+  <!--  <transition name="item" appear>-->
+  <div id="itemSearch" style="overflow: auto">
+    <h2>Item 검색</h2>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <input type="text" class="form-control" minlength="3" v-model="itmno" v-on:keyup.enter="onFetch()">
+        <button class="btn btn-secondary" type="button" @click="onFetch(0)">Item 검색</button>
+      </div>
     </div>
-  </div>
 
-  <div>
-    <!--      <button @click="$emit('update:visible', !visible)">Close</button>-->
-    <table class="table table-striped table-bordered" id="dataTable">
-      <tbody>
-      <tr v-for="data in dataList" v-bind:key="data.itmno" @click="enditem(data)">
-        <td class="d-none d-sm-block">{{ data.class1 }}</td>
-        <td class="d-none d-sm-block">{{ data.co_gb }}</td>
-        <td class>
-          <button
-            v-show="data.attach"
-            class="btn btn-indigo btn-sm"
-            type="button"
-            @click="fileDown(data)"
-          >다운로드
-          </button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th class="">품목</th>
+          <th class="">차종</th>
+          <th class="">품종</th>
+          <th class="">Item No</th>
+          <th class="d-none d-sm-table-cell d-sm-block">Item Name</th>
+          <th class="">단위</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="data in dataList.content" v-bind:key="data.itmno" @click="selectItem(data)">
+          <td class="">{{ data.pummock }}</td>
+          <td class="">{{ data.chajong }}</td>
+          <td class="">{{ data.pumjong }}</td>
+          <td class="">{{ data.itmno }}</td>
+          <td class="">{{ data.dscrp }}</td>
+          <td class="">{{ data.units }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+<!--    @changed="onFetch"-->
+    <pageFooter  />
+    <!--  </transition>-->
   </div>
 </template>
 
 <script>
 import crudService from "@/services/crudService";
+import pageFooter from "@/components/common/pageFooter";
 
 export default {
   name: "item",
-  data:{
-    itmno:''
+  components:{
+    pageFooter
   },
-  props: {
-    visible: {
-      type: Boolean,
-      require: true,
-      default: false
-    },
-    title: {
-      type: String,
-      require: false
+  data() {
+    return {
+      route : 'base/item/',
+        itmno: '',
+        warhs: '',
+        cartype: '',
+        itemtype: '' ,
+      dataList: []
     }
   },
-  watch: {
-    $route: "getData"
+  props:{
+    method: {type: Function},
+  },
+  mounted() {
+    this.method(this.itmno);
   },
   methods: {
-    // handleWrapperClick() {
-    //   this.$emit("update:visible", false);
-    // },
-    getData(data) {
+    onFetch(index) {
+      if (this.itmno === '') return
       var data =
         {
           params: {
-            warhs: 'XB',
             itmno: this.itmno,
-            pumgb: ''
+            warhs: this.warhs,
+            cartype: this.cartype,
+            pumgb: this.itemtype,
+            page: index - 1,
+            size: 20
           }
         }
-      crudService
-        .getDataByParam(data)
+      crudService.getDataByParam(this.route, data)
         .then(response => {
           this.dataList = response.data;
           console.log(response);
         })
-        .catch(e => {
-          console.log(e);
-        });
+        .catch(e => {console.log(e);});
     },
+    selectItem(data){
+      this.method(data.itmno);
+    }
   },
   created() {
-    crudService.setRoute("base/item");
-    this.getData();
-  },
-  mounted: function () {
+    this.onFetch(0);
   }
 };
 </script>
+<style>
+
+</style>

@@ -27,6 +27,16 @@ import crudService from "@/services/crudService";
 
 export default {
   name: "line",
+  data() {
+    return {
+      route : 'base/line/',
+      itmno: '',
+      warhs: '',
+      cartype: '',
+      itemtype: '' ,
+      dataList: []
+    }
+  },
   props: {
     visible: {
       type: Boolean,
@@ -38,6 +48,7 @@ export default {
       require: false
     }
   },
+
   watch: {
     $route: "getData"
   },
@@ -46,8 +57,16 @@ export default {
       this.$emit("update:visible", false);
     },
     getData() {
-      crudService
-        .retrieveList("")
+      var data =
+        {
+          params: {
+            itmno: this.itmno,
+            warhs: this.warhs,
+            page: index - 1,
+            size: 20
+          }
+        }
+      crudService.getDataByParam(this.route, data)
         .then(response => {
           this.dataList = response.data;
           console.log(response);
