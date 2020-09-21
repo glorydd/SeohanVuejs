@@ -6,6 +6,7 @@ import router from './router'
 import axios from 'axios'
 import store from './store'
 import 'bootstrap'
+import VModal from 'vue-js-modal'
 // import 'es6-promise/auto'
 
 // import $ from 'jquery';
@@ -17,6 +18,7 @@ Vue.config.productionTip = false
 Vue.prototype.$http = axios
 
 Vue.use(VeeValidate)
+Vue.use(VModal, { dynamic: true })
 
 /* eslint-disable no-new */
 new Vue({

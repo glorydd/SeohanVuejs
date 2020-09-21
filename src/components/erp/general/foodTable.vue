@@ -31,12 +31,13 @@
 </template>
 
 <script>
-import foodTableService from "@/services/general/foodTableService";
+import crudService from "@/services/crudService";
 
 export default {
   name: "foodTable",
   data() {
     return {
+      route : 'general/foodTable',
       datepicker: new Date(),
       querydate: "",
       company: "",
@@ -55,31 +56,30 @@ export default {
       this.querydate =this.datepicker.substr(0, 4) +this.datepicker.substr(5, 2) +this.datepicker.substr(8, 2);
       this.company= company;
 
-      foodTableService
-        .foodTable(this.querydate, this.company)
+      crudService
+        .fetchByParams(this.route, data)
         .then(response => {
-          response.data.forEach(function(item) {
-            switch (item.gubn) {
-              case "A":
-                item.gubn = "아침";
-                break;
-              case "B":
-                item.gubn = "점심";
-                break;
-              case "C":
-                item.gubn = "저녁";
-                break;
-              case "D":
-                item.gubn = "야식";
-                break;
-            }
-          });
+          // response.data.forEach(function(item) {
+          //   switch (item.gubn) {
+          //     case "A":
+          //       item.gubn = "아침";
+          //       break;
+          //     case "B":
+          //       item.gubn = "점심";
+          //       break;
+          //     case "C":
+          //       item.gubn = "저녁";
+          //       break;
+          //     case "D":
+          //       item.gubn = "야식";
+          //       break;
+          //   }
+          // });
           this.dataList = response.data;
-
+          console.log(response);
         })
-        .catch(e => {
-          console.error(e);
-        });
+        .catch(e => {console.log(e);});
+
     },
   },
   created() {

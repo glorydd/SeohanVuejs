@@ -5,16 +5,17 @@
 const path = require('path')
 const host = "localhost"
 
-module.exports = {  
+module.exports = {
   dev: {
-    // Paths 
+    // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    
+
+
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8091, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
-    
+
     autoOpenBrowser: false,
     https: false,
     disableHostCheck: true,
@@ -38,7 +39,7 @@ module.exports = {
     cacheBusting: true,
     cssSourceMap: true
   },
-  build: { 
+  build: {
     // Various Dev Server settings
     host: 'http://ind.seohan.com', // can be overwritten by process.env.HOST
     port: 8091, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
@@ -49,23 +50,6 @@ module.exports = {
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {
-      // proxy all requests starting with /api to jsonplaceholder
-      '/api': {
-        target: 'http://ind.seohan.com:44000',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': ''
-        }
-      },
-      '/message': {
-        target: 'http://ind.seohan.com:5090',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/message': ''
-        }
-      }
-    },
     /**
      * Source Maps
      */
