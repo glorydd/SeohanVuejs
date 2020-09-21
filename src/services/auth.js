@@ -15,7 +15,7 @@ export const setAuthInHeader = token => {
 }
 
 export default function authHeader () {
-  let accessToken = localStorage.getItem('accessToken');
+  let accessToken = localStorage.getItem('access_token');
   if (accessToken) {
     return { Authorization: accessToken }
   } else {
@@ -23,16 +23,15 @@ export default function authHeader () {
   }
 }
 
-
+export const auth = {
+  login(playload) {
+    return authRequest('post', '/oauth/token', playload)
+  }
+}
 export const account = {
+
   fetch() {
     return request('get', '/accounts')
-  },
-  create(playload) {
-    return request('post', '/accounts', playload)
-  },
-  put(playload) {
-    return request('put', '/accounts', playload)
   },
   fetchManager(playload) {
     return request('get', `/accounts/manager?page=${playload.page}&size=10&sort=id,DESC`)
@@ -48,15 +47,7 @@ export const account = {
   }
 }
 
-
-export const auth = {
-  login(playload) {
-    return authRequest('post', '/oauth/token', playload)
-  }
-}
-
-
-const authRequest = (method, url, data) => {
+export const authRequest = (method, url, data) => {
   return axios({
     headers: {
       'Authorization': 'Basic aWQ6c2VjcmV0',

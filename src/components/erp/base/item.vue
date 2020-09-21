@@ -78,7 +78,7 @@ export default {
             size: 20
           }
         }
-      crudService.fetchByParams(this.route, data)
+      crudService.getDataByParam(this.route, data)
         .then(response => {
           this.dataList = response.data;
           console.log(response);

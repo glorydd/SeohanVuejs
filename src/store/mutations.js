@@ -1,4 +1,4 @@
-import {setAuthInHeader} from '@/services'
+import {setAuthInHeader, } from '@/services/auth'
 
 const mutations = {
      

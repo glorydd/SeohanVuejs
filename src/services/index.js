@@ -1,6 +1,7 @@
 import axios from 'axios'
 import router from '../router'
 import qs from 'qs'
+import {authRequest} from '@/services/auth'
 
 const DOMAIN = 'http://localhost/api'
 
@@ -8,7 +9,6 @@ const BadRequest = 400
 const Unauthorized = 401
 const Forbidden = 403
 const NotFound = 404
-
 
 export const onUnauthorized = () => {
   router.push(`/login?returnPath=${encodeURIComponent(location.pathname)}`)
@@ -29,7 +29,6 @@ export  const onNotFound = (response) => {
   alert('잘못된 접근입니다.')
   throw Error(response)
 }
-
 export const request = (method, url, data) => {
   return axios({
     method,
@@ -39,7 +38,6 @@ export const request = (method, url, data) => {
   }).then(result => result)
     .catch(error => error.response)
 }
-
 
 export const requestFile = (method, url, data) => {
   return axios({
@@ -52,7 +50,6 @@ export const requestFile = (method, url, data) => {
   }).then(result => result)
     .catch(error => error.response)
 }
-
 
 export const cart = {
   fetch() {

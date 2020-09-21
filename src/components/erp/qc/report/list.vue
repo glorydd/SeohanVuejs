@@ -55,9 +55,12 @@ export default {
   },
   methods: {
     getData() {
-      var stat = "1";
-      crudService
-        .retrieveList(stat)
+      let data = {
+        params :{
+          stat : '1'
+        }
+      }
+      crudService.getDataByParams('general/report', data)
         .then(response => {
           this.dataList = response.data;
           console.log(response);
@@ -67,8 +70,7 @@ export default {
         });
     },
     endreport(data) {
-      crudService
-        .update(data)
+      crudService.update('general/report', data)
         .then(() => {
           this.getData();
         })
@@ -81,7 +83,6 @@ export default {
     }
   },
   created() {
-    crudService.setRoute('general/report');
     this.getData();
   },
   mounted: function() {}

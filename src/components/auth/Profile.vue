@@ -1,22 +1,27 @@
 <template>
   <div class="container">
     <header class="jumbotron">
-      <h3>id : {{content.asabn}}</h3>
-      <h3>user name : {{content.kname}}</h3>
-      <h3>email : {{content.asabn}}@seohan.com</h3>
+      <h3>id : {{content.accountid}}</h3>
+      <h3>user name : {{content.name}}</h3>
+      <h3>email : {{content.email}}</h3>
+      <h3>phone : {{content.phone}}</h3>
     </header>
   </div>
 </template>
 
 <script>
-import authService from '@/services/auth/authService';
-import {mapGetters} from 'vuex'
+import {auth, account} from '@/services/auth';
 
 export default {
   name: 'profile',
   data() {
     return {
-      content: ''
+      content: {
+        accountid:'',
+        name:'',
+        email:'',
+        phone :''
+      }
     }
   },
   // computed:{
@@ -24,17 +29,14 @@ export default {
   //     this.$store.getters.getUserInfo;
   //   }
   // },
-  computed: mapGetters({
-    content : 'getUserInfo'
-  }),
   mounted() {
-    authService. getUserContent().then(
+    account.fetch()
+    .then(
       response => {
         this.content = response.data;
       },
       error => {
         this.content = error.response.data.message;
-        alert(error.response.data.message);
       }
     )
   }

@@ -1,9 +1,15 @@
 import axios from "axios";
+import {onUnauthorized} from './index'
 
 var baseRoute = '';
 var headerInfo = '';
-class crudService {
 
+const BadRequest = 400
+const Unauthorized = 401
+const Forbidden = 403
+const NotFound = 404 
+ 
+const crudService = { 
   setConfig(sourceRoute) {
     baseRoute = sourceRoute;
 
@@ -15,45 +21,80 @@ class crudService {
         this.content = error.response.data.message;
       }
     )
-
-    // headerInfo = {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'Authorized':''
-    //   }
-    // }
-  }
+  },
 
   getOne(route, data) {
-    return axios.get('/api/' + route + '/' + data, headerInfo);
-  }
-
-
-
-
-
+    return axios.get('/api/' + route + '/' + data, headerInfo)
+          .then(result => result )
+          .catch(({response}) => {
+            if (response.status === Unauthorized) return onUnauthorized()
+            else if (response.status == Forbidden) return onForbidden(response)
+            else if (response.status == BadRequest) return onBadRequest(response)
+            else if (response.status == NotFound) return onNotFound(response)
+            throw Error(response)
+          });
+  },
   getAllList(route) {
-    return axios.get('/api/' + route, headerInfo);
-  }
+    return axios.get('/api/' + route, headerInfo)
+    .then(result => result )
+          .catch(({response}) => {
+            if (response.status === Unauthorized) return onUnauthorized()
+            else if (response.status == Forbidden) return onForbidden(response)
+            else if (response.status == BadRequest) return onBadRequest(response)
+            else if (response.status == NotFound) return onNotFound(response)
+            throw Error(response)
+          });;
+  },
   getDataByParam(route, data) {
-    return axios.get('/api/' + route + "/params", data);
-  }
+    return axios.get('/api/' + route + "/params", data)
+    .then(result => result )
+          .catch(({response}) => {
+            if (response.status === Unauthorized) return onUnauthorized()
+            else if (response.status == Forbidden) return onForbidden(response)
+            else if (response.status == BadRequest) return onBadRequest(response)
+            else if (response.status == NotFound) return onNotFound(response)
+            throw Error(response)
+          });;
+  },
   update(route, data) {
-    return axios.put('/api/' + route , data, headerInfo);
-  }
+    return axios.put('/api/' + route , data, headerInfo)
+    .then(result => result )
+          .catch(({response}) => {
+            if (response.status === Unauthorized) return onUnauthorized()
+            else if (response.status == Forbidden) return onForbidden(response)
+            else if (response.status == BadRequest) return onBadRequest(response)
+            else if (response.status == NotFound) return onNotFound(response)
+            throw Error(response)
+          });;
+  },
   save(route, data) {
-    return axios.post('/api/' + route , data, headerInfo);
-  }
+    return axios.post('/api/' + route , data, headerInfo)
+    .then(result => result )
+          .catch(({response}) => {
+            if (response.status === Unauthorized) return onUnauthorized()
+            else if (response.status == Forbidden) return onForbidden(response)
+            else if (response.status == BadRequest) return onBadRequest(response)
+            else if (response.status == NotFound) return onNotFound(response)
+            throw Error(response)
+          });;
+  },
 
   fileUpload(route, data) {
     return axios.post('/api/' + route + '/files', data, {
       headers: {
         'Content-Type': 'multipart/form-data',
         "Process-Data": false,
-        'Authorized': ''
       }
-    });
-  }
+    })
+    .then(result => result )
+          .catch(({response}) => {
+            if (response.status === Unauthorized) return onUnauthorized()
+            else if (response.status == Forbidden) return onForbidden(response)
+            else if (response.status == BadRequest) return onBadRequest(response)
+            else if (response.status == NotFound) return onNotFound(response)
+            throw Error(response)
+          });;
+  },
   fileDown(route, data) {
     var param = {
       params: {
@@ -65,5 +106,5 @@ class crudService {
     return axios.get('/api/file/', param, {responseType: "blob"});
   }
 }
+export default crudService;
 
-export default new crudService();

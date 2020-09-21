@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
-import authHeader from '@/services/auth-header'
+import {authHeader} from '@/services/auth'
 
 import Menu from '@/components/menu.vue'
 import Home from '@/components/home.vue'
@@ -41,6 +41,7 @@ import foodTable from '@/components/erp/general/foodTable'
 
 import lab from "@/components/erp/lab/lab";
 import protowms from "@/components/erp/lab/prototype/protowms";
+import Axios from 'axios'
 
 const NotFound = { template: '<div>Not Found</div>' }
 
@@ -48,6 +49,9 @@ Vue.use(Router)
 
 
 const requireAuth = () => (to, from, next) => {
+  if (from==='/login'){
+    from = '/'
+  }
   !!store.state.access_token ? next() : next(`/login?returnPath=${encodeURIComponent(from.path)}`)
 }
 
