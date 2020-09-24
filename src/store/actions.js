@@ -1,13 +1,9 @@
-import  {auth, account}   from '@/services/auth';
+import  { account}   from '@/services/auth';
 
 const actions  = {
 
-    logout({ commit }) {
-        auth.logout();
-        commit('logout');
-    },
     LOGIN({commit, dispatch}, playload) {
-      return auth.login(playload)
+      return account.login(playload)
         .then(({data}) => {
         commit('LOGIN', data.access_token)
         dispatch('FETCH_ACCOUNT')

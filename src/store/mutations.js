@@ -1,8 +1,6 @@
 import {setAuthInHeader, } from '@/services/auth'
 
 const mutations = {
-     
-        
     LOGIN(state, access_token) {
         if (!access_token) return
         state.access_token = access_token

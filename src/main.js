@@ -9,9 +9,6 @@ import 'bootstrap'
 import VModal from 'vue-js-modal'
 // import 'es6-promise/auto'
 
-// import $ from 'jquery';
-// import 'expose-loader?$!expose-loader?jQuery!jquery'
-
 import VeeValidate from 'vee-validate'
 
 Vue.config.productionTip = false

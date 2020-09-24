@@ -4,11 +4,9 @@ import Vuex from 'vuex'
 import axios from "axios";
 import state from './state'
 import mutations from './mutations'
-import actions from './actions' 
+import actions from './actions'
 
 Vue.use(Vuex)
-
-const resourceHost = '/api'
 
 const store = new Vuex.Store({
   state,
@@ -16,13 +14,6 @@ const store = new Vuex.Store({
   actions
 })
 
-// const enhanceAccessToeken = () => {
-//   const {accessToken} = localStorage
-//   if (!accessToken) return
-//   axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-// }
-// enhanceAccessToeken()
- 
 const access_token = localStorage.access_token
 store.commit('LOGIN', access_token)
 

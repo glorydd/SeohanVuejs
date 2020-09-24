@@ -3,20 +3,17 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-const host = "localhost"
 
-module.exports = {  
+module.exports = {
   dev: {
-    // Paths 
+    // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    
-
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8091, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
-    
+
     autoOpenBrowser: false,
     https: false,
     disableHostCheck: true,
@@ -40,7 +37,7 @@ module.exports = {
     cacheBusting: true,
     cssSourceMap: true
   },
-  build: { 
+  build: {
     // Various Dev Server settings
     host: 'http://ind.seohan.com', // can be overwritten by process.env.HOST
     port: 8091, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
@@ -50,7 +47,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/', 
+    assetsPublicPath: '/',
     /**
      * Source Maps
      */

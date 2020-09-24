@@ -12,7 +12,7 @@ const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const env = process.env.NODE_ENV === 'testing'
-  ? require('../config/test.env')
+  ? require('../config/dev.env')
   : require('../config/prod.env')
 
 const webpackConfig = merge(baseWebpackConfig, {
@@ -22,6 +22,32 @@ const webpackConfig = merge(baseWebpackConfig, {
       extract: true,
       usePostCSS: true
     })
+  },devServer: {
+    disableHostCheck: true,
+    clientLogLevel: 'warning',
+    historyApiFallback: {
+      rewrites: [
+        { from: /.*/, to: path.posix.join(config.build.assetsPublicPath, 'index.html') },
+      ],
+    },
+    hot: true,
+    contentBase: false, // since we use CopyWebpackPlugin.
+    compress: true,
+
+    host: config.build.host,
+    port: config.build.port,
+
+
+    open: config.build.autoOpenBrowser,
+    overlay: config.build.errorOverlay
+      ? { warnings: false, errors: true }
+      : false,
+    publicPath: config.build.assetsPublicPath,
+    quiet: true, // necessary for FriendlyErrorsPlugin
+    watchOptions: {
+      poll: config.build.poll,
+    },
+    // https:true
   },
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
   output: {
@@ -32,7 +58,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
-      'process.env': env
+      'process.env': require('../config/prod.env')
     }),
     new UglifyJsPlugin({
       uglifyOptions: {
@@ -48,7 +74,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       filename: utils.assetsPath('css/[name].[contenthash].css'),
       // Setting the following option to `false` will not extract CSS from codesplit chunks.
       // Their CSS will instead be inserted dynamically with style-loader when the codesplit chunk has been loaded by webpack.
-      // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`, 
+      // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`,
       // increasing file size: https://github.com/vuejs-templates/webpack/issues/1110
       allChunks: true,
     }),

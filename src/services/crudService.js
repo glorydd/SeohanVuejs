@@ -1,30 +1,16 @@
 import axios from "axios";
 import {onUnauthorized} from './index'
-
-var baseRoute = '';
-var headerInfo = '';
+import authHeader from "./auth";
 
 const BadRequest = 400
 const Unauthorized = 401
 const Forbidden = 403
-const NotFound = 404 
- 
-const crudService = { 
-  setConfig(sourceRoute) {
-    baseRoute = sourceRoute;
+const NotFound = 404
 
-    UserService.getUserContent().then(
-      response => {
-        this.content = response.data;
-      },
-      error => {
-        this.content = error.response.data.message;
-      }
-    )
-  },
 
-  getOne(route, data) {
-    return axios.get('/api/' + route + '/' + data, headerInfo)
+const crudService = {
+  getByPath(route, data) {
+    return axios.get('/api/' + route + '/' + data)
           .then(result => result )
           .catch(({response}) => {
             if (response.status === Unauthorized) return onUnauthorized()
@@ -34,9 +20,9 @@ const crudService = {
             throw Error(response)
           });
   },
-  getAllList(route) {
-    return axios.get('/api/' + route, headerInfo)
-    .then(result => result )
+  getRequest(route) {
+    return axios.get('/api/' + route)
+          .then(result => result )
           .catch(({response}) => {
             if (response.status === Unauthorized) return onUnauthorized()
             else if (response.status == Forbidden) return onForbidden(response)

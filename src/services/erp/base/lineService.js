@@ -4,11 +4,11 @@ var route = 'base/line';
 class lineService {
 
   // 공통 외 추가사항
-  getOne(data) {
-    return crudService.getOne(route + '/', data)
+  getLine(data) {
+    return crudService.getByPath(route + '/', data)
   }
   getLinesByFact(data) {
-    return crudService.getOne(route + '/fact/', data)
+    return crudService.getByPath(route + '/fact/', data)
   }
 }
 

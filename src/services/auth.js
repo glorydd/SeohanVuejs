@@ -2,9 +2,8 @@ import axios from 'axios';
 import router from '../router'
 import qs from 'qs'
 import {request, requestFile, onBadRequest,onForbidden,onUnauthorized,onNotFound} from './index'
+import crudService from "./crudService";
 
-// const API_URL = '/api/auth/';
-const DOMAIN = 'http://localhost/api'
 const BadRequest = 400
 const Unauthorized = 401
 const Forbidden = 403
@@ -23,26 +22,26 @@ export default function authHeader () {
   }
 }
 
-export const auth = {
-  login(playload) {
-    return authRequest('post', '/oauth/token', playload)
-  }
-}
 export const account = {
 
+  login(playload) {
+    return authRequest('post', '/oauth/token', playload)
+  },
   fetch() {
-    return request('get', '/accounts')
-  },
-  fetchManager(playload) {
-    return request('get', `/accounts/manager?page=${playload.page}&size=10&sort=id,DESC`)
-  },
-  fetchManagerSearch(playload) {
-    return request('get', `/accounts/manager/${playload.option}/${playload.keyword}?page=${playload.page}&size=10&sort=id,DESC`)
+    return crudService.getRequest('/accounts')
+      .catch(response => {
+        throw Error(response)
+      })
   },
   idCheck(playload) {
-    return request('post', '/accounts/join/check', playload)
+    return crudService.save('/accounts/join/check', playload)
   },
   createFiles(playload) {
+    // let data = {
+    //   params : {
+    //
+    //   }
+    // }
     return requestFile('post', `/accounts/files/${playload.accountId}`, playload.formData)
   }
 }
@@ -54,7 +53,7 @@ export const authRequest = (method, url, data) => {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     method,
-    url: DOMAIN + url,
+    url:  '/api' + url,
     data: qs.stringify(data)
   }).then(result => result)
     .catch(({response}) => {
