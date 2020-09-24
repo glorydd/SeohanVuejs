@@ -46,7 +46,7 @@
 <script>
 import store from 'vuex';
 import crudService from "@/services/crudService";
-import itemList from '@/components/erp/base/item';
+import searchItemModal from '@/components/erp/base/searchItem';
 
 export default {
   name: "asQuality",
@@ -65,7 +65,7 @@ export default {
     '$route':'getData'
   },
   components: {
-    appMyModal: itemList
+    appMyModal: searchItemModal
   },
   methods: {
     ShowItemListButton(){

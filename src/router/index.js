@@ -10,7 +10,8 @@ import Login from '@/components/auth/Login.vue'
 import Profile from '@/components/auth/Profile.vue'
 
 import base from '@/components/erp/base/base'
-import item from '@/components/erp/base/item'
+import searchItem from '@/components/erp/base/searchItem'
+import searchFactory from '@/components/erp/base/searchFactory'
 // import bom from '@/components/erp/base/bom'
 
 import general from '@/components/erp/general/general'
@@ -184,11 +185,14 @@ const router = new Router({
   {
     path: '/base', component: base,
     children: [
-      {path: 'item', component: item,  props: true, },
+      {path: 'searchItem', component: searchItem,  props: true, },
+      {path: 'searchFactory', component: searchFactory,  props: true, },
       // {path: 'bom', component: bom },
     ],
     // beforeEnter: requireAuth(),
-  },]
+  },
+
+  ]
 })
 
 export default router;

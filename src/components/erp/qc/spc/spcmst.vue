@@ -91,11 +91,11 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade bd-example-modal-lg " id="searchItemModal" tabindex="-1" role="dialog" aria-labelledby="itemSearchTitle" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg " id="itemSearchModal" tabindex="-1" role="dialog" aria-labelledby="itemSearchTitle" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-body">
-            <searchItemModal :method="setItem"/>
+            <itemSearchModal :method="setItem"/>
           </div>
         </div>
       </div>
@@ -106,11 +106,11 @@
 <script>
 import crudService from "@/services/crudService";
 import matWmsService from "@/services/erp/mat/matWmsService";
-import searchItemModal from '@/components/erp/base/searchItem' ;
+import itemSearchModal from '@/components/erp/base/item' ;
 
 export default {
   components: {
-    searchItemModal: searchItemModal
+    itemSearchModal: itemSearchModal
   },
   name: "warehouse",
   data() {
@@ -127,6 +127,7 @@ export default {
       selectedData: [],
     }
   },
+
   created() {
     this.warehouse = this.$route.query.warehouse;
     this.onFetch(0);
@@ -134,7 +135,7 @@ export default {
   methods: {
     setItem(itemno){
       this.itmno = itemno;
-     if (itemno!='') $('#searchItemModal').modal('toggle') ;
+     if (itemno!='') $('#itemSearchModal').modal('toggle') ;
      this.onFetch(0);
     },
     onFetch(index) {
