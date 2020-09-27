@@ -3,9 +3,9 @@
     <div class="row col-md-12 col-lg-12 col-sm-12 col-xs-12  ">
       <div>
         <h3>식단표</h3>
-          <button class="btn btn-default" v-on:click="getFoodTableList('seohan')">서한</button>
-          <button class="btn btn-default" v-on:click="getFoodTableList('kamtec')">캄텍</button>
-          <button class="btn btn-default" v-on:click="getFoodTableList('lab')">연구소</button>
+          <button class="btn btn-default" v-on:click="getFoodByCompany('SEOHAN')">서한</button>
+          <button class="btn btn-default" v-on:click="getFoodByCompany('KAMTEC')">캄텍</button>
+          <button class="btn btn-default" v-on:click="getFoodByCompany('LAB')">연구소</button>
         <input class="form-control"
           v-model="datepicker"
           v-on:change="getFoodTableList()"
@@ -37,10 +37,10 @@ export default {
   name: "foodTable",
   data() {
     return {
-      route : 'general/foodTable',
+      route : 'general/food',
       datepicker: new Date(),
       querydate: "",
-      company: "",
+      companycode: "",
       dataList: []
     };
   },
@@ -52,29 +52,20 @@ export default {
         return 'black' ;
       }
     },
-    getFoodTableList(company) {
-      this.querydate =this.datepicker.substr(0, 4) +this.datepicker.substr(5, 2) +this.datepicker.substr(8, 2);
-      this.company= company;
+    getFoodByCompany(companycode){
+      this.companycode = companycode;
+      this.getFoodTableList();
+    },
+    getFoodTableList() {      
+      var data ={
+        params:{
+          gdate :this.datepicker.substr(0, 4) +this.datepicker.substr(5, 2) +this.datepicker.substr(8, 2),
+          companycode: this.companycode
+        }
+      }
 
-      crudService
-        .fetchByParams(this.route, data)
+      crudService.getDataByParam(this.route, data)
         .then(response => {
-          // response.data.forEach(function(item) {
-          //   switch (item.gubn) {
-          //     case "A":
-          //       item.gubn = "아침";
-          //       break;
-          //     case "B":
-          //       item.gubn = "점심";
-          //       break;
-          //     case "C":
-          //       item.gubn = "저녁";
-          //       break;
-          //     case "D":
-          //       item.gubn = "야식";
-          //       break;
-          //   }
-          // });
           this.dataList = response.data;
           console.log(response);
         })
@@ -86,7 +77,7 @@ export default {
     var today = new Date();
     this.datepicker =
       today.getFullYear() + "-" +("00" + (today.getMonth() + 1)).slice(-2) +"-" +("00" + today.getDate()).slice(-2);
-    this.getFoodTableList('seohan');
+    this.getFoodByCompany('SEOHAN');
   },
   mounted: function() {},
   computed: {
