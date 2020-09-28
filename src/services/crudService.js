@@ -43,7 +43,7 @@ const crudService = {
           });;
   },
   update(route, data) {
-    return axios.put('/api/' + route , data, headerInfo)
+    return axios.put('/api/' + route , data)
     .then(result => result )
           .catch(({response}) => {
             if (response.status === Unauthorized) return onUnauthorized()
@@ -54,7 +54,7 @@ const crudService = {
           });;
   },
   save(route, data) {
-    return axios.post('/api/' + route , data, headerInfo)
+    return axios.post('/api/' + route , data)
     .then(result => result )
           .catch(({response}) => {
             if (response.status === Unauthorized) return onUnauthorized()
