@@ -20,8 +20,8 @@
             <th class>메뉴</th>
           </thead>
           <tbody>
-            <tr v-for="data in dataList" v-bind:key="data.gubn">
-              <td v-bind:class="{'A' : data.gubn==='아침' || data.gubn==='저녁'}">{{data.gubn}}</td>
+            <tr v-for="data in dataList" v-bind:key="data.rod_id">
+              <td v-bind:class="data.gubn">{{data.gubn}}</td>
               <td v-bind:class="{'A' : data.gubn==='아침' || data.gubn==='저녁'}">{{data.menu}}</td>
             </tr>
           </tbody>
@@ -85,7 +85,7 @@ export default {
 };
 </script>
 <style scoped>
-  .A, .C {
+  .A, .C, .아침, .저녁 {
     background-color: #EFEFEF;
   }
 </style>

@@ -1,8 +1,5 @@
 <template>
   <div>
-    <nav class="navbar navbar-light ">
-    </nav>
-    Home
     <router-view></router-view>
   </div>
 </template>

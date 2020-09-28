@@ -34,6 +34,17 @@ const crudService = {
             throw Error(response)
           });
   },
+  getDataByPath(route, data) {
+    return axios.get('/api/' + route + '/' + data, headerInfo)
+          .then(result => result )
+          .catch(({response}) => {
+            if (response.status === Unauthorized) return onUnauthorized()
+            else if (response.status == Forbidden) return onForbidden(response)
+            else if (response.status == BadRequest) return onBadRequest(response)
+            else if (response.status == NotFound) return onNotFound(response)
+            throw Error(response)
+          });
+  },
   getAllList(route) {
     return axios.get('/api/' + route, headerInfo)
     .then(result => result )
