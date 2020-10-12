@@ -146,8 +146,7 @@
       </div>
     </div>
 </template>
-<script src='./assets/js/bootstrap.min.js'>
-</script>
+
 
 <script>
   export default {
@@ -178,7 +177,7 @@
       },
       logOut() {
         this.$store.commit("LOGOUT");
-        
+
         location.href = '/login'
         // this.$router.push("/");
       }
