@@ -4,7 +4,7 @@
       <h2 id="titleProtoWarehouse">재고 현황</h2>
       <div class="input-group mb-3 ">
         <div class="input-group-prepend">
-          <button class="btn btn-secondary" type="button" data-toggle="modal"  data-target="#itemSearchModal"  >Item 검색</button>
+          <button ref="modal" class="btn btn-secondary" type="button" data-toggle="modal"  data-target="#itemSearchModal"  >Item 검색</button>
 
 
           <button
@@ -154,7 +154,7 @@ export default {
     },
     setItem(itemno){
       this.itmno = itemno;
-     if (itemno!='') $('#itemSearchModal').modal('toggle') ;
+     if (itemno!='') this.$refs.modal.modal('toggle') ;
      this.onFetch(0);
     },
     onFetch(index) {
@@ -213,7 +213,7 @@ export default {
     },
   },
   mounted() {
-    $('#itemSearchModal').modal('hide') ;
+    this.$refs.modal.modal('hide') ;
   },
   computed: {}
 };

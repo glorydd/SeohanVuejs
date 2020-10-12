@@ -32,12 +32,9 @@
     </nav>
     </div>-->
 </template>
-<!--<script src='../src/assets/js/bootstrap.min.js'>-->
-<!--</script>-->
-
 <script>
 export default {
-  name: "App",
+  name: "app",
   computed: {
     isAuthenticated() {
       return this.$store.getters.isAuthenticated;

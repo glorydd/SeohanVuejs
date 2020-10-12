@@ -1,20 +1,18 @@
 const path = require('path')
 const webpack = require('webpack')
-const config = require('./config')
+// const config = require('./config')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
-const HOST = process.env.HOST
-const PORT = process.env.PORT && Number(process.env.PORT)
-// function resolve (dir) {
-//   return path.join(__dirname, '..', dir)
-// }
+function resolve (dir) {
+  return path.join(__dirname, '/', dir)
+}
 
 module.exports = {
-  entry: './src/main.js',
-  output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
-    filename: 'build.js'
+  entry :  {
+    app: path.join(__dirname, 'src/main.js')
   },
+  devtool: '#source-map',
   module: {
     rules: [
       {
@@ -26,75 +24,87 @@ module.exports = {
       },      {
         test: /\.vue$/,
         loader: 'vue-loader',
-        options: {
-          loaders: {
-          }
-          // other vue-loader options go here
-        }
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
       },
-      {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]?[hash]'
-        }
-      }
     ]
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
+      // 'vue$': 'vue/dist/vue.esm.js',
       '@': path.resolve('src')
     },
     extensions: ['*', '.js', '.vue', '.json']
   },
   devServer: {
+    host: 'localhost',
     port:8091,
-    contentBase: './src',
     historyApiFallback: true,
-    noInfo: true,
-    disableHostCheck: true,
+    contentBase: path.join(__dirname, "dist"),
+    // contentBase: false, // since we use CopyWebpackPlugin.
+    inline: true,
     compress: true,
-    open: config.dev.autoOpenBrowser,
-    publicPath: config.dev.assetsPublicPath,
-    quiet: true, // necessary for FriendlyErrorsPlugin
+    overlay:true,
+    // publicPath: '/',
+    hot: true,
+    // quiet: true, // necessary for FriendlyErrorsPlugin
   },
-  performance: {
-    hints: false
-  },
-  devtool: '#eval-source-map',
   plugins: [
+    new VueLoaderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    // copy custom static assets
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, 'static'),
+        to: 'static',
+        ignore: ['.*']
+      }
+    ]),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jquery: 'jquery',
       'window.jQuery': 'jquery',
       jQuery: 'jquery'
     })
-  ]
+  ],
+  node: {
+    // prevent webpack from injecting useless setImmediate polyfill because Vue
+    // source contains it (although only uses it if it's native).
+    setImmediate: false,
+    // prevent webpack from injecting mocks to Node native modules
+    // that does not make sense for the client
+    dgram: 'empty',
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
+    child_process: 'empty'
+  },
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    filename: 'build.js'
+  }
 }
-
-if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map'
-  // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
-      }
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    })
-  ])
-}
+//
+// if (process.env.NODE_ENV === 'production') {
+//   module.exports.devtool = '#source-map'
+//   // http://vue-loader.vuejs.org/en/workflow/production.html
+//   module.exports.plugins = (module.exports.plugins || []).concat([
+//     new webpack.DefinePlugin({
+//       'process.env': {
+//         NODE_ENV: '"production"'
+//       }
+//     }),
+//     new webpack.optimize.UglifyJsPlugin({
+//       sourceMap: true,
+//       compress: {
+//         warnings: false
+//       }
+//     }),
+//     new webpack.LoaderOptionsPlugin({
+//       minimize: true
+//     })
+//   ])
+// }

@@ -3,14 +3,11 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-const host = "localhost"
 
 module.exports = {
-  dev: {
-    // Paths
+  dev: {    // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: './',
-
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8091, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
@@ -18,7 +15,6 @@ module.exports = {
     autoOpenBrowser: false,
     https: false,
     disableHostCheck: true,
-    errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
     // Use Eslint Loader?
@@ -29,7 +25,7 @@ module.exports = {
     // in the browser.
     showEslintErrorsInOverlay: false,
     // https://webpack.js.org/configuration/devtool/#development
-    devtool: 'source-map',
+    devtool: '#source-map',
 
     // If you have problems debugging vue-files in devtools,
     // set this to false - it *may* help

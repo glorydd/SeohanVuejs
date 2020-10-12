@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
-import {authHeader} from '@/services/auth'
 
 import Menu from '@/components/menu.vue'
 import Home from '@/components/home.vue'
@@ -15,10 +14,12 @@ import item from '@/components/erp/base/item'
 
 import general from '@/components/erp/general/general'
 
+
 import itDamage from '@/components/erp/it/itDamage/itDamage'
 import itDamageList from '@/components/erp/it/itDamage/list'
 import itDamageNew from '@/components/erp/it/itDamage/new'
 
+// 자재 부문
 import mat from '@/components/erp/mat/mat'
 import importPlan from '@/components/erp/mat/importPlan/importPlan'
 import importPlanList from '@/components/erp/mat/importPlan/list'
@@ -35,27 +36,33 @@ import asQuality from '@/components/erp/sales/asQuality/asQuality'
 import asQualityList from '@/components/erp/sales/asQuality/list'
 import asQualityNew from '@/components/erp/sales/asQuality/new'
 
-
 import foodTable from '@/components/erp/general/foodTable'
 // import qrReader from '@/components/general/qrReader'
 
 import lab from "@/components/erp/lab/lab";
 import protowms from "@/components/erp/lab/prototype/protowms";
-import Axios from 'axios'
 
-const NotFound = { template: '<div>Not Found</div>' }
 
 Vue.use(Router)
 
+// const requireAuth =  (to, from, next) => {
+//   if (from==='/login'){
+//     from = '/'
+//   }
+//   !!store.state.access_token ? next() : next(`/login?returnPath=${encodeURIComponent(from.path)}`)
+// }
 
-const requireAuth = () => (to, from, next) => {
+
+export function requireAuth(to, from, next) {
   if (from==='/login'){
     from = '/'
   }
-  !!store.state.access_token ? next() : next(`/login?returnPath=${encodeURIComponent(from.path)}`)
+  if (!store.state.access_token) {
+    next(`/login?returnPath=${encodeURIComponent(from.path)}`)
+  } else {
+    next();
+  }
 }
-
-
 const requireManager = (to, from, next) => {
 
   // 액세스토큰이 있으면
@@ -71,12 +78,12 @@ const requireManager = (to, from, next) => {
     return next(`/login?returnPath=${encodeURIComponent(from.path)}`)
 }
 
-const router = new Router({
+const router = new VueRouter({
   mode: 'history', // Use browser history
   routes: [
     {path: '/login', component: Login},
     {path: '/',
-    component:Menu,beforeEnter: requireAuth(),
+    component:Menu, beforeEach: requireAuth(),
     children:[
       // {path: '/', component: Home, beforeEnter: requireAuth()},
       {path: '/Profile', component: Profile , beforeEnter: requireAuth()},
@@ -188,7 +195,15 @@ const router = new Router({
       // {path: 'bom', component: bom },
     ],
     // beforeEnter: requireAuth(),
-  },]
+  },
+  // {
+  //   path: '/pub', component: pub,
+  //   children: [
+  //     {path: 'visitor', component: visitor,  props: true, },
+  //   ],
+  //   // beforeEnter: requireAuth(),
+  // }
+  ]
 })
 
 export default router;

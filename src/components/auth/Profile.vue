@@ -10,7 +10,8 @@
 </template>
 
 <script>
-import {auth, account} from '@/services/auth';
+import {account} from '@/services/auth';
+import {onBadRequest, onForbidden, onNotFound, onUnauthorized} from "../../services";
 
 export default {
   name: 'profile',
@@ -24,21 +25,14 @@ export default {
       }
     }
   },
-  // computed:{
-  //   getUserInfo(){
-  //     this.$store.getters.getUserInfo;
-  //   }
-  // },
   mounted() {
     account.fetch()
-    .then(
-      response => {
+    .then((response)=>{
         this.content = response.data;
-      },
-      error => {
-        this.content = error.response.data.message;
-      }
-    )
+    })
+    .catch(response => {
+      throw Error(response)
+    })
   }
 };
 </script>
