@@ -45,24 +45,13 @@ import protowms from "@/components/erp/lab/prototype/protowms";
 
 Vue.use(Router)
 
-// const requireAuth =  (to, from, next) => {
-//   if (from==='/login'){
-//     from = '/'
-//   }
-//   !!store.state.access_token ? next() : next(`/login?returnPath=${encodeURIComponent(from.path)}`)
-// }
-
-
-export function requireAuth(to, from, next) {
+const requireAuth =  (to, from, next) => {
   if (from==='/login'){
     from = '/'
   }
-  if (!store.state.access_token) {
-    next(`/login?returnPath=${encodeURIComponent(from.path)}`)
-  } else {
-    next();
-  }
+  !!store.state.access_token ? next() : next(`/login?returnPath=${encodeURIComponent(from.path)}`)
 }
+
 const requireManager = (to, from, next) => {
 
   // 액세스토큰이 있으면
@@ -78,15 +67,19 @@ const requireManager = (to, from, next) => {
     return next(`/login?returnPath=${encodeURIComponent(from.path)}`)
 }
 
-const router = new VueRouter({
+const router = new Router({
   mode: 'history', // Use browser history
+  // 스크롤 클릭시 맨 위로
+  scrollBehavior(to, from, savedPosition) {
+    return {x: 0, y: 0}
+  },
   routes: [
     {path: '/login', component: Login},
     {path: '/',
-    component:Menu, beforeEach: requireAuth(),
+    component:Menu, beforeEach: requireAuth,
     children:[
       // {path: '/', component: Home, beforeEnter: requireAuth()},
-      {path: '/Profile', component: Profile , beforeEnter: requireAuth()},
+      {path: '/Profile', component: Profile , beforeEnter: requireAuth},
       {path: '/general', component: general,
         children: [
           {
