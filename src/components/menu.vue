@@ -80,7 +80,7 @@
             >연구소</a>
             <ul class="collapse list-unstyled" id="menuLabList">
               <li>
-                <a href="/lab/proto/locaalm">시작품 불출 현황</a>
+                <a href="/qc/spc/spcmst">공정 검사 기준 설정</a>
               </li>
               <li>
                 <a href="#">Page 2</a>
@@ -89,10 +89,26 @@
                 <a href="#">Page 3</a>
               </li>
             </ul>
-          </li>
-          <li>
-            <a href="#">Portfolio</a>
-          </li>
+          </li><li>
+          <a
+            id="menuQc"
+            href="#menuQcList"
+            data-toggle="collapse"
+            aria-expanded="false"
+            class="menuHeader dropdown-toggle"
+          >품질</a>
+          <ul class="collapse list-unstyled" id="menuQcList">
+            <li>
+              <a href="/lab/proto/locaalm">시작품 불출 현황</a>
+            </li>
+            <li>
+              <a href="#">Page 2</a>
+            </li>
+            <li>
+              <a href="#">Page 3</a>
+            </li>
+          </ul>
+        </li>
           <li>
             <a href="#">Contact</a>
           </li>

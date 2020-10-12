@@ -3,7 +3,8 @@ import router from '../router'
 import qs from 'qs'
 import {authRequest} from '@/services/auth'
 
-const DOMAIN = 'http://localhost/api'
+
+const DOMAIN = '/api'
 
 const BadRequest = 400
 const Unauthorized = 401

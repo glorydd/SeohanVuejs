@@ -4,7 +4,6 @@
       <router-view/>
     </div>
 </template>
-
 <script>
 import menu from '@/components/menu';
 

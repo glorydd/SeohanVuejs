@@ -2,7 +2,7 @@
   <div  id="app">
     <h2 id="titleTop">출고 대기 목록</h2>
     <div class="row clearfix col-12">
-      <div class="col-6 " align="left">
+      <div class="col-2 " align="left">
         <button class="btn btn-success btn-lg"
                 type="button"
                 id="onFetch"
@@ -10,7 +10,16 @@
         >조회
         </button>
       </div>
-      <div class="col-6" align="right">
+      <div class="col-2" align="left">
+        <button
+          class="btn btn-primary btn-lg  text-right"
+          type="button"
+          id="selectAll"
+          @click="selectAll()"
+        >전체 선택
+        </button>
+      </div>
+      <div class="col-8" align="right">
         <button
           class="btn btn-primary btn-lg  text-right"
           type="button"
@@ -54,13 +63,14 @@
 <script>
 import crudService from "@/services/crudService";
 import locaalmService from "@/services/erp/mat/locaalmService";
-import moment from 'moment'
+// import moment from 'moment'
 
 
 export default {
   name: "locaAlmList",
   data() {
     return {
+      route:'mat/locaalm',
       datepicker: new Date(),
       folderPath: "locaAlmList",
       pagination: 0,
@@ -74,7 +84,7 @@ export default {
       sts:''
     };
   },
-  created() { 
+  created() {
     this.warehouse=this.$route.query.warehouse;
 
     // this.warehouse=this.$route.params.warehouse;
@@ -83,6 +93,12 @@ export default {
     this.onFetch();
   },
   methods: {
+    selectAll(){
+      // this.dataList.forEach()
+      for (var key in this.dataList ){
+        this.rowClick( this.dataList[key], key*1 ) ;
+      }
+    },
     onFetch() {
       var data =
         {
@@ -95,13 +111,11 @@ export default {
             size: 20
           }
         }
-      crudService.getDataByParam('mat/locaalm', data)
+      crudService.getDataByParam(this.route, data)
         .then(response => {
           this.dataList = response.data;
-
           this.selected = [];
           this.selectedData = [];
-
           console.log(response);
         })
         .catch(e => {
@@ -109,18 +123,15 @@ export default {
         });
     },
     endLocaAlmList() {
-      locaalmService
-        .update(this.selectedData)
+      crudService.update(this.route, this.selectedData)
         .then(() => {
           this.onFetch();
         })
-        .catch(e => {
-          console.log(e);
-        });
+        .catch(e => {console.log(e);});
     },
     formatDate(value) {
       if (value) {
-        return moment(String(value)).format('MM/DD/YYYY hh:mm')
+//        return moment(String(value)).format('MM/DD/YYYY hh:mm')
       }
     },
     rowClick(data, index) {
