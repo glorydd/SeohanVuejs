@@ -76,7 +76,7 @@ const router = new Router({
   routes: [
     {path: '/login', component: Login},
     {path: '/',
-    component:Menu, beforeEach: requireAuth,
+    component:Menu, beforeEach(to, from, next) {requireAuth(to, from, next) },
     children:[
       // {path: '/', component: Home, beforeEnter: requireAuth()},
       {path: '/Profile', component: Profile , beforeEnter: requireAuth},
@@ -99,7 +99,7 @@ const router = new Router({
           { path: 'food', component: foodTable },
           // { path: 'qrReader', component: qrReader },
         ],
-        beforeEnter: requireAuth(),
+        beforeEnter(to, from, next) {requireAuth(to, from, next) },
       },
       {
         path: '/sales', component: sales,
@@ -131,7 +131,7 @@ const router = new Router({
             ]
           }
         ],
-        beforeEnter: requireAuth(),
+        beforeEnter(to, from, next) {requireAuth(to, from, next) },
       },
       {
         path: '/qc', component: general,
@@ -153,7 +153,7 @@ const router = new Router({
           { path: 'food', component: foodTable },
           // { path: 'qrReader', component: qrReader },
         ],
-        beforeEnter: requireAuth(),
+        beforeEnter(to, from, next) {requireAuth(to, from, next) },
       },
       //   {
       //     path: '/lab', component: lab,

@@ -32,7 +32,7 @@ const crudService = {
           });
   },
   getAllList(route) {
-    return axios.get('/api/' + route, headerInfo)
+    return axios.get('/api/' + route)
     .then(result => result )
           .catch(({response}) => {
             if (response.status === Unauthorized) return onUnauthorized()
@@ -93,14 +93,14 @@ const crudService = {
           });;
   },
   fileDown(route, data) {
-    var param = {
+    let param = {
       params: {
         folderPath : route,
         filename: data
       }}
     window.location.href = '/api/file?folderPath=' + route + '&filename=' + data;
 
-    return axios.get('/api/file/', param, {responseType: "blob"});
+    return axios.get('/api/file', param, {responseType: "blob"});
   }
 }
 export default crudService;

@@ -28,5 +28,4 @@ export default {
 
 <style>
 @import url("./assets/css/app.css");
-@import url("https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css");
 </style>

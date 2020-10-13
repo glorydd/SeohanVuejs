@@ -5,7 +5,7 @@
       <div class="form-group">
         <label for="ID">ID</label>
         <input type="text" class="form-control" v-model="username"
-          v-validate="'required'"
+          required="true"
         />
       </div>
       <!-- <div class="alert alert-danger" role="alert" v-if="errors.has('asabn')">Username is required!</div> -->
@@ -13,7 +13,7 @@
       <div class="form-group">
         <label for="password">Password</label>
         <input type="password" class="form-control" v-model="password"
-          v-validate="'required'"
+               required="true"
         />
       </div>
       <div class="form-group">
@@ -56,7 +56,7 @@ export default {
         .then(() => {
           this.$router.push(this.returnPath);
         })
-        .catch((err) => {});
+        .catch((err) => {console.log(err)});
     },
   },
 };

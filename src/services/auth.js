@@ -28,7 +28,7 @@ export const account = {
     return authRequest('post', '/oauth/token', playload)
   },
   fetch() {
-    return crudService.getRequest('/accounts')
+    return crudService.getAllList('/accounts')
       .catch(response => {
         throw Error(response)
       })
