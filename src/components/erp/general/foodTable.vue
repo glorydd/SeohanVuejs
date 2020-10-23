@@ -56,15 +56,15 @@ export default {
       this.companycode = companycode;
       this.getFoodTableList();
     },
-    getFoodTableList() {      
-      var data ={
+    getFoodTableList() {
+      let data ={
         params:{
           gdate :this.datepicker.substr(0, 4) +this.datepicker.substr(5, 2) +this.datepicker.substr(8, 2),
           companycode: this.companycode
         }
       }
-
-      crudService.getDataByParam(this.route, data)
+      data = this.companycode + '/date/'+ this.datepicker.substr(0, 4) +this.datepicker.substr(5, 2) +this.datepicker.substr(8, 2);
+      crudService.getDataByPath(this.route, data)
         .then(response => {
           this.dataList = response.data;
           console.log(response);

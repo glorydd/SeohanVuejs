@@ -9,19 +9,8 @@ const NotFound = 404
 
 
 const crudService = {
-  getByPath(route, data) {
-    return axios.get('/api/' + route + '/' + data)
-          .then(result => result )
-          .catch(({response}) => {
-            if (response.status === Unauthorized) return onUnauthorized()
-            else if (response.status == Forbidden) return onForbidden(response)
-            else if (response.status == BadRequest) return onBadRequest(response)
-            else if (response.status == NotFound) return onNotFound(response)
-            throw Error(response)
-          });
-  },
   getDataByPath(route, data) {
-    return axios.get('/api/' + route + '/' + data, headerInfo)
+    return axios.get('/api/' + route + '/' + data)
           .then(result => result )
           .catch(({response}) => {
             if (response.status === Unauthorized) return onUnauthorized()
