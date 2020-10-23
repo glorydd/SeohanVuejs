@@ -4,9 +4,22 @@
       <h2 id="titleProtoWarehouse">재고 현황</h2>
       <div class="input-group mb-3 ">
         <div class="input-group-prepend">
-          <button class="btn btn-secondary" type="button" data-toggle="modal"  data-target="#itemSearchModal"  >Item 검색</button>
+          <button ref="modal" class="btn btn-secondary" type="button" data-toggle="modal"  data-target="#itemSearchModal"  >Item 검색</button>
 
-          <modal name="itemSearchModal"/>
+
+          <button
+            type="button"
+            class="btn"
+            @click="showModal"
+          >
+            Open Modal!
+          </button>
+
+          <modal name="itemSearchModal" :itmno="itmno"/>
+          <itemSearchModal
+            v-show="isModalVisible"
+            @close="closeModal">
+          </itemSearchModal>
         </div>
         <input type="text" class="form-control" ref="itmno" minlength="3"
                onkeyup="this.value = this.value.toUpperCase();"
@@ -95,7 +108,7 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-body">
-            <itemSearchModal :method="setItem"/>
+            <itemSearchModal :val="itmno" :method="setItem"/>
           </div>
         </div>
       </div>
@@ -115,6 +128,7 @@ export default {
   name: "warehouse",
   data() {
     return {
+      isModalVisible: false,
       modal:false,
       route: this.$route,
       datepicker: new Date(),
@@ -127,15 +141,20 @@ export default {
       selectedData: [],
     }
   },
-
   created() {
     this.warehouse = this.$route.query.warehouse;
     this.onFetch(0);
   },
   methods: {
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
     setItem(itemno){
       this.itmno = itemno;
-     if (itemno!='') $('#itemSearchModal').modal('toggle') ;
+     if (itemno!='') this.$refs.modal.modal('toggle') ;
      this.onFetch(0);
     },
     onFetch(index) {
@@ -194,7 +213,7 @@ export default {
     },
   },
   mounted() {
-    $('#itemSearchModal').modal('hide') ;
+    this.$refs.modal.modal('hide') ;
   },
   computed: {}
 };

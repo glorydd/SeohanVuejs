@@ -63,7 +63,7 @@
 <script>
 import crudService from "@/services/crudService";
 import locaalmService from "@/services/erp/mat/locaalmService";
-import moment from 'moment'
+// import moment from 'moment'
 
 
 export default {
@@ -131,7 +131,7 @@ export default {
     },
     formatDate(value) {
       if (value) {
-        return moment(String(value)).format('MM/DD/YYYY hh:mm')
+//        return moment(String(value)).format('MM/DD/YYYY hh:mm')
       }
     },
     rowClick(data, index) {

@@ -43,18 +43,14 @@ import lab from "@/components/erp/lab/lab";
 import protowms from "@/components/erp/lab/prototype/protowms";
 
 
-
-
 Vue.use(Router)
 
-
-const requireAuth = () => (to, from, next) => {
+const requireAuth =  (to, from, next) => {
   if (from==='/login'){
     from = '/'
   }
   !!store.state.access_token ? next() : next(`/login?returnPath=${encodeURIComponent(from.path)}`)
 }
-
 
 const requireManager = (to, from, next) => {
 
@@ -73,13 +69,17 @@ const requireManager = (to, from, next) => {
 
 const router = new Router({
   mode: 'history', // Use browser history
+  // 스크롤 클릭시 맨 위로
+  scrollBehavior(to, from, savedPosition) {
+    return {x: 0, y: 0}
+  },
   routes: [
     {path: '/login', component: Login},
     {path: '/',
-    component:Menu,beforeEnter: requireAuth(),
+    component:Menu, beforeEach(to, from, next) {requireAuth(to, from, next) },
     children:[
       // {path: '/', component: Home, beforeEnter: requireAuth()},
-      {path: '/Profile', component: Profile , beforeEnter: requireAuth()},
+      {path: '/Profile', component: Profile , beforeEnter: requireAuth},
       {path: '/general', component: general,
         children: [
           {
@@ -99,7 +99,7 @@ const router = new Router({
           { path: 'food', component: foodTable },
           // { path: 'qrReader', component: qrReader },
         ],
-        beforeEnter: requireAuth(),
+        beforeEnter(to, from, next) {requireAuth(to, from, next) },
       },
       {
         path: '/sales', component: sales,
@@ -131,7 +131,7 @@ const router = new Router({
             ]
           }
         ],
-        beforeEnter: requireAuth(),
+        beforeEnter(to, from, next) {requireAuth(to, from, next) },
       },
       {
         path: '/qc', component: general,
@@ -153,7 +153,7 @@ const router = new Router({
           { path: 'food', component: foodTable },
           // { path: 'qrReader', component: qrReader },
         ],
-        beforeEnter: requireAuth(),
+        beforeEnter(to, from, next) {requireAuth(to, from, next) },
       },
       //   {
       //     path: '/lab', component: lab,

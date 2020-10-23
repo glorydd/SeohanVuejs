@@ -1,6 +1,6 @@
 <template>
   <div id="itDamage">
-    <router-link to="/general/itdamage/new" exact>New Post</router-link>
+    
 
     <table class="table table-striped table-bordered" id="dataTable">
       <tbody>

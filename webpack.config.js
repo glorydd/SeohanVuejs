@@ -1,65 +1,78 @@
-const path = require('path');
-const webpack = require('webpack')
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
-module.exports ={
-  mode: 'development',
-  devtool : 'eval',
-  resolve: {
-    extensions: ['.js', '.vue'], //확장자를 제거하고 불러낼수 있다.
+const path = require('path')
+const webpack = require('webpack')
+
+module.exports = {
+  entry :  {
+    app: path.join(__dirname, 'src/main.js')
   },
-  entry :{
-    app : './src/main.js',
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    publicPath: '/dist/',
+    filename: 'build.js'
   },
-  module : {
+  devtool: '#eval-source-map',
+  module: {
     rules: [
-      ...(config.dev.useEslint ? [createLintingRule()] : []),
       {
+        test: /\.css$/,
+        use: [
+          'vue-style-loader',
+          'css-loader'
+        ],
+      },      {
         test: /\.vue$/,
         loader: 'vue-loader',
-        options: vueLoaderConfig
+        options: {
+          loaders: {
+          }
+          // other vue-loader options go here
+        }
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: utils.assetsPath('img/[name].[hash:7].[ext]')
-        }
-      },
-      {
-        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: utils.assetsPath('media/[name].[hash:7].[ext]')
-        }
-      },
-      {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
-        }
-      },
-      {
-        test: /.s[a|c]ss$/,
-        loader: 'style!css!sass'
+        exclude: /node_modules/
       }
     ]
   },
-  plugins: [new VueLoaderPlugin()],
-  //내보낼 파일의이름
-  output: {
-    //filename: [name].js
-    filename: '[name].js',
-    //__dirname 현재 경로, dist 폴더 이름
-    path: path.join(__dirname, 'dist'), //경로
+  resolve: {
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': path.resolve('src')
+    },
+    extensions: ['*', '.js', '.vue', '.json']
   },
+  devServer: {
+    host: 'localhost',
+    port:8091,
+    historyApiFallback: true,
+    noInfo:true,
+    disableHostCheck: true,
+    // compress: true,
+    overlay:true,
+  },
+  performance: {
+    hints: false
+  },
+}
+if (process.env.NODE_ENV === 'production') {
+  module.exports.devtool = '#source-map'
+  // http://vue-loader.vuejs.org/en/workflow/production.html
+  module.exports.plugins = (module.exports.plugins || []).concat([
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"production"'
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
+      compress: {
+        warnings: false
+      }
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true
+    })
+  ])
 }

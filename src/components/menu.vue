@@ -162,8 +162,7 @@
       </div>
     </div>
 </template>
-<script src='./assets/js/bootstrap.min.js'>
-</script>
+
 
 <script>
   export default {

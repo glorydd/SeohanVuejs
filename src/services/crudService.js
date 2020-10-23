@@ -20,9 +20,20 @@ const crudService = {
             throw Error(response)
           });
   },
-  getRequest(route) {
-    return axios.get('/api/' + route)
+  getDataByPath(route, data) {
+    return axios.get('/api/' + route + '/' + data, headerInfo)
           .then(result => result )
+          .catch(({response}) => {
+            if (response.status === Unauthorized) return onUnauthorized()
+            else if (response.status == Forbidden) return onForbidden(response)
+            else if (response.status == BadRequest) return onBadRequest(response)
+            else if (response.status == NotFound) return onNotFound(response)
+            throw Error(response)
+          });
+  },
+  getAllList(route) {
+    return axios.get('/api/' + route)
+    .then(result => result )
           .catch(({response}) => {
             if (response.status === Unauthorized) return onUnauthorized()
             else if (response.status == Forbidden) return onForbidden(response)
@@ -82,14 +93,14 @@ const crudService = {
           });;
   },
   fileDown(route, data) {
-    var param = {
+    let param = {
       params: {
         folderPath : route,
         filename: data
       }}
     window.location.href = '/api/file?folderPath=' + route + '&filename=' + data;
 
-    return axios.get('/api/file/', param, {responseType: "blob"});
+    return axios.get('/api/file', param, {responseType: "blob"});
   }
 }
 export default crudService;
