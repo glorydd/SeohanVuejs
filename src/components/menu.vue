@@ -60,7 +60,7 @@
             >자재</a>
             <ul class="collapse list-unstyled" id="menuMatList">
               <li>
-                <a href="/mat/import-plan">자재결품조회</a>
+                <a href="/mat/import-plan/list">자재결품조회</a>
               </li>
               <li>
                 <a href="/mat/wms/locaalm">출고 목록</a>
