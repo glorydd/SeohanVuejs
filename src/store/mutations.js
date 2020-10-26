@@ -4,7 +4,7 @@ const mutations = {
     LOGIN(state, access_token) {
         if (!access_token) return
         state.access_token = access_token
-        localStorage.access_token = access_token
+        localStorage.access_token = access_token         
         setAuthInHeader(access_token)
     },
     LOGOUT(state) {
@@ -16,7 +16,7 @@ const mutations = {
     // 사용자
     SET_ACCOUNT(state, data) {
         state.account = []
-        state.account = data
+        state.account = data 
     },
     SET_ACCOUNT_LIST(state, data) {
         state.accountList = []

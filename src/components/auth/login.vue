@@ -53,7 +53,7 @@ export default {
           password: this.password,
           grant_type: this.grant_type,
         })
-        .then(() => {
+        .then(() => { 
           this.$router.push(this.returnPath);
         })
         .catch((err) => {console.log(err)});

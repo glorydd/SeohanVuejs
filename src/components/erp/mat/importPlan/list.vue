@@ -21,47 +21,35 @@
 </template>
 
 <script>
-import crudService from "@/services/crudService";
-
+import crudService from "@/services/crudService"; 
 
 export default {
   name: "importPlan",
   data() {
     return {
-      folderPath:"importPlan",
-      datepicker: new Date(),
-      querydate: "",
-      dataList: []
+      route:"mat/import-plan",
+      datepicker: new Date(), 
+      dataList: [],
+      index : 0
     };
   },
   watch:{
     '$route':'getData'
   },
   methods: {
-    getData(data) {
-      var data =
-        {
-          params: {
-            warhs: this.warehouse,
-            itmno: this.itmno,
-            page: index - 1,
-            size: 20
-          }
-        }
-      crudService
-        .getDataByParam(data)
+    getData() {
+      let userid = JSON.parse(localStorage.user).asabn;
 
+      crudService.getDataByPath(this.route + '/alarm/user',userid) 
         .then(response => {
-          this.dataList = response.data;
-          console.log(response);
+          this.dataList = response.data; 
         })
         .catch(e => {
           console.log(e);
         });
     }
   },
-  created() {
-    crudService.setRoute('mat/importPlan');
+  created() { 
     this.getData();
   },
   mounted: function() {}

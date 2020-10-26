@@ -9,88 +9,107 @@ const NotFound = 404
 
 
 const crudService = {
-  getByPath(route, data) {
-    return axios.get('/api/' + route + '/' + data)
-          .then(result => result )
-          .catch(({response}) => {
-            if (response.status === Unauthorized) return onUnauthorized()
-            else if (response.status == Forbidden) return onForbidden(response)
-            else if (response.status == BadRequest) return onBadRequest(response)
-            else if (response.status == NotFound) return onNotFound(response)
-            throw Error(response)
-          });
+  async getDataByPath(route, data) {
+    try {
+      const result = await axios.get('/api/' + route + '/' +  data);
+      return result;
+    } catch ({ response }) {
+      if (response.status === Unauthorized)
+        return onUnauthorized();
+      else if (response.status == Forbidden)
+        return onForbidden(response);
+      else if (response.status == BadRequest)
+        return onBadRequest(response);
+      else if (response.status == NotFound)
+        return onNotFound(response);
+      throw Error(response);
+    }
   },
-  getDataByPath(route, data) {
-    return axios.get('/api/' + route + '/' + data, headerInfo)
-          .then(result => result )
-          .catch(({response}) => {
-            if (response.status === Unauthorized) return onUnauthorized()
-            else if (response.status == Forbidden) return onForbidden(response)
-            else if (response.status == BadRequest) return onBadRequest(response)
-            else if (response.status == NotFound) return onNotFound(response)
-            throw Error(response)
-          });
+  async getAllList(route) {
+    try {
+      const result = await axios.get('/api/' + route);
+      return result;
+    } catch ({ response }) {
+      if (response.status === Unauthorized)
+        return onUnauthorized();
+      else if (response.status == Forbidden)
+        return onForbidden(response);
+      else if (response.status == BadRequest)
+        return onBadRequest(response);
+      else if (response.status == NotFound)
+        return onNotFound(response);
+      throw Error(response);
+    }
   },
-  getAllList(route) {
-    return axios.get('/api/' + route)
-    .then(result => result )
-          .catch(({response}) => {
-            if (response.status === Unauthorized) return onUnauthorized()
-            else if (response.status == Forbidden) return onForbidden(response)
-            else if (response.status == BadRequest) return onBadRequest(response)
-            else if (response.status == NotFound) return onNotFound(response)
-            throw Error(response)
-          });;
+  async getDataByParam(route, data) {
+    try {
+      const result = await axios.get('/api/' + route + "/params", data);
+      return result;
+    } catch ({ response }) {
+      if (response.status === Unauthorized)
+        return onUnauthorized();
+      else if (response.status == Forbidden)
+        return onForbidden(response);
+      else if (response.status == BadRequest)
+        return onBadRequest(response);
+      else if (response.status == NotFound)
+        return onNotFound(response);
+      throw Error(response);
+    }
   },
-  getDataByParam(route, data) {
-    return axios.get('/api/' + route + "/params", data)
-    .then(result => result )
-          .catch(({response}) => {
-            if (response.status === Unauthorized) return onUnauthorized()
-            else if (response.status == Forbidden) return onForbidden(response)
-            else if (response.status == BadRequest) return onBadRequest(response)
-            else if (response.status == NotFound) return onNotFound(response)
-            throw Error(response)
-          });;
+  async update(route, data) {
+    try {
+      const result = await axios.put('/api/' + route, data);
+      return result;
+    } catch ({ response }) {
+      if (response.status === Unauthorized)
+        return onUnauthorized();
+      else if (response.status == Forbidden)
+        return onForbidden(response);
+      else if (response.status == BadRequest)
+        return onBadRequest(response);
+      else if (response.status == NotFound)
+        return onNotFound(response);
+      throw Error(response);
+    };
   },
-  update(route, data) {
-    return axios.put('/api/' + route , data)
-    .then(result => result )
-          .catch(({response}) => {
-            if (response.status === Unauthorized) return onUnauthorized()
-            else if (response.status == Forbidden) return onForbidden(response)
-            else if (response.status == BadRequest) return onBadRequest(response)
-            else if (response.status == NotFound) return onNotFound(response)
-            throw Error(response)
-          });;
-  },
-  save(route, data) {
-    return axios.post('/api/' + route , data)
-    .then(result => result )
-          .catch(({response}) => {
-            if (response.status === Unauthorized) return onUnauthorized()
-            else if (response.status == Forbidden) return onForbidden(response)
-            else if (response.status == BadRequest) return onBadRequest(response)
-            else if (response.status == NotFound) return onNotFound(response)
-            throw Error(response)
-          });;
+  async save(route, data) {
+    try {
+      const result = await axios.post('/api/' + route, data);
+      return result;
+    } catch ({ response }) {
+      if (response.status === Unauthorized)
+        return onUnauthorized();
+      else if (response.status == Forbidden)
+        return onForbidden(response);
+      else if (response.status == BadRequest)
+        return onBadRequest(response);
+      else if (response.status == NotFound)
+        return onNotFound(response);
+      throw Error(response);
+    };
   },
 
-  fileUpload(route, data) {
-    return axios.post('/api/' + route + '/files', data, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        "Process-Data": false,
-      }
-    })
-    .then(result => result )
-          .catch(({response}) => {
-            if (response.status === Unauthorized) return onUnauthorized()
-            else if (response.status == Forbidden) return onForbidden(response)
-            else if (response.status == BadRequest) return onBadRequest(response)
-            else if (response.status == NotFound) return onNotFound(response)
-            throw Error(response)
-          });;
+  async fileUpload(route, data) {
+    try {
+      const result = await axios.post('/api/' + route + '/files', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          "Process-Data": false,
+        }
+      });
+      return result;
+    } catch ({ response }) {
+      if (response.status === Unauthorized)
+        return onUnauthorized();
+      else if (response.status == Forbidden)
+        return onForbidden(response);
+      else if (response.status == BadRequest)
+        return onBadRequest(response);
+      else if (response.status == NotFound)
+        return onNotFound(response);
+      throw Error(response);
+    };
   },
   fileDown(route, data) {
     let param = {
