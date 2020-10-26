@@ -1,7 +1,7 @@
-const user = JSON.parse(localStorage.getItem('user'))
-const initialState = user
-  ? { status: { loggedIn: true }, user }
-  : { status: {}, user: null }
+// const user = JSON.parse(localStorage.user)
+// const initialState = user
+//   ? { status: { loggedIn: true }, user }
+//   : { status: {}, user: null }
 
 const state = {
   access_token: null,

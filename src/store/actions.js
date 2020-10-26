@@ -11,7 +11,8 @@ const actions  = {
     },
     LOGOUT(state) {
       state.access_token = null
-      state.account = null
+      state.account = null      
+      delete localStorage.user
       delete localStorage.access_token
       setAuthInHeader(null)
     },

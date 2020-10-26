@@ -69,7 +69,7 @@
                 <a href="/mat/wms/warehouse">재고 현황</a>
               </li>
             </ul>
-          </li class="active">
+          </li >
           <li>
             <a
               id="menuLab"
