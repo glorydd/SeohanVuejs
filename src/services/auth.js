@@ -12,6 +12,7 @@ const NotFound = 404
 export const setAuthInHeader = token => {
   axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : null
 }
+ 
 
 export default function authHeader () {
   let accessToken = localStorage.getItem('access_token');
@@ -28,7 +29,8 @@ export const account = {
     return authRequest('post', '/oauth/token', playload)
   },
   fetch() {
-    return crudService.getAllList('/accounts')
+    let accessToken = localStorage.getItem('access_token');
+    return axios.get('/api/' + '/accounts')
       .catch(response => {
         throw Error(response)
       })
@@ -36,14 +38,16 @@ export const account = {
   idCheck(playload) {
     return crudService.save('/accounts/join/check', playload)
   },
-  createFiles(playload) {
-    // let data = {
-    //   params : {
-    //
-    //   }
-    // }
+  createFiles(playload) { 
     return requestFile('post', `/accounts/files/${playload.accountId}`, playload.formData)
-  }
+  },  
+  currentUser() {
+    return this.$store.state.auth.user;
+  },
+  
+  isAuthenticated() {
+    return this.$store.getters.isAuthenticated;
+  },
 }
 
 export const authRequest = (method, url, data) => {

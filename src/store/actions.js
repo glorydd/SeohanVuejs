@@ -11,12 +11,14 @@ const actions  = {
     },
     LOGOUT(state) {
       state.access_token = null
-      state.account = null
+      state.account = null      
+      delete localStorage.user
       delete localStorage.access_token
       setAuthInHeader(null)
     },
 
     // 사용자
+    
     FETCH_ACCOUNT({commit}) {
     return account.fetch()
         .then(({data}) => {

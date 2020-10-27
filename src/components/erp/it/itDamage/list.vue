@@ -4,7 +4,7 @@
 
     <table class="table table-striped table-bordered" id="dataTable">
       <tbody>
-        <tr v-for="data in dataList" v-bind:key="data.rtime" v-on:click="'tel:' + data.rtel">
+        <tr v-for="data in dataList" v-bind:key="data.id" v-on:click="'tel:' + data.rtel">
           <td class="d-none d-sm-block">{{data.class1}}</td>
           <td class="d-none d-sm-block">{{data.co_gb}}</td>
           <td class="d-none d-sm-block">{{data.rteam}}</td>
@@ -26,7 +26,7 @@
             <button
               class="btn btn-indigo btn-sm"
               type="button"
-              id="endDamage"
+              id="endDamage"              
               @click="enditdamage(data)"
             >완료</button>
           </td>

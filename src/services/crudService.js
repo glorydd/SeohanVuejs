@@ -8,10 +8,17 @@ const Forbidden = 403
 const NotFound = 404
 
 
-const crudService = {
+const crudService = {  
+
   async getDataByPath(route, data) {
     try {
-      const result = await axios.get('/api/' + route + '/' +  data);
+      let accessToken = localStorage.getItem('access_token');
+      const result = await axios.get('/api/' + route + '/' +  data, {
+        headers: { 
+          'Authorization': 'Basic ' + accessToken,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      });
       return result;
     } catch ({ response }) {
       if (response.status === Unauthorized)
@@ -27,7 +34,13 @@ const crudService = {
   },
   async getAllList(route) {
     try {
-      const result = await axios.get('/api/' + route);
+      let accessToken = localStorage.getItem('access_token');
+      const result = await axios.get('/api/' + route, {
+        headers: { 
+          'Authorization': 'Basic ' + accessToken,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      });
       return result;
     } catch ({ response }) {
       if (response.status === Unauthorized)
@@ -43,7 +56,13 @@ const crudService = {
   },
   async getDataByParam(route, data) {
     try {
-      const result = await axios.get('/api/' + route + "/params", data);
+      let accessToken = localStorage.getItem('access_token');
+      const result = await axios.get('/api/' + route + '/params', data, {
+        headers: { 
+          'Authorization': 'Basic ' + accessToken,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }        
+      });
       return result;
     } catch ({ response }) {
       if (response.status === Unauthorized)
@@ -57,6 +76,7 @@ const crudService = {
       throw Error(response);
     }
   },
+
   async update(route, data) {
     try {
       const result = await axios.put('/api/' + route, data);
@@ -73,9 +93,10 @@ const crudService = {
       throw Error(response);
     };
   },
+
   async save(route, data) {
     try {
-      const result = await axios.post('/api/' + route, data);
+      const result = await axios.post('/api/' + route, data, headerInfo());
       return result;
     } catch ({ response }) {
       if (response.status === Unauthorized)
