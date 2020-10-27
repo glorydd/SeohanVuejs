@@ -11,10 +11,11 @@
           <th class="">기초재고</th>
           <th class="">생산계획</th>
           <th class="">기입고량</th>
+          <th class="">예상재고</th>
           <th class="">금일계획량</th>
           <th class="">예상결품수량</th>
         </tr>
-      </thead>
+      </thead> 
       <tbody>
         <tr v-for="data in dataList" v-bind:key="data.itmno" >
           <!-- <td class="">{{data.cstcd}}</td> -->
@@ -25,6 +26,7 @@
           <td class="">{{data.mqty}}</td>
           <td class="">{{data.bsqty}}</td>
           <td class="">{{data.preqty}}</td>
+          <td class="">{{data.mqty - data.bsqty + data.preqty}}</td>
           <td class="">{{data.tsqty}}</td>          
           <td class="">{{data.expqty}}</td>
         </tr>

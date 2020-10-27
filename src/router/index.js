@@ -114,25 +114,7 @@ const router = new Router({
         ],
         // beforeEnter: requireAuth(),
       },
-      {
-        path: '/mat', component: mat,
-        children: [
-          {
-            path: 'import-plan', component: importPlan,
-            children: [
-              { path: 'list', component: importPlanList,  props: true },
-            ]
-          },
-          {
-            path: 'wms', component: wms,
-            children: [
-              { path: 'loca', name:'loca', component: locaAlm,  props: true},
-              { path: 'warehouse', name:'warehouse', component: warehouse,  props: true }
-            ],
-            beforeEnter(to, from, next) {requireAuth(to, from, next) },
-          }
-        ],
-      },
+      
       {
         path: '/qc', component: general,
         children: [
@@ -180,6 +162,25 @@ const router = new Router({
         ]
       },
     ]
+  },
+  {
+    path: '/mat', component: mat,
+    children: [
+      {
+        path: 'import-plan', component: importPlan,
+        children: [
+          { path: 'list', component: importPlanList,  props: true },
+        ]
+      },
+      {
+        path: 'wms', component: wms,
+        children: [
+          { path: 'loca', name:'loca', component: locaAlm,  props: true},
+          { path: 'warehouse', name:'warehouse', component: warehouse,  props: true }
+        ],
+        beforeEnter(to, from, next) {requireAuth(to, from, next) },
+      }
+    ],
   },
   {
     path: '/base', component: base,
