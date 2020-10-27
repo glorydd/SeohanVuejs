@@ -50,8 +50,9 @@ export default {
     };
   }, 
   methods: {
-    getData() {
-      let userid = JSON.parse(localStorage.user).accountid; 
+    getData() {      
+      if(this.accountid==='') this.accountid= JSON.parse(localStorage.user).accountid; 
+
       crudService.getDataByPath(this.route + '/alarm/user',this.accountid) 
         .then(response => {
           this.dataList = response.data; 
@@ -62,7 +63,7 @@ export default {
     }
   },
   created() {
-    this.accountid=this.$route.query.accountid;
+    if (this.$route.query.accountid !=undefined) this.accountid=this.$route.query.accountid;
     this.getData();
   },
   mounted: function() {}
