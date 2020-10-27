@@ -18,6 +18,7 @@ const actions  = {
     },
 
     // 사용자
+    
     FETCH_ACCOUNT({commit}) {
     return account.fetch()
         .then(({data}) => {

@@ -2,7 +2,7 @@
   <div id="importPlan">
     <table class="table table-striped table-bordered" id="dataTable">
       <thead> 
-        <tr>
+        <tr id="">
           <th class="">업체명</th>
           <th class="">품번</th>
           <th class="">품명</th>
@@ -26,7 +26,7 @@
           <td class="">{{data.bsqty}}</td>
           <td class="">{{data.tsqty}}</td>
           <td class="">{{data.preqty}}</td>
-          <td class="">{{data.expqty}}</td>          
+          <td class="">{{data.expqty}}</td>
         </tr>
       </tbody>
     </table>
@@ -35,22 +35,23 @@
 
 <script>
 import crudService from "@/services/crudService"; 
+import {account} from '@/services/auth';
 
 export default {
-  name: "importPlan",
+  name: "importPlan", 
   data() {
     return {
       route:"mat/import-plan",
       datepicker: new Date(), 
       dataList: [],
-      index : 0
+      index : 0,
+
+      accountid : ''
     };
-  },
-  watch:{
-    '$route':'getData'
-  },
+  }, 
   methods: {
     getData() {
+      let user = getAccountId();
       let userid = JSON.parse(localStorage.user).accountid;
 
       crudService.getDataByPath(this.route + '/alarm/user',userid) 
@@ -62,6 +63,7 @@ export default {
         });
     }
   },
+  
   created() { 
     this.getData();
   },

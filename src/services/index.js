@@ -50,8 +50,7 @@ export const requestFile = (method, url, data) => {
     contentType: false
   }).then(result => result)
     .catch(error => error.response)
-}
-    
+} 
 
 export const mail = {
   mailSend(playload) {
