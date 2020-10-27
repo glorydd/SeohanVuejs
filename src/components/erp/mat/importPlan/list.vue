@@ -8,11 +8,11 @@
           <th class="">품명</th>
           <!-- <th class="">업체코드</th> -->          
           <th class="">창고코드</th>
-          <th class="">발주수량</th>
-          <th class="">입고수량</th>
-          <th class="">대기수량</th>
-          <th class="">진행수량</th>
-          <th class="">만료수량</th>
+          <th class="">기초재고</th>
+          <th class="">생산계획</th>
+          <th class="">기입고량</th>
+          <th class="">금일계획량</th>
+          <th class="">예상결품수량</th>
         </tr>
       </thead>
       <tbody>
@@ -24,8 +24,8 @@
           <td class="">{{data.warhs}}</td>
           <td class="">{{data.mqty}}</td>
           <td class="">{{data.bsqty}}</td>
-          <td class="">{{data.tsqty}}</td>
           <td class="">{{data.preqty}}</td>
+          <td class="">{{data.tsqty}}</td>          
           <td class="">{{data.expqty}}</td>
         </tr>
       </tbody>
@@ -51,10 +51,8 @@ export default {
   }, 
   methods: {
     getData() {
-      let user = getAccountId();
-      let userid = JSON.parse(localStorage.user).accountid;
-
-      crudService.getDataByPath(this.route + '/alarm/user',userid) 
+      let userid = JSON.parse(localStorage.user).accountid; 
+      crudService.getDataByPath(this.route + '/alarm/user',this.accountid) 
         .then(response => {
           this.dataList = response.data; 
         })
@@ -63,8 +61,8 @@ export default {
         });
     }
   },
-  
-  created() { 
+  created() {
+    this.accountid=this.$route.query.accountid;
     this.getData();
   },
   mounted: function() {}

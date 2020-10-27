@@ -120,7 +120,7 @@ const router = new Router({
           {
             path: 'import-plan', component: importPlan,
             children: [
-              { path: 'list', component: importPlanList },
+              { path: 'list', component: importPlanList,  props: true },
             ]
           },
           {
@@ -128,10 +128,10 @@ const router = new Router({
             children: [
               { path: 'loca', name:'loca', component: locaAlm,  props: true},
               { path: 'warehouse', name:'warehouse', component: warehouse,  props: true }
-            ]
+            ],
+            beforeEnter(to, from, next) {requireAuth(to, from, next) },
           }
         ],
-        beforeEnter(to, from, next) {requireAuth(to, from, next) },
       },
       {
         path: '/qc', component: general,
