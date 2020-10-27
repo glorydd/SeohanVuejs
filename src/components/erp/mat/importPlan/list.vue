@@ -20,8 +20,8 @@
         <tr v-for="data in dataList" v-bind:key="data.itmno" >
           <!-- <td class="">{{data.cstcd}}</td> -->
           <td class="">{{data.cusna}}</td>
-          <td class="">{{data.dscrp}}</td>          
-          <td class="">{{data.itmno}}</td>
+          <td class="">{{data.itmno}}</td>          
+          <td class="">{{data.dscrp}}</td>
           <td class="">{{data.warhs}}</td>
           <td class="">{{data.mqty}}</td>
           <td class="">{{data.bsqty}}</td>
